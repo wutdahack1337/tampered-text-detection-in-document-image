@@ -1,0 +1,1 @@
+# tampered-text-detection-in-document-image
