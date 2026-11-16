@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.15)  16 NOV 2026 12:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.15)  16 NOV 2026 18:09
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1321,78 +1321,11 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 284.
 )
 \Hy@SectionHShift=\skip156
-)) (./config/code-cell.tex (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcolorbox.sty
-Package: tcolorbox 2026/05/28 version 6.10.0 text color boxes
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty
-Package: verbatim 2026-08-17 v1.5z LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks70
-\verbatim@line=\toks71
-\verbatim@in@stream=\read5
-) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/environ/environ.sty
-Package: environ 2014/05/04 v0.3 A new way to define environments
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspaces.sty
-Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
-))
-\tcb@titlebox=\box136
-\tcb@upperbox=\box137
-\tcb@lowerbox=\box138
-\tcb@phantombox=\box139
-\c@tcbbreakpart=\count542
-\c@tcblayer=\count543
-\c@tcolorbox@number=\count544
-\l__tcobox_tmpa_box=\box140
-\l__tcobox_tmpa_dim=\dimen356
-\tcb@temp=\box141
-\tcb@temp=\box142
-\tcb@temp=\box143
-\tcb@temp=\box144
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbraster.code.tex
-Library (tcolorbox): 'tcbraster.code.tex' version '6.10.0'
-\c@tcbrastercolumn=\count545
-\c@tcbrasterrow=\count546
-\c@tcbrasternum=\count547
-\c@tcbraster=\count548
-) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskins.code.tex
-Library (tcolorbox): 'tcbskins.code.tex' version '6.10.0'
-(c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tikzfill/tikzfill.image.sty
-Package: tikzfill.image 2026/04/23 v1.2.0 Image filling library for TikZ
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tikzfill/tikzlibraryfill.image.code.tex
-File: tikzlibraryfill.image.code.tex 2026/04/23 v1.2.0 Image filling library
-\l__tikzfill_tmpa_dim=\dimen357
-\l__tikzfill_tmpb_dim=\dimen358
-\l__tikzfill_img_box=\box145
-)) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbskinsjigsaw.code.tex
-Library (tcolorbox): 'tcbskinsjigsaw.code.tex' version '6.10.0'
-)) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbbreakable.code.tex
-Library (tcolorbox): 'tcbbreakable.code.tex' version '6.10.0'
-(c:/ProgramData/TinyTeX/texmf-dist/tex/latex/pdfcol/pdfcol.sty
-Package: pdfcol 2026-06-20 v1.8 Handle new color stacks for pdfTeX (HO)
-)
-Package pdfcol Info: New color stack `tcb@breakable' = 1 on input line 23.
-\tcb@testbox=\box146
-\tcb@totalupperbox=\box147
-\tcb@totallowerbox=\box148
-) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbhooks.code.tex
-Library (tcolorbox): 'tcbhooks.code.tex' version '6.10.0'
-) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbtheorems.code.tex
-Library (tcolorbox): 'tcbtheorems.code.tex' version '6.10.0'
-) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbfitting.code.tex
-Library (tcolorbox): 'tcbfitting.code.tex' version '6.10.0'
-\tcbfitdim=\dimen359
-\tcb@lowerfitdim=\dimen360
-\tcb@upperfitdim=\dimen361
-\tcb@cur@hbadness=\count549
-)) (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbminted.code.tex
-Library (tcolorbox): 'tcbminted.code.tex' version '6.10.0'
-(c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcblistingscore.code.tex
-Library (tcolorbox): 'tcblistingscore.code.tex' version '6.10.0'
-(c:/ProgramData/TinyTeX/texmf-dist/tex/latex/tcolorbox/tcbprocessing.code.tex
-Library (tcolorbox): 'tcbprocessing.code.tex' version '6.10.0'
-)
-\c@tcblisting=\count550
-))) (./config/headings.tex) (./config/line-for-hand-writing.tex) (./config/lists.tex) (./config/page-setup.tex) (./config/refs.tex) (./config/tocs.tex)
-\@quotelevel=\count551
-\@quotereset=\count552
+)) (./config/code-cell.tex (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2025/11/14 1.11b listings language file
+)) (./config/headings.tex) (./config/line-for-hand-writing.tex) (./config/lists.tex) (./config/page-setup.tex) (./config/refs.tex) (./config/tocs.tex)
+\@quotelevel=\count542
+\@quotereset=\count543
 LaTeX Font Info:    Trying to load font information for T5+ptm on input line 14.
  (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/vntex/t5ptm.fd
 File: t5utm.fd 2005/08/24 Fontinst v1.929 font definitions for T5/ptm.
@@ -1459,7 +1392,7 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count553
+\c@lstlisting=\count544
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: float package is loaded.
 Package caption Info: hyperref package is loaded.
@@ -1494,77 +1427,59 @@ Package hyperref Info: Link coloring OFF on input line 14.
 <images/logo.png, id=195, 96.36pt x 96.36pt>
 File: images/logo.png Graphic file (type png)
 <use images/logo.png>
-Package pdftex.def Info: images/logo.png  used on input line 16.
-(pdftex.def)             Requested size: 85.35826pt x 85.35724pt.
+Package pdftex.def Info: images/logo.png  used on input line 23.
+(pdftex.def)             Requested size: 68.28644pt x 68.28667pt.
+LaTeX Font Info:    Calculating math sizes for size <13> on input line 42.
+LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 42.
+ (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
+File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 42.
+ (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/omlztmcm.fd
+File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 42.
+ (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/omsztmcm.fd
+File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 42.
+ (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/omxztmcm.fd
+File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
+)
+LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 42.
+ (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ptm.fd
+File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
+)
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 42.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9.62007> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 42.
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.80008> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 42.
  [1
 
 
-{c:/ProgramData/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/vntex/t5.enc} <./images/logo.png>]
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.41 \end{titlepage}
-                     [2])
+{c:/ProgramData/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/vntex/t5.enc} <./images/logo.png>])
 \openout2 = `minor-pages/inner-cover.aux'.
 
  (./minor-pages/inner-cover.tex
 File: images/logo.png Graphic file (type png)
 <use images/logo.png>
-Package pdftex.def Info: images/logo.png  used on input line 16.
-(pdftex.def)             Requested size: 85.35826pt x 85.35724pt.
-LaTeX Font Info:    Calculating math sizes for size <14> on input line 33.
-LaTeX Font Info:    Trying to load font information for OT1+ztmcm on input line 33.
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ztmcm.fd
-File: ot1ztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OT1/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OML+ztmcm on input line 33.
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/omlztmcm.fd
-File: omlztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OML/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMS+ztmcm on input line 33.
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/omsztmcm.fd
-File: omsztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMS/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OMX+ztmcm on input line 33.
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/omxztmcm.fd
-File: omxztmcm.fd 2000/01/03 Fontinst v1.801 font definitions for OMX/ztmcm.
-)
-LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 33.
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/ot1ptm.fd
-File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
-)
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <14> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 33.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10.36008> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 33.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <8.40009> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 33.
+Package pdftex.def Info: images/logo.png  used on input line 23.
+(pdftex.def)             Requested size: 68.28644pt x 68.28667pt.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.42     \end{center}
-                      [1
+l.54 \end{titlepage}
+                     [1
 
 
 
-]
-pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.44 \end{titlepage}
-                     [2])
+])
 \openout2 = `minor-pages/remark.aux'.
 
- (./minor-pages/remark.tex
-LaTeX Font Info:    Calculating math sizes for size <13> on input line 13.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 13.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9.62007> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 13.
-LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.80008> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 13.
-)
+ (./minor-pages/remark.tex)
 pdfTeX warning (ext4): destination with the same identifier (name{page.}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
@@ -1768,22 +1683,11 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 83.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 83.
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2025/11/14 1.11b listings language file
-)
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 106.
-
-Overfull \hbox (2.21301pt too wide) in paragraph at lines 110--111
-[][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (72.41373pt too wide) in paragraph at lines 113--114
-[][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-[12]
-Overfull \hbox (6.83046pt too wide) in paragraph at lines 127--128
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 110.
+LaTeX Font Info:    Font shape `T5/lmtt/bx/n' in size <8> not available
+(Font)              Font shape `T5/lmtt/b/n' tried instead on input line 111.
+ [12]
+Overfull \hbox (6.83046pt too wide) in paragraph at lines 133--134
 []\T5/ptm/b/n/13 Chu©n hâa Im-a-geNet: \T5/ptm/m/n/13 Chu©n hâa k¶nh m u £nh theo $\OML/ztmcm/m/it/13 ^^V \OT1/ztmcm/m/n/13 = [0\OML/ztmcm/m/it/13 :\OT1/ztmcm/m/n/13 485\OML/ztmcm/m/it/13 ; \OT1/ztmcm/m/n/13 0\OML/ztmcm/m/it/13 :\OT1/ztmcm/m/n/13 456\OML/ztmcm/m/it/13 ; \OT1/ztmcm/m/n/13 0\OML/ztmcm/m/it/13 :\OT1/ztmcm/m/n/13 406]$
  []
 
@@ -1817,50 +1721,24 @@ Overfull \hbox (33.94714pt too wide) in paragraph at lines 116--142
  [][] 
  []
 
-[15]
-Overfull \hbox (41.21341pt too wide) in paragraph at lines 149--150
-[][][][] 
- []
-
-
-Overfull \hbox (41.21341pt too wide) in paragraph at lines 151--152
-[][][][] 
- []
-
-
-Overfull \hbox (49.01349pt too wide) in paragraph at lines 152--153
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (2.21301pt too wide) in paragraph at lines 153--154
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (41.21341pt too wide) in paragraph at lines 157--158
-[][][][] 
- []
-
+[15] [16]
 <images/part-02/chap-03/sec-02/single_prediction_10043.png, id=479, 1581.9903pt x 359.1819pt>
 File: images/part-02/chap-03/sec-02/single_prediction_10043.png Graphic file (type png)
 <use images/part-02/chap-03/sec-02/single_prediction_10043.png>
-Package pdftex.def Info: images/part-02/chap-03/sec-02/single_prediction_10043.png  used on input line 164.
+Package pdftex.def Info: images/part-02/chap-03/sec-02/single_prediction_10043.png  used on input line 171.
 (pdftex.def)             Requested size: 426.79135pt x 96.8982pt.
-[16 <./images/part-02/chap-03/sec-02/single_prediction_10043.png>]
-<images/part-02/chap-03/sec-02/batch_predictions_vis.png, id=496, 1438.173pt x 3594.7098pt>
+ [17
+
+ <./images/part-02/chap-03/sec-02/single_prediction_10043.png>]
+<images/part-02/chap-03/sec-02/batch_predictions_vis.png, id=496, 1997.4625pt x 1995.455pt>
 File: images/part-02/chap-03/sec-02/batch_predictions_vis.png Graphic file (type png)
 <use images/part-02/chap-03/sec-02/batch_predictions_vis.png>
-Package pdftex.def Info: images/part-02/chap-03/sec-02/batch_predictions_vis.png  used on input line 173.
-(pdftex.def)             Requested size: 405.45047pt x 1013.42311pt.
- [17]
-Overfull \vbox (371.24883pt too high) has occurred while \output is active []
+Package pdftex.def Info: images/part-02/chap-03/sec-02/batch_predictions_vis.png  used on input line 181.
+(pdftex.def)             Requested size: 384.48987pt x 384.10344pt.
+ [18
 
-
-Overfull \vbox (371.24883pt too high) has occurred while \output is active []
-
- [18 <./images/part-02/chap-03/sec-02/batch_predictions_vis.png>]
-Overfull \hbox (35.25557pt too wide) in paragraph at lines 188--189
+ <./images/part-02/chap-03/sec-02/batch_predictions_vis.png (PNG copy)>]
+Overfull \hbox (35.25557pt too wide) in paragraph at lines 196--197
 []\T5/ptm/b/n/13 Nhâm thuëc t½nh ^^_¤t F1-Score r§t cao (74% -- 92%): \T5/ptm/m/n/13 Bao gçm \T5/ptm/m/it/13 lack_of_integration
  []
 
@@ -1890,7 +1768,7 @@ Overfull \hbox (8.60191pt too wide) in paragraph at lines 3--3
 
 
 ]
-runsystem(latexminted cleantemp  --timestamp 20261116124906 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
+runsystem(latexminted cleantemp  --timestamp 20261116180937 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
 
  (./main.aux (./minor-pages/outer-cover.aux) (./minor-pages/inner-cover.aux) (./minor-pages/remark.aux) (./minor-pages/thanks.aux) (./minor-pages/tocs.aux) (./minor-pages/lstfigs.aux) (./minor-pages/lsttabs.aux) (./minor-pages/acronym.aux) (./minor-pages/abstract-en.aux) (./minor-pages/abstract-vi.aux) (./part-01/part-01.aux) (./part-02/part-02.aux) (./part-03/part-03.aux) (./minor-pages/refs.aux))
  ***********
@@ -1904,18 +1782,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45763 strings out of 468958
- 938444 string characters out of 5452119
- 2027899 words of memory out of 5000000
- 73971 multiletter control sequences out of 15000+600000
- 724710 words of font info for 168 fonts, out of 8000000 for 9000
+ 41195 strings out of 468958
+ 807141 string characters out of 5452119
+ 1948337 words of memory out of 5000000
+ 69457 multiletter control sequences out of 15000+600000
+ 718226 words of font info for 147 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  107i,14n,120p,1550b,1803s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmb8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmbi8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmr8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmri8v.pfb>
-Output written on main.pdf (35 pages, 2831762 bytes).
+<c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/latxfont/lcircle1.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt8.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmb8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmbi8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmr8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmri8v.pfb>
+Output written on main.pdf (33 pages, 1402639 bytes).
 PDF statistics:
- 640 PDF objects out of 1000 (max. 8388607)
- 555 compressed objects within 6 object streams
+ 643 PDF objects out of 1000 (max. 8388607)
+ 557 compressed objects within 6 object streams
  162 named destinations out of 1000 (max. 500000)
  404 words of extra memory for PDF output out of 10000 (max. 10000000)
 

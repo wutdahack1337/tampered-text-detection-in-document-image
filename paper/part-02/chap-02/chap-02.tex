@@ -103,7 +103,11 @@ Số liệu trên cho thấy sự mất cân bằng dữ liệu (class imbalance
 
 \subsubsection{2.2. Thuật toán phân tích nhãn và Lọc cụm từ phủ định}
 \indent\indent Trong các tập dữ liệu chú thích văn bản, nhiều mẫu xuất hiện các câu mô tả ngữ cảnh phủ định (ví dụ: \textit{``no obvious edge artifacts'', ``not cause inconsistent font'', ``should be deleted''}). Để tránh gán nhầm nhãn dương tính ($1$), thuật toán trích xuất vector nhãn sử dụng danh sách các cụm từ loại trừ:
-\begin{lstlisting}[language=Python, frame=single, caption={Thuật toán trích xuất vector nhãn 6 chiều}]
+
+\vspace{0.2cm}
+\noindent
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption={Thuật toán trích xuất vector nhãn 6 chiều}]
 def extract_label_vector(content):
     vec = []
     for k in LABELS:
@@ -118,6 +122,8 @@ def extract_label_vector(content):
             vec.append(0)
     return vec
 \end{lstlisting}
+\end{minipage}
+\vspace{0.2cm}
 
 \subsubsection{2.3. Pipeline tăng cường dữ liệu đồng bộ ảnh -- mặt nạ}
 \indent\indent Do đặc thù bài toán phân đoạn pixel, các phép biến đổi hình học phải được áp dụng đồng bộ cho cả ảnh đầu vào và mặt nạ ground-truth:

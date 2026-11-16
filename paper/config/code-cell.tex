@@ -1,15 +1,50 @@
-\usepackage[many]{tcolorbox}
-\tcbuselibrary{minted} 
+% Cấu hình hiển thị Code Listings hiện đại, chuyên nghiệp
+\definecolor{codebg}{RGB}{248, 250, 252}        % Nền xám xanh cực nhẹ
+\definecolor{codeborder}{RGB}{222, 226, 230}    % Viền xám nhạt tinh tế
+\definecolor{codekeyword}{RGB}{9, 88, 217}      % Xanh dương chuẩn IDE cho từ khóa
+\definecolor{codestring}{RGB}{186, 33, 33}      % Đỏ sẫm cho chuỗi ký tự
+\definecolor{codecomment}{RGB}{108, 117, 125}   % Xám ghi cho chú thích
+\definecolor{codenumbers}{RGB}{173, 181, 189}   % Xám nhạt cho số thứ tự dòng
+\definecolor{outputbg}{RGB}{243, 244, 246}      % Nền cho terminal / output kết quả
 
-\newtcblisting{pythonminted}{
-  listing engine=minted,
-  colback=black!5,
-  colframe=blue!75!black,
-  listing only,
-  minted language=python,
-  minted options={fontsize=\small, breaklines, escapeinside=||},
-  left=5pt, right=5pt, top=5pt, bottom=5pt,
-  width=\linewidth,
-  boxrule=0.5pt,
-  arc=4pt
+\lstset{
+    backgroundcolor=\color{codebg},
+    frame=single,
+    rulecolor=\color{codeborder},
+    frameround=tttt,
+    framesep=7pt,
+    basicstyle=\ttfamily\footnotesize,
+    columns=flexible,            % Tránh hiện tượng giãn khoảng cách ký tự bất thường
+    keepspaces=true,
+    breaklines=true,
+    breakatwhitespace=true,
+    showstringspaces=false,
+    tabsize=4,
+    language=Python,
+    keywordstyle=\color{codekeyword}\bfseries,
+    stringstyle=\color{codestring},
+    commentstyle=\color{codecomment}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{codenumbers},
+    numbersep=8pt,
+    xleftmargin=12pt,
+    xrightmargin=4pt,
+    captionpos=t
+}
+
+% Style chuyên biệt cho Output Console / Log dự đoán (không hiển thị số dòng)
+\lstdefinestyle{consoleoutput}{
+    backgroundcolor=\color{outputbg},
+    frame=single,
+    rulecolor=\color{codeborder},
+    frameround=tttt,
+    framesep=8pt,
+    basicstyle=\ttfamily\footnotesize,
+    columns=flexible,
+    keepspaces=true,
+    breaklines=true,
+    numbers=none,
+    xleftmargin=4pt,
+    xrightmargin=4pt,
+    captionpos=t
 }

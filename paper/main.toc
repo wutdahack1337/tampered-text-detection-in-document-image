@@ -37,8 +37,8 @@
 \contentsline {subsubsection}{1.2. Chiến lược huấn luyện và Tối ưu hóa siêu tham số}{14}{section*.20}%
 \contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Kết quả thực nghiệm và Đánh giá}{15}{subsection.7.3.2}%
 \contentsline {subsubsection}{2.1. Kết quả định lượng trên tập kiểm thử Minh-TFR TestSet}{15}{section*.21}%
-\contentsline {subsubsection}{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}{16}{section*.25}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Thảo luận và Đánh giá chuyên sâu}{19}{subsection.7.3.3}%
+\contentsline {subsubsection}{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}{17}{section*.25}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Thảo luận và Đánh giá chuyên sâu}{18}{subsection.7.3.3}%
 \contentsline {chapter}{\numberline {}III. PHẦN KẾT LUẬN}{20}{chapter.8}%
 \contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Kết quả đạt được}{20}{subsection.8.0.1}%
 \contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Hạn chế và Hướng phát triển}{20}{subsection.8.0.2}%

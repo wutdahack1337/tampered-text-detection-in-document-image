@@ -1,44 +1,54 @@
 \begin{titlepage}
+    \thispagestyle{empty}
     \begin{tikzpicture}[remember picture, overlay]
-        % Viền ngoài màu đen với các khoảng cách mới
-        \draw[line width=4pt, color=black, rounded corners=0pt]
-            ($(current page.north west) + (3cm,-3cm)$)   % Điều chỉnh từ góc trên bên trái
+        % Viền ngoài màu đen
+        \draw[line width=3.5pt, color=black]
+            ($(current page.north west) + (3.0cm,-2.5cm)$)
             rectangle
-            ($(current page.south east) + (-2cm,3cm)$);    % Điều chỉnh từ góc dưới bên phải
+            ($(current page.south east) + (-2.0cm,2.5cm)$);
+        % Viền trong mảnh
+        \draw[line width=1.0pt, color=black]
+            ($(current page.north west) + (3.15cm,-2.65cm)$)
+            rectangle
+            ($(current page.south east) + (-2.15cm,2.65cm)$);
     \end{tikzpicture}
 
     \begin{center}
-        \fontsize{14}{16}\selectfont{
-        \vspace{-0.3cm}
+        \vspace*{-1.0cm}
+        {\fontsize{13}{16}\selectfont
         \textbf{ĐẠI HỌC CẦN THƠ}\\
-        \textbf{TRƯỜNG CÔNG NGHỆ THÔNG TIN \& TRUYỀN THÔNG}}\\[1.2cm]
+        \textbf{TRƯỜNG CÔNG NGHỆ THÔNG TIN \& TRUYỀN THÔNG}\par}
 
-        \includegraphics[width=3cm]{images/logo.png}\\[1.5cm]
+        \vspace{0.6cm}
+        \includegraphics[width=2.4cm]{images/logo.png}
 
-        \fontsize{15}{18}\selectfont{
-        \textbf{LUẬN VĂN TỐT NGHIỆP ĐẠI HỌC}\\[0.2cm]
-        \textbf{NGÀNH KHOA HỌC MÁY TÍNH}\\}
-        \vspace{1.5cm}
+        \vspace{0.6cm}
+        {\fontsize{14}{17}\selectfont
+        \textbf{LUẬN VĂN TỐT NGHIỆP ĐẠI HỌC}\\[0.15cm]
+        \textbf{NGÀNH KHOA HỌC MÁY TÍNH}\par}
 
-        \fontsize{15}{20}\selectfont{
-        \textbf{Đề tài}\\[0.3cm]
+        \vspace{0.7cm}
+        {\fontsize{13}{15}\selectfont \textbf{Đề tài:}\par}
+        \vspace{0.2cm}
+        {\fontsize{14}{19}\selectfont
         \textbf{PHÁT HIỆN VÀ PHÂN LOẠI ĐA LỚP CHỮ BỊ LÀM GIẢ TRONG ẢNH TÀI LIỆU}\\
         \textbf{SỬ DỤNG MÔ HÌNH HỌC SÂU ĐA NHIỆM EFFICIENTNET-B0}\\[0.2cm] 
+        \fontsize{10.5}{14}\selectfont
         \textbf{(LIGHTWEIGHT MULTI-TASK TAMPERED TEXT DETECTION IN DOCUMENT IMAGES}\\
-        \textbf{USING EFFICIENTNET-B0 AND FREQUENCY DCT FEATURES)}}
-        \vspace{2.0cm}
+        \textbf{USING EFFICIENTNET-B0 AND FREQUENCY DCT FEATURES)}\par}
 
-        \fontsize{14}{18}\selectfont{
-        \setlength{\tabcolsep}{1.8cm} 
-        \begin{tabular}{@{}l c@{}}
+        \vspace{1.8cm}
+        {\fontsize{13}{18}\selectfont
+        \setlength{\tabcolsep}{1.2cm} 
+        \begin{tabular}{cc}
             \textbf{Giảng viên hướng dẫn} & \textbf{Sinh viên thực hiện} \\
-            \textbf{TS. Mã Trường Thành} & \textbf{Trần Quang Minh} \\
-            & \textbf{Mã số: B2304069} \\
-            & \textbf{Khóa: 49} \\
-        \end{tabular}}
-        \vspace{3.0cm}
-    
-        \fontsize{14}{18}\selectfont{\textbf{\textit{Cần Thơ, 11/2026}}}
-    \end{center}
+            \textbf{TS. Mã Trường Thành}  & \textbf{Trần Quang Minh} \\
+                                          & \textbf{Mã số: B2304069} \\
+                                          & \textbf{Khóa: 49} \\
+        \end{tabular}\par}
 
+        \vspace{3.2cm}
+        {\fontsize{13}{16}\selectfont
+        \textbf{\textit{Cần Thơ, 11/2026}}\par}
+    \end{center}
 \end{titlepage}

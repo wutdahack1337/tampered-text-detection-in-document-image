@@ -141,11 +141,16 @@
     \end{tabular}
 \end{table}
 
+\clearpage
 \subsubsection{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}
 \indent\indent Trong môi trường triển khai thực tế, mô hình cung cấp giao diện suy luận đồng thời \texttt{model.predict(image, threshold=0.5, top\_k=3)} trả về mặt nạ phân đoạn nhị phân, bản đồ xác suất làm giả (Probability Heatmap) và danh sách top 3 nhãn vi mô có độ tin cậy cao nhất.
 
 Dưới đây là kết quả suy luận thực tế từ checkpoint trên một ảnh tài liệu kiểm thử mẫu (\texttt{10043.jpg}):
-\begin{lstlisting}[language=Python, frame=single, caption={Kết quả suy luận thực tế trên ảnh tài liệu 10043.jpg}]
+
+\vspace{0.2cm}
+\noindent
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[style=consoleoutput, caption={Kết quả suy luận thực tế trên ảnh tài liệu 10043.jpg}]
 ============================================================
 KET QUA DU DOAN: 10043.jpg
 ============================================================
@@ -156,6 +161,8 @@ KET QUA DU DOAN: 10043.jpg
     3. inconsistent_alignment : 48.38%
 ============================================================
 \end{lstlisting}
+\end{minipage}
+\vspace{0.2cm}
 
 Hình \ref{fig:single_infer} minh họa trực quan quá trình suy luận trên mẫu tài liệu này với 4 khung nhìn: ảnh gốc đầu vào, bản đồ nhiệt xác suất làm giả (inferno heatmap), mặt nạ nhị phân dự đoán tại ngưỡng $0.5$, và lớp phủ (overlay) khoanh vùng văn bản nghi vấn.
 
@@ -166,11 +173,12 @@ Hình \ref{fig:single_infer} minh họa trực quan quá trình suy luận trên
     \label{fig:single_infer}
 \end{figure}
 
+\clearpage
 Bên cạnh đó, Hình \ref{fig:batch_vis} minh họa kết quả dự đoán trên một tập các mẫu ảnh kiểm thử chuẩn ngẫu nhiên trong \textbf{Minh-TFR TestSet}, đối sánh trực tiếp giữa Ground Truth (mặt nạ và nhãn thực tế) với kết quả dự đoán của mô hình LightweightDTD:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\textwidth]{images/part-02/chap-03/sec-02/batch_predictions_vis.png}
+    \includegraphics[width=0.92\textwidth, height=13.5cm, keepaspectratio]{images/part-02/chap-03/sec-02/batch_predictions_vis.png}
     \caption{Kết quả kiểm thử trên các mẫu tài liệu độc lập: (1) Ảnh gốc, (2) Ground Truth Mask \& Classes, (3) Predicted Mask, (4) Top-3 Classes kèm độ tin cậy}
     \label{fig:batch_vis}
 \end{figure}
