@@ -11,7 +11,7 @@
 \contentsline {subsection}{\numberline {\hspace {-0.5cm}}5. Phương pháp nghiên cứu}{3}{subsection.6.0.5}%
 \contentsline {subsection}{\numberline {\hspace {-0.5cm}}6. Ý nghĩa khoa học, thực tiễn và Bố cục luận văn}{4}{subsection.6.0.6}%
 \contentsline {chapter}{\numberline {}II. PHẦN NỘI DUNG}{5}{chapter.7}%
-\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 1. MÔ TẢ BÀI TOÁN}{5}{section.7.1}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 1. MÔ TẢ BÀI TOÁN VÀ CƠ SỞ LÝ THUYẾT}{5}{section.7.1}%
 \contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Mô tả chi tiết bài toán}{5}{subsection.7.1.1}%
 \contentsline {subsubsection}{1.1. Bài toán phát hiện chữ bị làm giả trong tài liệu}{5}{section*.3}%
 \contentsline {subsubsection}{1.2. Hệ thống nhãn phân loại pháp y vi mô}{5}{section*.4}%

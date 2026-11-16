@@ -114,7 +114,16 @@ paper/
 ├── config/                # Cấu hình font chữ, lề trang, tiêu đề, TikZ
 ├── images/                # Logo trường và các hình ảnh biểu đồ minh họa
 ├── minor-pages/           # Bìa ngoài, bìa trong, nhận xét, lời cảm ơn, mục lục, từ viết tắt
-├── part-01/               # Phần I: Đặt vấn đề, mục tiêu, phương pháp, ý nghĩa
-├── part-02/               # Phần II: Cơ sở lý thuyết, Thiết kế mô hình, Thực nghiệm & Đánh giá
-└── part-03/               # Phần III: Kết luận và hướng nghiên cứu mở rộng
+├── part-01/
+│   └── part-01.tex        # Toàn bộ Phần I (Đặt vấn đề, nghiên cứu liên quan, mục tiêu, bố cục)
+├── part-02/
+│   ├── part-02.tex        # Điều phối các chương trong Phần II
+│   ├── chap-01/
+│   │   └── chap-01.tex    # Chương 1: Mô tả bài toán và cơ sở lý thuyết
+│   ├── chap-02/
+│   │   └── chap-02.tex    # Chương 2: Thiết kế và cài đặt giải pháp LightweightDTD
+│   └── chap-03/
+│       └── chap-03.tex    # Chương 3: Thực nghiệm, đánh giá định lượng và trực quan hóa
+└── part-03/
+    └── part-03.tex        # Toàn bộ Phần III (Kết luận và hướng phát triển)
 ```

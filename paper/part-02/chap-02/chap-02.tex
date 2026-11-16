@@ -1,4 +1,100 @@
 \section{CHƯƠNG 2. THIẾT KẾ VÀ CÀI ĐẶT GIẢI PHÁP}
 \vspace{0.5cm}
-\input{part-02/chap-02/sec-01/sec-01}
-\input{part-02/chap-02/sec-02/sec-02}
+
+\subsection{1. Thiết kế kiến trúc mô hình LightweightDTD}
+
+\subsubsection{1.1. Tổng quan kiến trúc hai nhánh Không gian -- Tần số}
+\indent\indent Kiến trúc mô hình đề xuất \textbf{LightweightDTD} được minh họa tổng thể trong hệ thống bao gồm hai nhánh trích xuất đặc trưng song song:
+\begin{enumerate}
+    \item \textbf{Nhánh không gian (Spatial Feature Extraction):} Sử dụng các khối MBConv của backbone EfficientNet-B0 (được khởi tạo với trọng số tiền huấn luyện ImageNet) để trích xuất biểu diễn ngữ cảnh qua 4 mức độ phân giải giảm dần:
+    \begin{itemize}[label={--}, itemsep=1pt]
+        \item $f_0 \in \mathbb{R}^{B \times 24 \times \frac{H}{4} \times \frac{W}{4}}$ (Đặc trưng biên viền cục bộ độ phân giải cao).
+        \item $f_1 \in \mathbb{R}^{B \times 40 \times \frac{H}{8} \times \frac{W}{8}}$ (Đặc trưng hình học nét chữ).
+        \item $f_2 \in \mathbb{R}^{B \times 112 \times \frac{H}{16} \times \frac{W}{16}}$ (Đặc trưng cụm văn bản).
+        \item $f_3 \in \mathbb{R}^{B \times 1280 \times \frac{H}{32} \times \frac{W}{32}}$ (Đặc trưng ngữ nghĩa toàn cục).
+    \end{itemize}
+    \item \textbf{Nhánh tần số (Frequency Analysis Branch):} Ảnh RGB được chuyển đổi sang ảnh xám và khôi phục dải giá trị $[0, 1]$. Mô-đun \textbf{BlockDCT} trích xuất 64 hệ số phổ trực chuẩn theo lưới $8 \times 8$, cho ra tensor kích thước $[B, 64, \frac{H}{8}, \frac{W}{8}]$. Tiếp đó, khối tích chập gọn nhẹ \texttt{LightweightFrequencyHead} chiếu 64 kênh tần số về 32 kênh đặc trưng tần số tinh gọn.
+\end{enumerate}
+
+\subsubsection{1.2. Cơ chế hợp nhất tần số tại độ phân giải $1/8$}
+\indent\indent Do khối nén DCT tự nhiên có độ phân giải không gian bằng $1/8$ ảnh gốc, tầng đặc trưng không gian $f_1$ ($40$ kênh) và đặc trưng tần số ($32$ kênh) được ghép kênh trực tiếp (concatenation) thành tensor 72 kênh:
+\begin{equation}
+\mathbf{F}_{\text{fused\_raw}} = [f_1 \,\|\, \mathbf{F}_{\text{freq}}] \in \mathbb{R}^{B \times 72 \times \frac{H}{8} \times \frac{W}{8}}
+\end{equation}
+Tensor 72 kênh này được đưa qua khối chú ý \textbf{scSE(72)} để tự động đánh giá mức độ tương quan giữa bất thường miền tần số và vết cắt biên không gian, sau đó chiếu qua lớp tích chập $1 \times 1$ có chuẩn hóa BatchNorm và kích hoạt ReLU để đưa về 40 kênh chuẩn:
+\begin{equation}
+f_1^* = \text{ReLU}\left(\text{BN}\left(\text{Conv}_{1 \times 1}\left(\text{scSE}(\mathbf{F}_{\text{fused\_raw}})\right)\right)\right) \in \mathbb{R}^{B \times 40 \times \frac{H}{8} \times \frac{W}{8}}
+\end{equation}
+
+\subsubsection{1.3. Bộ giải mã lặp đa góc nhìn LiteMID (Lightweight Multi-view Iterative Decoder)}
+\indent\indent Để tổng hợp đặc trưng qua các tầng mà không làm bùng nổ tham số, bộ giải mã \textbf{LiteMID} được thiết kế với độ rộng kênh thống nhất $W_{\text{dec}} = 48$:
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item Các tầng đặc trưng $(f_0, f_1^*, f_2, f_3)$ với số kênh ban đầu $(24, 40, 112, 1280)$ được chiếu về cùng độ rộng 48 qua các khối $1 \times 1$ Conv + BatchNorm + ReLU.
+    \item \textbf{Góc nhìn 1 (View 1 -- Liền kề tỉ lệ):} Giải mã giữa các tỉ lệ lân cận qua các khối tích chập tách biệt chiều sâu \texttt{DepthwiseSeparableBlock}:
+    \begin{equation}
+    x_{00} = \text{DSB}([\text{proj}(f_0) \,\|\, \text{Up}(f_1^*)]), \quad x_{11} = \text{DSB}([\text{proj}(f_1^*) \,\|\, \text{Up}(f_2)]), \quad x_{22} = \text{DSB}([\text{proj}(f_2) \,\|\, \text{Up}(f_3)])
+    \end{equation}
+    \item \textbf{Góc nhìn 2 (View 2 -- Tích hợp skip-connection):}
+    \begin{equation}
+    x_{01} = \text{DSB}([\text{proj}(f_0) \,\|\, x_{00} \,\|\, \text{Up}(x_{11})]), \quad x_{12} = \text{DSB}([\text{proj}(f_1^*) \,\|\, x_{11} \,\|\, \text{Up}(x_{22})])
+    \end{equation}
+    \item \textbf{Góc nhìn 3 (View 3 -- Tích hợp lặp cuối cùng):}
+    \begin{equation}
+    x_{02} = \text{scSE}\left(\text{DSB}([\text{proj}(f_0) \,\|\, x_{00} \,\|\, x_{01} \,\|\, \text{Up}(x_{12})])\right) \in \mathbb{R}^{B \times 48 \times \frac{H}{4} \times \frac{W}{4}}
+    \end{equation}
+\end{itemize}
+
+\subsubsection{1.4. Đầu ra đa nhiệm và Hàm mất mát kết hợp MultiTaskTamperLoss}
+\indent\indent Từ tensor đặc trưng dùng chung $x_{02}$ của LiteMID, mô hình phân nhánh thành hai đầu ra:
+\begin{enumerate}
+    \item \textbf{Nhánh phân đoạn mặt nạ (Pixel Segmentation Head):} Đưa $x_{02}$ qua một khối \texttt{DepthwiseSeparableBlock}, tích chập $1 \times 1$ chiếu về 1 kênh và áp dụng phép nội suy song tuyến tính (Bilinear Upsample) $4 \times$ để khôi phục kích thước ảnh gốc $[B, 1, 224, 224]$.
+    \item \textbf{Nhánh phân loại thuộc tính vi mô (Multi-label Classification Head):} Đưa $x_{02}$ qua lớp Adaptive Average Pooling về kích thước $1 \times 1$, làm phẳng (flatten), qua lớp Dropout ($p=0.2$) và lớp tuyến tính $\text{Linear}(48, 6)$ để xuất ra vector logit 6 chiều đại diện cho 6 nhãn làm giả.
+\end{enumerate}
+
+Toàn bộ mô hình có chính xác \textbf{4,155,796 tham số}. Hàm mất mát đa nhiệm được tối ưu đồng thời:
+\begin{equation}
+\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{seg}} + \lambda_{\text{cls}} \mathcal{L}_{\text{cls}}
+\end{equation}
+trong đó:
+\begin{equation}
+\mathcal{L}_{\text{seg}} = \text{BCEWithLogits}(\hat{M}, M) + \lambda_{\text{dice}} \left( 1 - \frac{2 \sum \hat{M}_{\sigma} \cdot M + \epsilon}{\sum \hat{M}_{\sigma} + \sum M + \epsilon} \right)
+\end{equation}
+\begin{equation}
+\mathcal{L}_{\text{cls}} = \text{BCEWithLogits}(\hat{\mathbf{y}}, \mathbf{y})
+\end{equation}
+với trọng số thiết lập $\lambda_{\text{dice}} = 1.0$ và $\lambda_{\text{cls}} = 1.0$.
+
+\subsection{2. Xử lý tập dữ liệu và Cài đặt tiền xử lý}
+
+\subsubsection{2.1. Tập dữ liệu Minh-TFR và Phân bố mẫu}
+\indent\indent Tập dữ liệu thực nghiệm được xây dựng từ tập chuẩn TFR và DTD-lightweight, bao gồm các cặp ảnh tài liệu định dạng PNG/JPG, mặt nạ nhị phân ground-truth kích thước tương ứng và các nhãn thuộc tính làm giả được lưu trữ dưới định dạng JSON Lines (\texttt{.jsonl}):
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item \textbf{Tập dữ liệu huấn luyện (\texttt{train\_datas.jsonl}):} Chứa hàng ngàn mẫu tài liệu đa dạng như biên lai, hóa đơn điện tử, hợp đồng, chứng minh thư.
+    \item \textbf{Tập dữ liệu kiểm thử (\texttt{test\_datas.jsonl}):} Tập kiểm thử độc lập \textbf{Minh-TFR TestSet} gồm 500 batches đánh giá chuẩn dùng để đo lường năng lực tổng quát hóa.
+\end{itemize}
+
+\subsubsection{2.2. Thuật toán phân tích nhãn và Lọc cụm từ phủ định}
+\indent\indent Trong các tập dữ liệu chú thích văn bản, nhiều mẫu xuất hiện các câu mô tả ngữ cảnh phủ định (ví dụ: \textit{``no obvious edge artifacts'', ``not cause inconsistent font'', ``should be deleted''}). Để tránh gán nhầm nhãn dương tính ($1$), thuật toán trích xuất vector nhãn sử dụng danh sách các cụm từ loại trừ:
+\begin{lstlisting}[language=Python, frame=single, caption={Thuật toán trích xuất vector nhãn 6 chiều}]
+def extract_label_vector(content):
+    vec = []
+    for k in LABELS:
+        m = re.search(LABEL_PATTERNS[k], content, re.I)
+        if m:
+            text = m.group(1).lower()
+            if not any(neg in text for neg in NEGATIVE_PHRASES):
+                vec.append(1)
+            else:
+                vec.append(0)
+        else:
+            vec.append(0)
+    return vec
+\end{lstlisting}
+
+\subsubsection{2.3. Pipeline tăng cường dữ liệu đồng bộ ảnh -- mặt nạ}
+\indent\indent Do đặc thù bài toán phân đoạn pixel, các phép biến đổi hình học phải được áp dụng đồng bộ cho cả ảnh đầu vào và mặt nạ ground-truth:
+\begin{enumerate}
+    \item \textbf{Biến đổi hình học đồng thời (Coupled Geometric Transforms):} Áp dụng phép lật ngang ngẫu nhiên (\texttt{RandomHorizontalFlip}, $p=0.5$) và xoay nhẹ (\texttt{RandomRotation} trong khoảng $\pm 10^\circ$) đồng thời cho cả ảnh và mặt nạ.
+    \item \textbf{Biến đổi quang học (Photometric Transforms):} Áp dụng \texttt{ColorJitter} (độ sáng, độ tương phản $\pm 0.1$) chỉ riêng cho ảnh đầu vào, giữ nguyên mặt nạ nhị phân.
+    \item \textbf{Chuẩn hóa ImageNet:} Chuẩn hóa kênh màu ảnh theo $\mu = [0.485, 0.456, 0.406]$ và $\sigma = [0.229, 0.224, 0.225]$. Lưu ý rằng khi đưa vào mô-đun BlockDCT, ảnh được chuyển đổi ngược về dạng xám trong dải $[0, 1]$ trước khi tính toán phổ tần số để đảm bảo tính ổn định số học.
+\end{enumerate}

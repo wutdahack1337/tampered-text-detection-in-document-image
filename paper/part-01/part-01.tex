@@ -1,8 +1,109 @@
 \chapter{I. PHẦN GIỚI THIỆU}
 
-\input{part-01/sec-01/sec-01}
-\input{part-01/sec-02/sec-02}
-\input{part-01/sec-03/sec-03}
-\input{part-01/sec-04/sec-04}
-\input{part-01/sec-05/sec-05}
-\input{part-01/sec-06/sec-06}
+\subsection{1. Đặt vấn đề}
+
+\indent\indent Trong kỷ nguyên số hóa, các văn bản tài liệu đóng vai trò pháp lý then chốt trong mọi giao dịch tài chính, hành chính và thương mại. Sự phát triển vượt bậc của các phần mềm xử lý ảnh số đã mở đường cho các hành vi gian lận tài liệu ngày càng tinh vi, từ chỉnh sửa số tiền trên hóa đơn, ngày tháng trong hợp đồng đến việc giả mạo con dấu và chữ ký. Bằng mắt thường, người thẩm định rất khó phân biệt được sự sai khác giữa vùng văn bản gốc và vùng văn bản đã bị can thiệp.\vspace{0.3cm}
+
+Đặc thù của hành vi làm giả chữ (tampered text) trong tài liệu là sự can thiệp cục bộ ở diện tích rất nhỏ nhưng để lại các dấu vết bất thường ở hai miền thông tin:\vspace{-0.1cm}
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Miền không gian (Spatial Domain):} Xuất hiện các vết cắt biên viền (edge artifacts), độ nhòe do nội suy, sự lệch chuẩn về độ nghiêng hoặc sai khác về phông chữ (inconsistent font).
+    \item \textbf{Miền tần số (Frequency Domain):} Các vùng chữ chỉnh sửa hoặc chèn ghép từ nguồn khác thường phá vỡ tính đồng nhất của mẫu nhiễu nén JPEG, tạo ra sự sai lệch đột ngột trong phổ tần số cao và hệ số lượng tử hóa.
+\end{itemize}
+
+Các phương pháp giám định truyền thống thường chỉ phân tích đơn lẻ miền không gian hoặc tần số và phụ thuộc nhiều vào ngưỡng thiết lập thủ công. Mặt khác, các nghiên cứu học sâu hiện đại thường sử dụng các mô hình cồng kềnh với hàng chục triệu tham số, hoặc chỉ giải quyết bài toán đơn lẻ (hoặc chỉ phân loại nhị phân thật/giả, hoặc chỉ phân đoạn mặt nạ). Việc thiếu một cơ chế đồng thời vừa định vị chính xác vị trí bị làm giả ở cấp độ pixel, vừa phân loại được bản chất hình thức giả mạo (như lệch font chữ, vết cắt viền, vân bề mặt lạ) là một rào cản lớn trong ứng dụng thực tiễn.\vspace{0.3cm}
+
+Trước những thách thức trên, đề tài này đề xuất kiến trúc học sâu đa nhiệm mang tên \textbf{LightweightDTD} (~4.15 triệu tham số). Bằng cách kết hợp backbone trích xuất đặc trưng không gian \textbf{EfficientNet-B0} với nhánh phân tích tần số khối \textbf{BlockDCT $8 \times 8$}, kết hợp mô-đun chú ý \textbf{scSE} và bộ giải mã lặp đa góc nhìn \textbf{LiteMID}, mô hình có thể đồng thời khoanh vùng chính xác điểm ảnh bị làm giả và phân loại đa nhãn 6 đặc trưng pháp y vi mô với độ chính xác cao và tốc độ suy luận vượt trội.
+
+\subsection{2. Những nghiên cứu liên quan}
+
+\indent\indent Các phương pháp pháp y ảnh số và giám định tài liệu đã trải qua hai giai đoạn phát triển chính: các kỹ thuật trích xuất đặc trưng thủ công truyền thống và các kiến trúc học sâu dựa trên mạng nơ-ron tích chập.
+
+Các nghiên cứu cổ điển tập trung phân tích dấu vết nén và tần số ảnh. Krawetz \cite{krawetz2007picture} giới thiệu phương pháp Phân tích mức sai số (ELA) để phát hiện sự sai lệch mức nén JPEG. Farid \cite{farid2009image} phân tích sự bất thường của hàm phản hồi quang học và dấu vết nội suy màu CFA. Tuy nhiên, các phương pháp này thường kém ổn định khi tài liệu bị nén lại nhiều lần.\vspace{0.3cm}
+
+Trong lĩnh vực học sâu cho tài liệu giả mạo, Wang và cộng sự \cite{dtd_dataset} đã giới thiệu tập dữ liệu chuẩn DTD cùng kiến trúc Multi-view Iterative Decoder (MID) để giải mã các đặc trưng biên viền và văn bản. Mặc dù đạt độ chính xác cao, các kiến trúc DTD gốc thường có kích thước rất lớn (hơn 25--50 triệu tham số), đòi hỏi chi phí tính toán cao và chỉ tập trung vào phân đoạn mặt nạ pixel.\vspace{0.3cm}
+
+Về kiến trúc trích xuất đặc trưng thị giác, Tan và Le \cite{tan2019efficientnet} đã chứng minh rằng mạng \textbf{EfficientNet-B0} với phương pháp co giãn phức hợp (Compound Scaling) có thể đạt độ chính xác tương đương các mạng lớn như ResNet-50 \cite{he2015deepresiduallearningimage} nhưng chỉ tiêu tốn 5.3 triệu tham số backbone. Đồng thời, Roy và cộng sự \cite{roy2018concurrent} đề xuất khối chú ý \textbf{scSE (Spatial and Channel Squeeze-and-Excitation)}, chứng minh việc hiệu chuẩn song song cả bản đồ chú ý không gian và kênh giúp mạng học sâu tăng cường mạnh mẽ các vùng biên cục bộ mà không làm tăng đáng kể số lượng tham số.\vspace{0.3cm}
+
+Về phân tích miền tần số, việc kết hợp biến đổi Cosin rời rạc theo khối (BlockDCT $8 \times 8$) trực tiếp vào mạng nơ-ron tích chập \cite{ahmed1974discrete} cho phép mạng nắm bắt các đặc trưng nén JPEG mà không cần giải mã lại toàn bộ ảnh.
+
+Từ những nghiên cứu trên, khoảng trống khoa học hiện hữu là sự thiếu vắng một kiến trúc hợp nhất đa nhiệm gọn nhẹ, vừa phân đoạn được mặt nạ vị trí giả mạo ở cấp độ pixel, vừa phân loại được bản chất các đặc trưng vi mô của hành vi làm giả.
+
+\subsection{3. Mục tiêu đề tài}
+
+\indent\indent Đề tài hướng tới việc xây dựng một hệ thống học sâu gọn nhẹ, hoạt động theo cơ chế đa nhiệm nhằm giải quyết trọn vẹn bài toán phát hiện và phân loại chữ bị làm giả trong ảnh tài liệu:\vspace{0.3cm}
+
+\textbf{Mục tiêu tổng quát:}
+Xây dựng và đánh giá mô hình học sâu đa nhiệm \textbf{LightweightDTD} (~4.15 triệu tham số) kết hợp EfficientNet-B0 và BlockDCT $8 \times 8$ nhằm định vị chính xác mặt nạ pixel giả mạo và phân loại 6 đặc trưng pháp y vi mô.
+
+\textbf{Mục tiêu cụ thể:}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Xử lý và chuẩn hóa dữ liệu:} Xây dựng tập dữ liệu chuẩn hóa Minh-TFR từ tập TFR/DTD-lightweight, lọc bỏ các văn bản phủ định sai lệch và xây dựng tập kiểm thử chuẩn 2,000 mẫu phân tầng.
+    \item \textbf{Thiết kế kiến trúc hai nhánh Không gian -- Tần số:} Kết hợp backbone EfficientNet-B0 trích xuất đặc trưng thị giác với nhánh biến đổi BlockDCT $8 \times 8$ trích xuất đặc trưng nén JPEG, hòa trộn qua mô-đun chú ý scSE.
+    \item \textbf{Cài đặt bộ giải mã LiteMID đa góc nhìn gọn nhẹ:} Xây dựng bộ giải mã lồng nhau LiteMID sử dụng các khối tích chập Depthwise Separable, tổng hợp đặc trưng đa tỉ lệ từ $H/4$ đến $H/32$.
+    \item \textbf{Huấn luyện đa nhiệm (Multi-task Learning):} Thiết lập hàm mất mát liên hợp $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{seg}} + \lambda \mathcal{L}_{\text{cls}}$ (kết hợp BCE + Dice Loss cho phân đoạn và BCE cho phân loại 6 nhãn).
+    \item \textbf{Đánh giá toàn diện:} Đo lường hiệu năng qua các chỉ số Pixel Accuracy, Precision, Recall, IoU, Macro Dice và Top-3 Class Hit Rate.
+\end{enumerate}
+
+\subsection{4. Đối tượng và phạm vi nghiên cứu}
+
+\indent\indent \textbf{Đối tượng nghiên cứu:}
+\begin{itemize}
+    \item Các dấu vết làm giả văn bản trên ảnh tài liệu (vết cắt dán viền, vân bề mặt, sai lệch phông chữ, sai lệch căn dòng, đứt gãy tính hòa nhập).
+    \item Kỹ thuật trích xuất đặc trưng không gian bằng mạng tích chập gọn nhẹ EfficientNet-B0.
+    \item Kỹ thuật phân tích đặc trưng miền tần số cục bộ bằng biến đổi BlockDCT $8 \times 8$.
+    \item Cơ chế học đa nhiệm (Multi-task Learning) kết hợp phân đoạn mặt nạ pixel và phân loại nhãn.
+\end{itemize}
+\vspace{0.3cm}
+
+\textbf{Phạm vi nghiên cứu:}
+\begin{itemize}
+    \item \textbf{Về dữ liệu:} Sử dụng tập dữ liệu Minh-TFR (được trích xuất từ DTD-lightweight và TFR) gồm các mẫu ảnh tài liệu kèm mặt nạ ground-truth và nhãn phân loại 6 đặc trưng.
+    \item \textbf{Về mô hình:} Tập trung vào kiến trúc học sâu LightweightDTD với tổng tham số dưới 5 triệu tham số, tối ưu hóa cho tốc độ suy luận nhanh trên GPU/CPU.
+    \item \textbf{Về thực nghiệm:} Cài đặt trên môi trường PyTorch, đánh giá trên tập kiểm thử độc lập 2,000 mẫu (\texttt{Minh-TFR TestSet}).
+\end{itemize}
+
+\subsection{5. Phương pháp nghiên cứu}
+
+\indent\indent Đề tài triển khai kết hợp các phương pháp nghiên cứu sau:\vspace{0.3cm}
+
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Phương pháp nghiên cứu lý thuyết:} Khảo sát toán học về phép biến đổi DCT-II trực chuẩn trên khối $8 \times 8$, nguyên lý Compound Scaling của EfficientNet, cơ chế chú ý scSE và cấu trúc giải mã lặp đa góc nhìn MID.
+    \item \textbf{Phương pháp tiền xử lý và kỹ thuật dữ liệu:} Lập trình thuật toán bóc tách nhãn từ văn bản chú thích, xử lý cụm từ phủ định, tái cân bằng tập dữ liệu và áp dụng pipeline tăng cường ảnh (Data Augmentation).
+    \item \textbf{Phương pháp thực nghiệm mô hình hóa:}
+    \begin{itemize}
+        \item Cài đặt mô-đun BlockDCT tính toán nhanh trên PyTorch tensor.
+        \item Xây dựng nhánh kết hợp không gian -- tần số tại độ phân giải $1/8$.
+        \item Thiết kế và cài đặt bộ giải mã lồng nhau LiteMID sử dụng Depthwise Separable Convolutions.
+        \item Xây dựng hàm mất mát kết hợp `MultiTaskTamperLoss` gồm BCE + Dice Loss cho nhánh phân đoạn và BCE cho nhánh phân loại.
+    \end{itemize}
+    \item \textbf{Phương pháp đánh giá thực nghiệm:} Đánh giá trên tập kiểm thử độc lập qua các chỉ số Pixel Accuracy, Precision, Recall, IoU, Macro Dice và Top-3 Class Hit Rate.
+\end{enumerate}
+
+\subsection{6. Ý nghĩa khoa học, thực tiễn và Bố cục luận văn}
+
+\indent\indent \textbf{Ý nghĩa khoa học:}
+\begin{itemize}
+    \item Đề xuất thành công mô hình học sâu đa nhiệm \textbf{LightweightDTD} kết hợp hiệu quả giữa đặc trưng không gian và miền tần số nén JPEG.
+    \item Chứng minh rằng một kiến trúc tinh gọn (~4.15 triệu tham số) hoàn toàn có thể đạt được độ chính xác phân đoạn 99.68\% và Top-3 Class Hit Rate 98.30\%, mở ra hướng tiếp cận tối ưu hóa cho các bài toán pháp y ảnh tài liệu.
+\end{itemize}
+\vspace{0.3cm}
+
+\textbf{Ý nghĩa thực tiễn:}
+\begin{itemize}
+    \item Cung cấp công cụ tự động hóa việc xác thực tính nguyên bản của hóa đơn, hợp đồng, chứng minh nhân dân trong các dịch vụ công, ngân hàng và doanh nghiệp.
+    \item Kích thước mô hình nhỏ và yêu cầu phần cứng thấp, thuận tiện tích hợp vào các thiết bị quét văn bản hoặc ứng dụng di động xử lý thời gian thực.
+\end{itemize}
+\vspace{0.3cm}
+
+\textbf{Bố cục luận văn:}
+Luận văn gồm 3 phần chính:
+\begin{itemize}
+    \item \textbf{Phần I: Phần giới thiệu:} Trình bày đặt vấn đề, các nghiên cứu liên quan, mục tiêu, đối tượng, phương pháp nghiên cứu và ý nghĩa của đề tài.
+    \item \textbf{Phần II: Phần nội dung:} Gồm 3 chương:
+    \begin{itemize}
+        \item \textit{Chương 1: Cơ sở lý thuyết:} Trình bày nguyên lý EfficientNet-B0, biến đổi BlockDCT, mô-đun chú ý scSE và các độ đo đánh giá.
+        \item \textit{Chương 2: Thiết kế và Cài đặt giải pháp:} Chi tiết kiến trúc LightweightDTD, nhánh không gian, nhánh tần số, bộ giải mã LiteMID, hàm mất mát đa nhiệm và tiền xử lý tập dữ liệu Minh-TFR.
+        \item \textit{Chương 3: Thực nghiệm và Đánh giá kết quả:} Trình bày kết quả huấn luyện, các chỉ số định lượng trên tập kiểm thử và trực quan hóa kết quả dự đoán.
+    \end{itemize}
+    \item \textbf{Phần III: Phần kết luận và Hướng phát triển:} Tổng kết các đóng góp, phân tích hạn chế và đề xuất hướng mở rộng trong tương lai.
+\end{itemize}

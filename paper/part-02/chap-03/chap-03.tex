@@ -3,6 +3,106 @@
 \setlength{\fboxrule}{1pt} 
 \setlength{\fboxsep}{0pt}  
 
-\input{part-02/chap-03/sec-01/sec-01}
-\input{part-02/chap-03/sec-02/sec-02}
-\input{part-02/chap-03/sec-03/sec-03}
+\subsection{1. Môi trường thực nghiệm và Thiết lập huấn luyện}
+
+\subsubsection{1.1. Cấu hình phần cứng và phần mềm}
+\indent\indent Toàn bộ quá trình thực nghiệm, huấn luyện mô hình và kiểm thử được triển khai trên môi trường tính toán chuẩn:
+\begin{table}[H]
+    \centering
+    \caption{Cấu hình môi trường thực nghiệm}
+    \label{tab:env_specs}
+    \vspace{0.2cm}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|m{4.5cm}|m{9.5cm}|}
+        \hline
+        \textbf{Thành phần} & \textbf{Thông số kỹ thuật} \\
+        \hline
+        Bộ xử lý đồ họa (GPU) & NVIDIA GPU (CUDA Enabled) hỗ trợ FP16 / AMP \\
+        \hline
+        Môi trường thực thi & Python 3.10+, PyTorch 2.x, Torchvision, Scikit-learn \\
+        \hline
+        Tập dữ liệu & Minh-TFR (DTD-lightweight + TFR extracted) \\
+        \hline
+        Checkpoint tốt nhất & \texttt{best\_model\_multi\_classes.pth} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsubsection{1.2. Chiến lược huấn luyện và Tối ưu hóa siêu tham số}
+\indent\indent Để mô hình hội tụ nhanh và tối ưu hóa bộ nhớ GPU, các chiến lược kỹ thuật sau được áp dụng:
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item \textbf{Huấn luyện độ chính xác hỗn hợp tự động (Automatic Mixed Precision -- AMP):} Sử dụng `torch.cuda.amp.GradScaler()` để tính toán song song kiểu FP16/FP32, giúp giảm 50\% mức chiếm dụng VRAM. Riêng mô-đun BlockDCT được cố định tính toán trên FP32 nhằm đảm bảo độ chính xác toán học của phép nhân ma trận cơ sở.
+    \item \textbf{Thuật toán tối ưu (Optimizer):} Sử dụng AdamW với tốc độ học khởi tạo $1 \times 10^{-4}$ và hệ số suy giảm trọng số (Weight Decay) là $1 \times 10^{-2}$.
+    \item \textbf{Lịch trình điều chỉnh tốc độ học (LR Scheduler):} Áp dụng Cosine Annealing Learning Rate Scheduler để giảm dần tốc độ học về $1 \times 10^{-6}$ ở các epoch cuối.
+    \item \textbf{Hàm mất mát đa nhiệm (MultiTaskTamperLoss):} Kết hợp có trọng số giữa hàm mất mát phân đoạn ($\text{BCE} + \text{Dice}$) và hàm mất mát phân loại đa nhãn ($\text{BCE}$).
+\end{itemize}
+
+\subsection{2. Kết quả thực nghiệm và Đánh giá}
+
+\subsubsection{2.1. Kết quả định lượng trên tập kiểm thử Minh-TFR TestSet}
+\indent\indent Mô hình \textbf{LightweightDTD} sau khi huấn luyện được tải lại từ checkpoint tối ưu \texttt{best\_model\_multi\_classes.pth} và đánh giá toàn diện trên toàn bộ tập kiểm thử độc lập \textbf{Minh-TFR TestSet} (gồm 500 batches kiểm thử với ngưỡng nhị phân $threshold = 0.5$).
+
+\begin{table}[H]
+    \centering
+    \caption{Kết quả định lượng của mô hình LightweightDTD trên Minh-TFR TestSet}
+    \label{tab:test_results}
+    \vspace{0.2cm}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|m{6.5cm}|m{4cm}|m{3.5cm}|}
+        \hline
+        \textbf{Chỉ số đánh giá (Evaluation Metric)} & \textbf{Giá trị đạt được} & \textbf{Tỷ lệ (\%)} \\
+        \hline
+        \textbf{Pixel Accuracy (Độ chính xác pixel)} & \textbf{0.9968} & \textbf{99.68\%} \\
+        \hline
+        \textbf{Top-3 Class Hit Rate} & \textbf{0.9830} & \textbf{98.30\%} \\
+        \hline
+        \textbf{Precision (Micro)} & \textbf{0.8525} & \textbf{85.25\%} \\
+        \hline
+        \textbf{Recall (Micro)} & \textbf{0.6496} & \textbf{64.96\%} \\
+        \hline
+        \textbf{Intersection over Union (IoU Micro)} & \textbf{0.5839} & \textbf{58.39\%} \\
+        \hline
+        \textbf{Macro Dice Score} & \textbf{0.4518} & 45.18\% \\
+        \hline
+        \multicolumn{2}{|l|}{\textbf{Tổng số tham số mô hình (Total Parameters)}} & \textbf{4,155,796} \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Kết quả tại \textbf{Bảng \ref{tab:test_results}} thể hiện hai ưu thế vượt trội:
+\begin{enumerate}
+    \item \textbf{Ở nhiệm vụ phân đoạn mặt nạ làm giả:} Độ chính xác pixel đạt tới \textbf{99.68\%} cùng chỉ số \textbf{Precision đạt 85.25\%}. Chỉ số IoU đạt \textbf{58.39\%}, phản ánh khả năng khoanh vùng chính xác các ký tự bị sửa đổi mà không làm lan rộng sang các vùng văn bản hợp lệ xung quanh.
+    \item \textbf{Ở nhiệm vụ phân loại đặc trưng làm giả:} Chỉ số \textbf{Top-3 Class Hit Rate đạt tới 98.30\%}, chứng minh rằng trong gần như toàn bộ các trường hợp kiểm thử (98.3\%), mô hình đều chỉ ra đúng ít nhất một bản chất lỗi vi mô thực tế nằm trong 3 phán đoán hàng đầu.
+\end{enumerate}
+
+\subsubsection{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}
+\indent\indent Để ứng dụng thực tế, mô hình cung cấp phương thức suy luận nhanh \texttt{model.predict(image, threshold=0.5, top\_k=3)} trả về đồng thời mặt nạ phân đoạn pixel và danh sách top 3 nhãn vi mô có độ tin cậy cao nhất.
+
+Dưới đây là một trường hợp suy luận mẫu trên ảnh tài liệu kiểm thử:
+\begin{lstlisting}[language=Python, frame=single, caption={Ví dụ kết quả suy luận từ phương thức predict}]
+# Input: Anh tai lieu kich thuoc 224x224x3
+result = model.predict(img_tensor, threshold=0.5, top_k=3)
+
+# Output Pixel Mask:
+print("Pixel mask shape:", result["mask"].shape)  # (224, 224)
+
+# Output Top-3 Classes and Confidence Scores:
+# 1. inconsistent_alignment : 58.09%
+# 2. text_incoherence       : 56.46%
+# 3. edge_artifacts         : 52.85%
+\end{lstlisting}
+
+Kết quả cho thấy mô hình phát hiện chính xác vùng văn bản nghi vấn và chỉ ra các dấu hiệu: chữ bị lệch dòng (\textit{inconsistent\_alignment}), ngữ nghĩa không mạch lạc (\textit{text\_incoherence}) và xuất hiện viền cắt dán (\textit{edge\_artifacts}).
+
+\subsection{3. Thảo luận và Đánh giá tổng kết}
+
+\indent\indent Từ các kết quả thực nghiệm đạt được, một số phân tích học thuật quan trọng được rút ra:\vspace{0.3cm}
+
+\textbf{1. Hiệu quả của việc kết hợp miền Không gian và Tần số (BlockDCT Fusion):}
+Việc tích hợp nhánh phân tích tần số BlockDCT $8 \times 8$ tại tầng đặc trưng $1/8$ đã chứng minh tính hiệu quả vượt bậc trong việc phát hiện các vết làm giả tinh vi. Trong khi các mạng CNN thông thường dễ bị đánh lừa bởi các ký tự ghép có phông chữ tương đồng, ma trận hệ số DCT cho phép mạng bóc tách sự đứt gãy trong cấu trúc lưới nén JPEG, nâng cao rõ rệt chỉ số Precision (đạt 85.25\%).\vspace{0.3cm}
+
+\textbf{2. Tính gọn nhẹ vượt bậc của bộ giải mã LiteMID kết hợp scSE:}
+Nhờ thay thế các khối tích chập tiêu chuẩn bằng các khối tích chập tách biệt chiều sâu (Depthwise Separable Blocks) và kiểm soát độ rộng kênh ở mức 48, bộ giải mã LiteMID cùng khối chú ý scSE giữ cho tổng tham số của toàn bộ mô hình dừng lại ở mức \textbf{4.15 triệu tham số}. So với các kiến trúc DTD gốc thường có kích thước trên 30 triệu tham số, LightweightDTD tiết kiệm gần 85\% dung lượng nhưng vẫn bảo toàn độ chính xác pixel đạt 99.68\%.\vspace{0.3cm}
+
+\textbf{3. Khả năng giải thích hỗ trợ giám định (Top-3 Class Hit Rate 98.30\%):}
+Việc tích hợp đầu ra phân loại 6 đặc trưng vi mô giúp mô hình vượt khỏi giới hạn của một bộ phân đoạn mặt nạ thuần túy. Tỷ lệ Top-3 Hit Rate lên tới 98.30\% là một đóng góp thiết thực cho các hệ thống giám định thực tế, cung cấp gợi ý trực quan cho chuyên viên pháp y về loại hình can thiệp (lệch dòng, sai phông, hay vết cắt viền).

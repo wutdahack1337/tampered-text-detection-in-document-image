@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.15)  16 NOV 2026 09:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.11.15)  16 NOV 2026 10:06
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1696,116 +1696,115 @@ Ch\uhorn \ohorn ng .
 
  (./part-01/part-01.tex
 Ch\uhorn \ohorn ng .
-(./part-01/sec-01/sec-01.tex) (./part-01/sec-02/sec-02.tex [1
+[1
 
 
 
 
-]) (./part-01/sec-03/sec-03.tex
-Overfull \hbox (17.49458pt too wide) in paragraph at lines 5--7
+]
+Overfull \hbox (17.49458pt too wide) in paragraph at lines 35--37
 []\T5/ptm/b/n/13 Möc ti¶u têng qu¡t: \T5/ptm/m/n/13 X¥y düng v  ^^_¡nh gi¡ mæ h¼nh håc s¥u ^^_a nhi»m \T5/ptm/b/n/13 Lightweight-
  []
 
-) (./part-01/sec-04/sec-04.tex [2]
-LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 5.
+[2]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 51.
  (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-Overfull \hbox (25.02463pt too wide) in paragraph at lines 6--7
+Overfull \hbox (25.02463pt too wide) in paragraph at lines 52--53
 []\T5/ptm/m/n/13 Kÿ thuªt tr½ch xu§t ^^_°c tr÷ng khæng gian b¬ng m¤ng t½ch chªp gån nhµ EfficientNet-
  []
 
 
-Overfull \hbox (3.97676pt too wide) in paragraph at lines 14--15
+Overfull \hbox (3.97676pt too wide) in paragraph at lines 60--61
 []\T5/ptm/b/n/13 V· dú li»u: \T5/ptm/m/n/13 Sû döng tªp dú li»u Minh-TFR (^^_÷ñc tr½ch xu§t tø DTD-lightweight
  []
 
-) (./part-01/sec-05/sec-05.tex) (./part-01/sec-06/sec-06.tex [3])) [4]
+LaTeX Font Info:    Trying to load font information for T5+lmtt on input line 62.
+(c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/t5lmtt.fd
+File: t5lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [3{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-t5.enc}]) [4]
 \openout2 = `part-02/part-02.aux'.
 
  (./part-02/part-02.tex
 Ch\uhorn \ohorn ng .
-(./part-02/chap-01/chap-01.tex (./part-02/chap-01/sec-01/sec-01.tex [5
+(./part-02/chap-01/chap-01.tex [5
 
 
 
 
-]) (./part-02/chap-01/sec-02/sec-02.tex [6] [7])) [8] (./part-02/chap-02/chap-02.tex (./part-02/chap-02/sec-01/sec-01.tex
-LaTeX Font Info:    Trying to load font information for T5+lmtt on input line 13.
- (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/lm/t5lmtt.fd
-File: t5lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-)
-Overfull \hbox (121.42761pt too wide) detected at line 33
+] [6] [7]) [8] (./part-02/chap-02/chap-02.tex
+Overfull \hbox (121.42761pt too wide) detected at line 36
 [][][]\OML/ztmcm/m/it/13 x[] \OT1/ztmcm/m/n/13 = []([[](\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 ) \OMS/ztmcm/m/n/13 k []\OT1/ztmcm/m/n/13 (\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 )])\OML/ztmcm/m/it/13 ;  x[] \OT1/ztmcm/m/n/13 = []([[](\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 ) \OMS/ztmcm/m/n/13 k []\OT1/ztmcm/m/n/13 (\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 )])\OML/ztmcm/m/it/13 ;  x[] \OT1/ztmcm/m/n/13 = []([[](\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 ) \OMS/ztmcm/m/n/13 k []\OT1/ztmcm/m/n/13 (\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 )])
  []
 
 
-Overfull \hbox (0.42976pt too wide) detected at line 37
+Overfull \hbox (0.42976pt too wide) detected at line 40
 [][][]\OML/ztmcm/m/it/13 x[] \OT1/ztmcm/m/n/13 = []([[](\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 ) \OMS/ztmcm/m/n/13 k \OML/ztmcm/m/it/13 x[] \OMS/ztmcm/m/n/13 k []\OT1/ztmcm/m/n/13 (\OML/ztmcm/m/it/13 x[]\OT1/ztmcm/m/n/13 )])\OML/ztmcm/m/it/13 ;  x[] \OT1/ztmcm/m/n/13 = []([[](\OML/ztmcm/m/it/13 f[]\OT1/ztmcm/m/n/13 ) \OMS/ztmcm/m/n/13 k \OML/ztmcm/m/it/13 x[] \OMS/ztmcm/m/n/13 k []\OT1/ztmcm/m/n/13 (\OML/ztmcm/m/it/13 x[]\OT1/ztmcm/m/n/13 )])
  []
 
-[9{c:/ProgramData/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-t5.enc}]) (./part-02/chap-02/sec-02/sec-02.tex
+[9]
 LaTeX Font Info:    Font shape `T5/lmtt/bx/n' in size <13> not available
-(Font)              Font shape `T5/lmtt/b/n' tried instead on input line 6.
+(Font)              Font shape `T5/lmtt/b/n' tried instead on input line 72.
  (c:/ProgramData/TinyTeX/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 ) [10]
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 12.
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 78.
 
-Overfull \hbox (2.21301pt too wide) in paragraph at lines 16--17
+Overfull \hbox (2.21301pt too wide) in paragraph at lines 82--83
 [][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (72.41373pt too wide) in paragraph at lines 19--20
+Overfull \hbox (72.41373pt too wide) in paragraph at lines 85--86
 [][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (6.83046pt too wide) in paragraph at lines 33--34
+Overfull \hbox (6.83046pt too wide) in paragraph at lines 99--100
 []\T5/ptm/b/n/13 Chu©n hâa Im-a-geNet: \T5/ptm/m/n/13 Chu©n hâa k¶nh m u £nh theo $\OML/ztmcm/m/it/13 ^^V \OT1/ztmcm/m/n/13 = [0\OML/ztmcm/m/it/13 :\OT1/ztmcm/m/n/13 485\OML/ztmcm/m/it/13 ; \OT1/ztmcm/m/n/13 0\OML/ztmcm/m/it/13 :\OT1/ztmcm/m/n/13 456\OML/ztmcm/m/it/13 ; \OT1/ztmcm/m/n/13 0\OML/ztmcm/m/it/13 :\OT1/ztmcm/m/n/13 406]$
  []
 
-)) [11] (./part-02/chap-03/chap-03.tex (./part-02/chap-03/sec-01/sec-01.tex
+) [11] (./part-02/chap-03/chap-03.tex
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <10> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 11.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 16.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7.4> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 11.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 16.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <6> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 11.
-) (./part-02/chap-03/sec-02/sec-02.tex
-Overfull \hbox (9.14719pt too wide) in paragraph at lines 12--31
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 16.
+
+Overfull \hbox (9.14719pt too wide) in paragraph at lines 51--70
  [][] 
  []
 
 [12]
-Overfull \hbox (69.58115pt too wide) in paragraph at lines 40--41
+Overfull \hbox (69.58115pt too wide) in paragraph at lines 79--80
 []\T5/ptm/m/n/13 ^^^º ùng döng thüc t¸, mæ h¼nh cung c§p ph÷ìng thùc suy luªn nhanh \T5/lmtt/m/n/13 model.predict(image,
  []
 
 
-Overfull \hbox (25.61325pt too wide) in paragraph at lines 45--47
+Overfull \hbox (25.61325pt too wide) in paragraph at lines 84--86
 [][][][][][][][][][][][][][][][][][][] 
  []
 
 Missing character: There is no   in font utmr8v!
 Missing character: There is no   in font utmr8v!
 
-Overfull \hbox (56.81357pt too wide) in paragraph at lines 48--50
+Overfull \hbox (56.81357pt too wide) in paragraph at lines 87--89
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-) (./part-02/chap-03/sec-03/sec-03.tex [13]))) [14]
+[13])) [14]
 \openout2 = `part-03/part-03.aux'.
 
  (./part-03/part-03.tex
 Ch\uhorn \ohorn ng .
-(./part-03/sec-01/sec-01.tex) (./part-03/sec-02/sec-02.tex [15
+[15
 
 
 
 
-])) [16]
+]) [16]
 \openout2 = `minor-pages/refs.aux'.
 
  (./minor-pages/refs.tex
@@ -1825,7 +1824,7 @@ Overfull \hbox (8.60191pt too wide) in paragraph at lines 3--3
 Package caption Warning: Unused \captionsetup[figure] on input line 7.
 See the caption package documentation for explanation.
 
-runsystem(latexminted cleantemp  --timestamp 20261116095208 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
+runsystem(latexminted cleantemp  --timestamp 20261116100619 FAD58DE7366495DB4650CFEFAC2FCD61)...executed.
 
 (./main.aux (./minor-pages/outer-cover.aux) (./minor-pages/inner-cover.aux) (./minor-pages/remark.aux) (./minor-pages/thanks.aux) (./minor-pages/tocs.aux) (./minor-pages/lstfigs.aux) (./minor-pages/lsttabs.aux) (./minor-pages/acronym.aux) (./minor-pages/abstract-en.aux) (./minor-pages/abstract-vi.aux) (./part-01/part-01.aux) (./part-02/part-02.aux) (./part-03/part-03.aux) (./minor-pages/refs.aux))
  ***********
@@ -1833,21 +1832,21 @@ LaTeX2e <2026-11-01>
 L3 programming layer <2020/03/25>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 6CD3F2023835EE5DBA63766AA2128192;13438.
+(rerunfilecheck)             Checksum: D78B0D17123A53BD846EF9E5A42F06FA;13563.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 45835 strings out of 468958
- 941050 string characters out of 5452119
+ 45709 strings out of 468958
+ 937056 string characters out of 5452119
  2023074 words of memory out of 5000000
- 74004 multiletter control sequences out of 15000+600000
+ 73929 multiletter control sequences out of 15000+600000
  725043 words of font info for 169 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 107i,14n,120p,1491b,1854s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 107i,14n,120p,1491b,1794s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtk10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/lm/lmtt12.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/symbol/usyr.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmb8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmbi8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmr8v.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/ProgramData/TinyTeX/texmf-dist/fonts/type1/vntex/urwvn/utmri8v.pfb>
-Output written on main.pdf (30 pages, 470663 bytes).
+Output written on main.pdf (30 pages, 470942 bytes).
 PDF statistics:
  591 PDF objects out of 1000 (max. 8388607)
  515 compressed objects within 6 object streams
