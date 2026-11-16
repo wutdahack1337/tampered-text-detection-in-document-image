@@ -1,0 +1,16 @@
+\subsection{4. Đối tượng và phạm vi nghiên cứu}
+
+\indent\indent \textbf{Đối tượng nghiên cứu:}
+\begin{itemize}
+    \item Các kỹ thuật làm giả văn bản trên ảnh tài liệu số (copy-move, chèn chữ splicing, xóa thông tin erasure, chỉnh sửa phông chữ).
+    \item Các phương pháp trích xuất đặc trưng vi mô và phân loại ảnh bằng mạng nơ-ron tích chập gọn nhẹ (EfficientNet-B0).
+    \item Kỹ thuật học biểu diễn đa phương thức và sinh lời giải thích bằng mô hình thị giác - ngôn ngữ nhỏ (SmolVLM2-500M).
+\end{itemize}
+\vspace{0.3cm}
+
+\textbf{Phạm vi nghiên cứu:}
+\begin{itemize}
+    \item \textbf{Về dữ liệu:} Sử dụng tập dữ liệu DTD-lightweight (phiên bản thu gọn tối ưu cho huấn luyện nhanh) gồm các mẫu ảnh tài liệu tiếng Anh và số hóa có nhãn phân loại làm giả và mặt nạ vị trí.
+    \item \textbf{Về mô hình:} Tập trung nghiên cứu phân loại đa lớp trên backbone EfficientNet-B0 và pipeline trích xuất suy luận với SmolVLM2-500M.
+    \item \textbf{Về phần cứng:} Triển khai và kiểm thử trên môi trường GPU tiêu chuẩn (Google Colab / máy trạm cục bộ với card NVIDIA), đảm bảo mô hình có thể chạy được trên cấu hình phần cứng phổ thông.
+\end{itemize}

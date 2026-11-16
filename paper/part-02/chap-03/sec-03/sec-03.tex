@@ -1,0 +1,12 @@
+\subsection{3. Thảo luận và Đánh giá tổng kết}
+
+\indent\indent Dựa trên các kết quả thực nghiệm, một số kết luận chuyên môn quan trọng được rút ra:\vspace{0.3cm}
+
+\textbf{1. Đánh đổi giữa hiệu năng và kích thước mô hình (Efficiency vs Accuracy):}
+Mạng EfficientNet-B0 với khoảng 5.3M tham số tiêu tốn ít hơn 75\% bộ nhớ GPU trong quá trình suy luận so với ResNet-50 nhưng lại cho điểm F1 cao hơn 2.48\%. Điều này chứng minh tính ưu việt của cơ chế Compound Scaling và khối MBConv trong việc nắm bắt các đặc trưng cục bộ tần số cao của chữ tài liệu mà không cần mạng quá sâu.\vspace{0.3cm}
+
+\textbf{2. Hiệu quả của kỹ thuật tái cân bằng phân bố nhãn (Rebalancing Splits):}
+Việc lọc sạch các câu chú thích phủ định và tái cân bằng 2,000 mẫu kiểm thử đã ngăn chặn hiện tượng mô hình thiên vị về các lớp chiếm đa số, giúp điểm Recall của các lớp thiểu số (như \textit{Text incoherence}) tăng từ 0.421 lên 0.578.\vspace{0.3cm}
+
+\textbf{3. Bước đột phá về tính minh bạch giải thích (Explainable AI):}
+Sự tham gia của mô hình thị giác - ngôn ngữ SmolVLM2 đã giải quyết triệt để bài toán ``hộp đen'' vốn là rào cản lớn nhất của các giải pháp học sâu trong lĩnh vực pháp y tài liệu. Các chuỗi suy luận bằng ngôn ngữ tự nhiên không chỉ giúp chuyên viên giám định tiết kiệm thời gian khoanh vùng nghi vấn mà còn là bằng chứng rõ ràng phục vụ công tác đối soát hồ sơ.

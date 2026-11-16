@@ -1,0 +1,51 @@
+\subsection{1. Thiết kế hệ thống}
+\indent\indent Quy trình tổng quát của hệ thống được minh họa tại \textbf{Hình \ref{fig:LXLTongQuat}}, bao gồm 4 giai đoạn xử lý tuần tự: (1) Phân tách video, (2) Tiền xử lý và trích xuất đặc trưng, (3) Xây dựng MG, và (4) Suy luận phân tầng.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{images/part-02/chap-02/sec-01/TongQuat.jpg}
+    \vspace{0.3cm}
+    \caption{Luồng xử lý tổng quát của hệ thống khi triển khai thành ứng dụng}
+    \label{fig:LXLTongQuat}
+\end{figure}
+
+\indent\textbf{Đặc tả Dữ liệu đầu vào (INPUT):} Hệ thống được thiết kế với cơ chế chấp nhận thiếu hụt, cho phép hoạt động ngay cả khi người dùng không cung cấp đầy đủ văn bản hoặc âm thanh. Tuy nhiên, dữ liệu hình ảnh là thành phần bắt buộc. Các ràng buộc cụ thể bao gồm:\vspace{-0.1cm}
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Video:} Yêu cầu thời lượng tối thiểu 30 giây và tối đa 2 phút. Trong trường hợp người dùng đã cung cấp đủ tối thiểu 3 hình ảnh hợp lệ, việc tải lên video trở thành tùy chọn.
+    \item \textbf{Hình ảnh:} Số lượng tối thiểu là 3 và tối đa 20 ảnh. Nếu video hợp lệ đã được tải lên, hệ thống sẽ tự động trích xuất khung hình và người dùng không cần thao tác thêm.
+    \item \textbf{Văn bản:} Đây là thành phần tùy chọn. Nếu cung cấp, hệ thống chấp nhận duy nhất 01 tệp tin định dạng \texttt{.txt} chứa nội dung mô tả.
+    \item \textbf{Âm thanh:} Đây cũng là thành phần tùy chọn. Hệ thống chấp nhận 01 tệp tin định dạng \texttt{.mp3} hoặc \texttt{.wav} với thời lượng từ 30 giây đến 2 phút. Trường hợp người dùng tải lên video, phần âm thanh sẽ được tự động tách xuất từ video đó.
+\end{itemize}
+
+\textbf{Dữ liệu đầu ra (OUTPUT):} Nhãn chủ đề ICH được dự đoán bởi mô hình, kèm theo độ tin cậy.\vspace{0.3cm}
+
+\newpage
+\indent\textbf{Chi tiết các giai đoạn xử lý:}
+\begin{itemize}[label={--}, itemsep=3pt]
+    \item \textbf{Giai đoạn 1 -- Phân tách video:} Nếu người dùng có tải lên video đầu vào, hệ thống sẽ tiến hành phân tách, quá trình này thực hiện trích xuất chuỗi hình ảnh (tần suất 4 giây/khung hình) và các đoạn âm thanh (5 giây/đoạn) để chuẩn bị cho bước tiếp theo.
+
+    \item \textbf{Giai đoạn 2 -- Tiền xử lý và trích xuất đặc trưng:} Các dữ liệu thô ứng với mỗi phương thức sẽ có cách xử lý riêng biệt khác nhau, bao gồm:
+    \begin{itemize}[label={+}, itemsep=1pt]
+        \item \textbf{Đặc trưng hình ảnh:} Hệ thống tích hợp 6 kiến trúc CNN tiên tiến đã được huấn luyện trước trên tập dữ liệu ImageNet làm bộ trích xuất đặc trưng nền tảng (backbone). Người dùng có quyền lựa chọn một trong các mô hình: \textbf{ResNet18}, \textbf{RegNetX400MF}, \textbf{MobileNetV3 Large}, \textbf{MobileNetV3 Small}, \textbf{DenseNet121} hoặc \textbf{ShuffleNetV2 1.0x}. Hình ảnh đầu vào được tự động thay đổi kích thước (resize) và chuẩn hóa (normalize) tuân theo chuẩn của backbone được chọn.
+        
+        \item \textbf{Đặc trưng văn bản:} Dữ liệu văn bản trải qua quy trình gán nhãn từ loại (POS Tagging) sử dụng thư viện \textit{underthesea} chuyên dụng cho tiếng Việt. Sau đó, hệ thống tiến hành loại bỏ stopwords và chỉ giữ lại các từ mang nội dung chính thuộc các nhóm: danh từ ($N$), danh từ riêng ($Np$) động từ ($V$) và tính từ ($A$). Để biểu diễn ngữ nghĩa, hệ thống sử dụng mô hình \textbf{all-MiniLM-L6-v2} nhằm chuyển đổi cặp {từ khóa, câu chứa từ khóa} thành vector embedding ngữ nghĩa.
+        
+        \item \textbf{Đặc trưng âm thanh:} Hệ thống áp dụng kỹ thuật trích xuất MFCC để nắm bắt đặc trưng phổ âm. Để mô tả sự biến thiên của tín hiệu âm thanh theo thời gian (yếu tố quan trọng trong các lễ hội âm nhạc), hệ thống kết hợp thêm các đặc trưng động là Delta (đạo hàm bậc 1) và Delta-Delta (đạo hàm bậc 2).
+    \end{itemize}
+
+    \item \textbf{Giai đoạn 3 -- Xây dựng MG:}  Các vector đặc trưng từ ba nguồn dữ liệu được chuyển đổi thành các đỉnh trong một đồ thị thống nhất. Về mặt cấu trúc, đây là đồ thị đa phương thức cấp đỉnh (Node-Level MG). Trong đó, các kết nối được thiết lập giữa tất cả các đỉnh, bao gồm các đỉnh cùng phương thức và các đỉnh khác phương thức (ví dụ: kết nối giữa 1 đỉnh hình ảnh và 1 đỉnh văn bản). Trọng số của các kết nối này là tham số học được (learnable parameters), bằng việc huấn luyện các mô hình \textbf{Giai đoạn 4}, nhằm tìm ra cấu trúc tương quan tốt nhất.
+
+    \item \textbf{Giai đoạn 4 -- Suy luận phân tầng:} Đây là cơ chế ra quyết định được thiết kế nhằm tối ưu hóa việc sử dụng dữ liệu âm thanh. Hệ thống sử dụng song song hai mô hình MGAT + FastKAN/MLP gồm: mô hình được huấn luyện chỉ trên 2 phương thức (hình ảnh và văn bản) và mô hình được huấn luyện trên cả 3 phương thức (hình ảnh, văn bản và âm thanh).
+    \begin{itemize}[label={+}, itemsep=1pt]
+        \item \textbf{Bước 4.1 -- Dự đoán nhãn thô:} Hệ thống tiến hành dùng 2 mô hình MGAT + FastKAN/MLP đã đề cập ở bên trên để dự đoán và cho ra 2 nhãn thô.
+        
+        \item \textbf{Bước 4.2 -- Ra quyết định:} Dựa trên nhãn thô, hệ thống tiến hành xét rằng liệu 1 trong số các nhãn dự đoán được có dùng âm thanh hay không, cụ thể như sau: 
+        \begin{itemize}[label={\textbullet}, itemsep=1pt]
+            \item \textbf{Trường hợp Có (Yes):} Hệ thống sử dụng dữ liệu hình ảnh, văn bản cùng với âm thanh để đưa vào mô hình MGAT + FastKAN/MLP (3 phương thức) một lần nữa, nhằm dự đoán ra kết quả cuối cùng.
+            \item \textbf{Trường hợp Không (No):} Hệ thống sẽ ưu tiên nhãn thô có độ tin cậy cao hơn giữa 2 nhãn để cho ra kết quả cuối cùng.
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\input{part-02/chap-02/sec-01/subsec-01}
+\input{part-02/chap-02/sec-01/subsec-02}

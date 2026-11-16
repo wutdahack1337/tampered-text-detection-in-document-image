@@ -1,0 +1,35 @@
+\graphicspath{ {images/} } % Định nghĩa thư mục chứa hình ảnh là "images/"
+
+\counterwithout{figure}{chapter}
+\counterwithout{table}{chapter}
+
+% Cấu hình cho danh mục hình ảnh (figure) và bảng (table)
+\captionsetup[figure]{labelfont={bf}, labelsep=period}
+\captionsetup[table]{labelfont={bf}, labelsep=period}
+\captionsetup{font={large, it}, skip=3pt}  % Đặt cỡ chữ và khoảng cách cho caption hình ảnh
+
+\makeatletter
+\renewcommand{\thefigure}{\textbf{\arabic{figure}}}  % Số thứ tự hình ảnh tăng dần
+\makeatother
+
+\makeatletter
+\renewcommand{\thetable}{\textbf{\arabic{table}}}  % Số thứ tự bảng tăng dần
+\makeatother
+
+% Điều chỉnh cách hiển thị danh mục hình ảnh
+\renewcommand{\cftfigpresnum}{\textbf{Hình }}
+\renewcommand{\cftfigaftersnum}{\textbf{. }}
+\cftsetindents{figure}{0pt}{55pt}
+\renewcommand{\cftfigdotsep}{\cftdotsep}
+\setlength{\cftbeforefigskip}{5pt}   
+
+% Điều chỉnh cách hiển thị danh mục bảng
+\renewcommand{\cfttabpresnum}{\textbf{Bảng }}  
+\renewcommand{\cfttabaftersnum}{\textbf{. }}
+\cftsetindents{table}{0pt}{55pt}
+\renewcommand{\cfttabdotsep}{\cftdotsep}
+\setlength{\cftbeforetabskip}{5pt}  
+
+\newcommand*{\noaddvspace}{\renewcommand*{\addvspace}[1]{}}
+\addtocontents{lof}{\protect\noaddvspace}
+\addtocontents{lot}{\protect\noaddvspace}

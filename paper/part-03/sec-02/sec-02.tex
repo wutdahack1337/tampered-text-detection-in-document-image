@@ -1,0 +1,14 @@
+\subsection{2. Hạn chế và Hướng phát triển}
+
+\subsubsection{2.1. Hạn chế của đề tài}
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item \textbf{Độ trễ khi sinh câu suy luận:} Mặc dù SmolVLM2-500M là mô hình VLM nhỏ gọn, quá trình sinh chuỗi văn bản tự hồi quy vẫn yêu cầu thời gian tính toán nhất định (khoảng 0.8 -- 1.5 giây/mẫu trên GPU), chậm hơn đáng kể so với tốc độ suy luận của mạng phân loại thuần túy EfficientNet-B0 (~15 mili-giây/mẫu).
+    \item \textbf{Độ phức tạp của tài liệu thực tế:} Đối với các ảnh tài liệu bị chụp mờ nhòe nghiêm trọng trong điều kiện ánh sáng yếu hoặc bị nén nhiều lần qua các mạng xã hội, độ chính xác nhận diện các vết nén vi mô có xu hướng suy giảm.
+\end{itemize}
+
+\subsubsection{2.2. Hướng nghiên cứu và phát triển tiếp theo}
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item \textbf{Tối ưu hóa mô hình với lượng tử hóa (Quantization):} Áp dụng các kỹ thuật lượng tử hóa trọng số (INT8 / INT4 hoặc GGML/GGUF) và TensorRT để nén mô hình SmolVLM2, cho phép chạy trực tiếp trên thiết bị di động và các hệ thống máy quét tại chỗ (On-premise edge devices).
+    \item \textbf{Tự động định vị vùng nghi vấn (End-to-end Localizing \& Detection):} Mở rộng pipeline thành hệ thống đầu cuối (End-to-End) tự động phát hiện vùng văn bản bị can thiệp trên toàn bộ trang tài liệu độ phân giải cao mà không cần bước cắt ảnh ROI thủ công.
+    \item \textbf{Đa dạng hóa ngôn ngữ văn bản:} Huấn luyện bổ sung tập dữ liệu trên các tài liệu hành chính tiếng Việt (căn cước công dân gắn chip, giấy khai sinh, bằng đại học) để phục vụ trực tiếp cho các dịch vụ số tại Việt Nam.
+\end{itemize}

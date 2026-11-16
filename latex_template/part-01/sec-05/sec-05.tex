@@ -1,0 +1,8 @@
+\subsection{5. Phương pháp nghiên cứu}
+\indent\indent Để giải quyết bài toán phân loại dữ liệu văn hóa phi vật thể đa phương thức, luận văn áp dụng cách tiếp cận hỗn hợp, kết hợp giữa nghiên cứu lý thuyết để nắm bắt cơ sở khoa học, phương pháp thực nghiệm và phân tích định lượng để kiểm chứng hiệu quả mô hình. Cụ thể như sau:\vspace{-0.1cm}
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Phương pháp nghiên cứu lý thuyết:} Tìm hiểu và tổng hợp tài liệu về các kỹ thuật trích xuất đặc trưng (CNN, Transformer, MFCC), lý thuyết Mạng noron đồ thị (GNN), Graph Attention Network (GAT) và kiến trúc KAN mới nhất.
+    \item \textbf{Phương pháp thực nghiệm và phân tích định lượng:} Xây dựng, huấn luyện mô hình trên dữ liệu thực tế; sử dụng các thang đo độ chính xác cho bài toán phân lớp (Accuracy, Precision, Recall, F1-Score) để đánh giá và so sánh hiệu năng giữa các phương pháp.
+\end{itemize}
+
+Tóm tắt quy trình thực hiện: Quy trình nghiên cứu bắt đầu từ việc thu thập và tiền xử lý đồng bộ ba luồng dữ liệu (hình ảnh, văn bản, âm thanh) từ nguồn video thực tế. Dựa trên cơ sở dữ liệu này, nghiên cứu thực hiện xây dựng mô hình phân loại đơn phương thức (CNN Baseline) để tạo mốc chuẩn cho đánh giá, ngoài ra còn dùng để trích xuất đặc trưng cho mô hình đồ thị đa phương thức. Trọng tâm của quy trình là việc thiết kế và huấn luyện kiến trúc đồ thị đa phương thức kết hợp GAT và KAN nhằm học các mối quan hệ ngữ nghĩa phức tạp. Cuối cùng, kết quả nghiên cứu được đánh giá định lượng trên tập kiểm thử và kiểm chứng thực tế thông qua việc triển khai lên ứng dụng Web.

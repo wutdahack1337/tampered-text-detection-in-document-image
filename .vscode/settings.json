@@ -1,0 +1,88 @@
+{
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.latex.clean.subfolder.enabled": true,
+  "latex-workshop.latex.recipe.default": "pdflatex -> biber -> pdflatex*2",
+  "latex-workshop.formatting.latex": "none",
+  "[latex]": {
+    "editor.formatOnSave": false
+  },
+  "latex-workshop.latex.tools": [
+    {
+      "name": "pdflatex",
+      "command": "C:/ProgramData/TinyTeX/bin/windows/pdflatex.exe",
+      "args": [
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "-shell-escape",
+        "%DOC%"
+      ],
+      "env": {
+        "PATH": "C:\\ProgramData\\TinyTeX\\bin\\windows;%PATH%"
+      }
+    },
+    {
+      "name": "biber",
+      "command": "C:/ProgramData/TinyTeX/bin/windows/biber.exe",
+      "args": [
+        "%DOCFILE%"
+      ],
+      "env": {
+        "PATH": "C:\\ProgramData\\TinyTeX\\bin\\windows;%PATH%"
+      }
+    },
+    {
+      "name": "bibtex",
+      "command": "C:/ProgramData/TinyTeX/bin/windows/bibtex.exe",
+      "args": [
+        "%DOCFILE%"
+      ],
+      "env": {
+        "PATH": "C:\\ProgramData\\TinyTeX\\bin\\windows;%PATH%"
+      }
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "pdflatex -> biber -> pdflatex*2",
+      "tools": [
+        "pdflatex",
+        "biber",
+        "pdflatex",
+        "pdflatex"
+      ]
+    },
+    {
+      "name": "pdflatex",
+      "tools": [
+        "pdflatex"
+      ]
+    }
+  ],
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux",
+    "*.bbl",
+    "*.blg",
+    "*.idx",
+    "*.ind",
+    "*.lof",
+    "*.lot",
+    "*.out",
+    "*.toc",
+    "*.acn",
+    "*.acr",
+    "*.alg",
+    "*.glg",
+    "*.glo",
+    "*.gls",
+    "*.fls",
+    "*.log",
+    "*.fdb_latexmk",
+    "*.snm",
+    "*.nav",
+    "*.synctex.gz",
+    "*.bcf",
+    "*.run.xml"
+  ]
+}

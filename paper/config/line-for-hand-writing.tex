@@ -1,0 +1,10 @@
+\newcommand{\notes}[3][\empty]{
+	\noindent \vspace{15pt}\\
+	\foreach \n in {1,...,#2}{
+		\ifthenelse{
+			\equal{#1}{\empty}
+		}
+		{\rule{#3}{0.5pt}\vspace{15pt}\\}
+		{\rule{#3}{0.5pt}\vspace{15pt}\\}
+	}
+}

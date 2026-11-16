@@ -1,0 +1,10 @@
+\subsection{1. Kết quả đạt được}
+
+\indent\indent Đề tài \textbf{``Phát hiện chữ bị làm giả trong ảnh tài liệu sử dụng EfficientNet và mô hình thị giác - ngôn ngữ SmolVLM''} đã hoàn thành toàn diện các mục tiêu nghiên cứu đề ra với các kết quả cụ thể:
+
+\begin{itemize}[label={--}, itemsep=3pt]
+    \item \textbf{Xây dựng hoàn chỉnh pipeline phân loại và suy luận pháp y tài liệu:} Đề tài đã đề xuất và triển khai thành công kiến trúc hai tầng kết hợp mạng nơ-ron tích chập gọn nhẹ \textbf{EfficientNet-B0} (cho phân loại đa nhãn 6 đặc trưng vi mô) cùng mô hình thị giác - ngôn ngữ \textbf{SmolVLM2-500M} (cho trích xuất lập luận suy luận tự nhiên).
+    \item \textbf{Đề xuất quy trình làm sạch và tái cân bằng dữ liệu hiệu quả:} Xây dựng thuật toán lọc sạch các nhãn chứa cụm từ phủ định và tái cân bằng tập kiểm thử 2,000 mẫu chuẩn trên tập dữ liệu TFR / DTD-lightweight, khắc phục triệt để hiện tượng thiên lệch nhãn.
+    \item \textbf{Đạt hiệu năng định lượng ấn tượng:} Trên tập kiểm thử chuẩn, mô hình đạt \textbf{Validation Loss 0.4011}, \textbf{Độ chính xác 78.50\%} và \textbf{F1-Score 0.6658}, vượt trội so với các mô hình baseline lớn hơn như ResNet-50 trong khi số lượng tham số chỉ khoảng 5.3M (đối với phần trích xuất đặc trưng).
+    \item \textbf{Minh bạch hóa quá trình giám định với Explainable AI:} Mô hình có khả năng trích xuất chính xác chuỗi tư duy \texttt{<think>...</think>}, giải thích rõ ràng các dấu vết biên viền (edge artifacts), sai khác phông chữ (inconsistent font) và bất thường cấu trúc nén (unnatural texture), hỗ trợ đắc lực cho công tác thẩm định tài liệu số.
+\end{itemize}

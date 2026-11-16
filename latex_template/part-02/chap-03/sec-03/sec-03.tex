@@ -1,0 +1,17 @@
+\subsection{3. Thảo luận chung về các kết quả thực nghiệm}
+\indent\indent Dựa trên chuỗi các thực nghiệm từ mô hình đơn phương thức đến đa phương thức và các kiểm chứng trên mô hình truyền thống, tôi tổng hợp các thảo luận chung về hiệu quả của giải pháp đề xuất như sau:
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Tính hiệu quả của phương pháp đa phương thức:} Kết quả thực nghiệm khẳng định việc tích hợp dữ liệu văn bản và âm thanh thông qua kiến trúc MGAT giúp hệ thống vượt qua giới hạn về độ chính xác của các mô hình phân lớp ảnh thuần túy (CNN Baseline). Sự bổ sung thông tin ngữ nghĩa và đặc trưng âm thanh đã giúp giải quyết hiệu quả vấn đề nhập nhằng giữa các lớp có bối cảnh hình ảnh tương đồng, nâng cao độ tin cậy của kết quả dự đoán.
+
+    \item \textbf{Chất lượng biểu diễn đặc trưng của MGAT:} Kết quả kiểm thử với các mô hình máy học truyền thống (đặc biệt là Linear SVC đạt ~86\%) là minh chứng cho thấy kiến trúc MGAT hoạt động hiệu quả trong việc trích xuất và tổng hợp tri thức. Các vector đặc trưng đầu ra có tính phân tách tốt trong không gian nhiều chiều, giúp gom nhóm các mẫu dữ liệu cùng lớp ngay cả trước khi đi qua bộ phân lớp phi tuyến phức tạp.
+
+    \item \textbf{Sự tương thích giữa Backbone và Classifier:} Hai mô hình FastKAN và MLP cho thấy sự phụ thuộc rõ rệt vào đặc điểm của backbone:
+    \begin{itemize}[label={+}, itemsep=1pt]
+        \item \textbf{FastKAN} phát huy hiệu quả tối đa khi kết hợp với các backbone có khả năng trích xuất đặc trưng sâu và phong phú (như DenseNet, ResNet). Khả năng xấp xỉ hàm linh hoạt của KAN giúp khai thác triệt để lượng thông tin này.
+        \item \textbf{MLP} lại cho thấy sự ổn định và phù hợp hơn với các backbone hạng nhẹ (như MobileNet Small, ShuffleNet). Khi không gian đặc trưng đầu vào bị nén hoặc thưa thông tin, cấu trúc đơn giản của MLP giúp mô hình tránh được hiện tượng overfitting mà FastKAN có thể gặp phải.
+    \end{itemize}
+
+    \item \textbf{Hiệu quả của chiến lược suy luận phân tầng:} Sự chênh lệch hiệu năng giữa mô hình hai phương thức và ba phương thức xác nhận vai trò quan trọng nhưng đặc thù của dữ liệu âm thanh. Cơ chế suy luận hai bước (sử dụng cả mô hình hai phương thức và ba phương thức để lọc nhãn thô và chỉ sử dụng dữ liệu âm thanh để đưa vào mô hình ba phương thức khi cần thiết) là giải pháp hợp lý để vừa tận dụng thông tin âm thanh cho các lớp lễ hội, vừa loại bỏ nhiễu cho các lớp không cần âm thanh, vừa đảm bảo độ chính xác cao.
+\end{itemize}
+
+\indent Trong đề tài này, tôi chỉ tập trung so sánh về mặt không gian, tức số lượng tham số, mà không xem xét thời gian chạy. Lý do là vì mục tiêu chính của thực nghiệm là đánh giá hiệu quả sử dụng tham số của kiến trúc đề xuất. Nhờ áp dụng chiến lược học chuyển giao (đóng băng các backbone), mô hình chỉ cần cập nhật một lượng nhỏ tham số (khoảng 4-5M) trong tổng số tham số khá lớn của toàn hệ thống (28-40M). So sánh này nhằm chứng minh rằng, chỉ cần huấn luyện một phần nhỏ gọn, mô hình vẫn có thể khai thác hiệu quả tri thức từ các mạng tiền huấn luyện lớn để đạt độ chính xác cao, đồng thời tiết kiệm đáng kể chi phí tính toán trong quá trình huấn luyện. Thực tế, tốc độ suy luận phụ thuộc nhiều vào mức độ tối ưu hóa phần mềm và việc sử dụng CUDA, vốn chưa được tối ưu hoàn toàn trong thư viện FastKAN hiện tại.

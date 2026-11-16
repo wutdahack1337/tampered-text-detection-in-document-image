@@ -1,0 +1,24 @@
+\newpage
+\subsection{2. Kết quả thực nghiệm}
+Việc huấn luyện và thực nghiệm mô hình được tiến hành trên nhiều máy chủ khác nhau, với các cấu hình phần cứng như sau:
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Hệ điều hành:} Debian 11
+    \item \textbf{RAM:} từ 192 GiB đến 512 GiB
+    \item \textbf{CPU:} Intel Xeon Silver/Gold và AMD EPYC
+    \item \textbf{GPU:} Nvidia Quadro RTX 6000 (23 GiB) và Nvidia A40 (45 GiB)
+    \item \textbf{Thư viện:} Trong đề tài này tôi sử dụng các thư viện phổ biến như:
+    \begin{itemize}[label={+}, itemsep=1pt]
+        \item \textit{Xây dựng các mô hình học sâu:} torch (2.9.0), torchvision (0.24.0), torch-geometric (2.7.0), fastkan\footnote{\url{https://github.com/ZiyaoLi/fast-kan}}.
+        \item \textit{Xử lý ảnh và CNN backbone:} torchvision (0.24.0), pillow (12.0.0).
+        \item \textit{Xử lý văn bản:} underthesea (8.3.0) cho tách câu, tokenization và POS tagging; sentence-transformers (5.1.2) cho tạo embedding văn bản.
+        \item \textit{Xử lý âm thanh:} librosa (0.11.0).
+        \item \textit{Hỗ trợ mô hình máy học truyền thống và các thang đo đánh giá:} numpy (2.3.4), pandas (2.3.3), scikit-learn (1.7.2).
+    \end{itemize}
+\end{itemize}
+
+\input{part-02/chap-03/sec-02/subsec-01.tex}
+\input{part-02/chap-03/sec-02/subsec-02.tex}
+\input{part-02/chap-03/sec-02/subsec-03.tex}
+\input{part-02/chap-03/sec-02/subsec-04.tex}
+\input{part-02/chap-03/sec-02/subsec-05.tex}
+

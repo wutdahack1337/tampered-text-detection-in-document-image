@@ -1,0 +1,61 @@
+% Định nghĩa lại part
+\makeatletter
+\def\@part[#1]#2{%
+  \ifnum \c@secnumdepth >-2\relax
+    \refstepcounter{part}%
+  \fi
+  \addcontentsline{toc}{part}{#1}
+  \markboth{}{}%
+  {\centering
+   \interlinepenalty \@M
+   \normalfont
+   \Huge\bfseries #2\par}%
+  \@endpart}
+\makeatother
+
+% Định nghĩa lại chapter
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{-20pt}% Điều chỉnh khoảng cách trước tiêu đề chương
+  {\parindent \z@ \centering
+    \reset@font
+    \fontsize{18pt}{20pt}\selectfont \bfseries #1\par\nobreak % Điều chỉnh kích thước chữ xuống \LARGE
+    \vskip 20\p@
+  }}
+\makeatother
+
+% Định nghĩa lại section
+\makeatletter
+\renewcommand\section{\@startsection {section}{1}{\z@}% Đặt khoảng cách thụt lề bên trái thành 0pt
+    {-15pt plus -2pt minus -2pt}% Khoảng cách trước tiêu đề section
+    {6pt plus 2pt minus 2pt}% Khoảng cách sau tiêu đề section
+    {\normalfont \Large \bfseries \centering}} % Định dạng: cỡ chữ lớn, in đậm, căn giữa
+\makeatother
+
+
+\makeatletter
+\renewcommand\subsection{\@startsection {subsection}{2}{\z@}% Đặt khoảng cách thụt lề bên trái thành 0pt
+  {-8pt plus -2pt minus -2pt}% Khoảng cách trước tiêu đề subsection
+  {4pt plus 2pt minus 2pt}% Khoảng cách sau tiêu đề subsection
+  {\normalfont \fontsize{13pt}{15pt}\selectfont \bfseries \raggedright}} % Định dạng: cỡ chữ bình thường, in đậm, in nghiêng, căn lề trái
+
+
+\makeatletter
+\renewcommand\subsubsection{\@startsection {subsubsection}{3}{\z@}% Đặt khoảng cách thụt lề bên trái thành 0pt
+  {-8pt plus -2pt minus -2pt}% Khoảng cách trước tiêu đề subsection
+  {4pt plus 2pt minus 2pt}% Khoảng cách sau tiêu đề subsection
+  {\normalfont \fontsize{13pt}{15pt}\selectfont \bfseries \itshape \raggedright}} % Định dạng: cỡ chữ bình thường, in đậm, in nghiêng, căn lề trái
+\makeatother
+
+\makeatletter
+\renewcommand\paragraph{\@startsection {paragraph}{4}{\z@}% Đặt khoảng cách thụt lề bên trái thành 0pt
+  {-8pt plus -2pt minus -2pt}% Khoảng cách trước tiêu đề paragraph
+  {4pt plus 2pt minus 2pt}% Khoảng cách sau tiêu đề paragraph
+  {\normalfont \fontsize{13pt}{15pt}\selectfont \itshape \raggedright}} % Định dạng tiêu đề
+\makeatother
+
+% Giảm khoảng cách giữa số và tên của đề mục
+\renewcommand{\thechapter}{}
+\renewcommand{\thesection}{\hspace{-0.4cm}}
+\renewcommand{\thesubsection}{\hspace{-0.5cm}}
+\renewcommand{\thesubsubsection}{\hspace{-0.4cm}}

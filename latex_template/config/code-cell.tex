@@ -1,0 +1,15 @@
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{minted} 
+
+\newtcblisting{pythonminted}{
+  listing engine=minted,
+  colback=black!5,
+  colframe=blue!75!black,
+  listing only,
+  minted language=python,
+  minted options={fontsize=\small, breaklines, escapeinside=||},
+  left=5pt, right=5pt, top=5pt, bottom=5pt,
+  width=\linewidth,
+  boxrule=0.5pt,
+  arc=4pt
+}

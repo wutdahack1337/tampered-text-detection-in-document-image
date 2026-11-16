@@ -1,0 +1,49 @@
+\usepackage[utf8]{vietnam} % Cho phép sử dụng tiếng Việt trong tài liệu (mã hóa UTF-8)
+\usepackage{amsmath} % Gói để chèn các công thức toán học
+\usepackage{amssymb}
+\usepackage{mathptmx} % Gói dùng để chỉnh font-size theo pt
+\usepackage{xcolor} % Gói hỗ trợ màu sắc
+\usepackage{tikz} % Gói vẽ đồ họa vector bằng TikZ
+\usetikzlibrary{calc} % Thư viện tính toán trong TikZ (ví dụ, tính toán vị trí)
+\usepackage{adjustbox} % Cung cấp các công cụ để điều chỉnh, căn chỉnh các đối tượng trong tài liệu
+\usepackage{tocloft} % Cung cấp các công cụ để thay đổi kiểu dáng và định dạng của mục lục
+\usepackage{pdflscape} % Cho phép tạo các trang nằm ngang (landscape) trong tài liệu
+\usepackage{times} % Sử dụng font chữ Times New Roman trong tài liệu
+\usepackage{fancyhdr} % Cung cấp khả năng tạo các header và footer tùy chỉnh
+\usepackage{emptypage} % Loại bỏ header, footer và đánh số trang trên các trang trắng
+\usepackage{ragged2e} % Cung cấp các lệnh căn lề cho các đoạn văn (ví dụ: \justifying, \raggedleft, \raggedright)
+\usepackage[top=3cm, left=3.5cm, right=2.5cm, bottom=3cm, headheight=120pt, headsep=13pt]{geometry} % Thiết lập kích thước lề và các thuộc tính trang
+\usepackage{ulem} % Cung cấp các lệnh để gạch chân văn bản
+\usepackage{titlesec} % Cho phép tùy chỉnh các tiêu đề (chapter, section, etc.)
+\usepackage{enumitem} % Cung cấp các công cụ để kiểm soát kiểu và định dạng của các danh sách liệt kê
+\usepackage{soul} % Cho phép làm nổi bật văn bản bằng màu sắc hoặc gạch dưới
+\usepackage{lipsum} % Gói tạo văn bản tự động
+\usepackage{framed}
+\usepackage{listings}  % Dùng để hiển thị mã nguồn lập trình với định dạng tùy chỉnh
+\usepackage{fancyvrb}			% Phiên bản nâng cao của verbatim, dùng để chèn code
+\usepackage{pgffor, ifthen} % Hiển thị dòng kẻ để viết tay (phần Nhận xét của giảng viên)
+\usepackage{xpatch}
+
+\usepackage{caption}
+\usepackage{float} % Cho phép đặt hình ảnh, bảng ở vị trí chính xác trên trang (với tùy chọn [H])
+\usepackage{makecell} % Cho phép định dạng các ô trong bảng, như làm nổi bật header
+\usepackage{longtable} % Cho phép tạo bảng dài có thể kéo dài qua nhiều trang
+\usepackage{tabularx} % Cung cấp bảng có chiều rộng cột thay đổi tự động để lấp đầy toàn bộ chiều rộng trang
+\usepackage{graphicx} % Cho phép chèn và điều chỉnh hình ảnh vào tài liệu
+\usepackage{colortbl} % Cho phép tô màu các ô trong bảng
+\usepackage{array} % Cung cấp các lệnh mở rộng cho bảng, ví dụ: cột có chiều rộng cố định
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{minted}
+\usepackage{silence}
+\WarningsOff[hyperref]
+
+\usepackage[backend=biber]{biblatex}
+
+% Nếu dùng hyperref, tắt gạch chân cho liên kết
+\usepackage[colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue, hidelinks]{hyperref}
+
+ % Cho phép hiển thị và định dạng các URL trong tài liệu
+\renewcommand{\UrlFont}{\fontfamily{lmtt}\selectfont}
+\renewcommand{\ttdefault}{lmtt}

@@ -1,0 +1,23 @@
+\subsection{1. Mô tả chi tiết bài toán}
+\subsubsection{1.1. Bài toán phân loại ICH}
+\indent\indent Nghiên cứu tập trung giải quyết bài toán phân loại ICH dựa trên dữ liệu đa phương thức gồm video (được trích xuất thành hình ảnh/âm thanh), hình ảnh, văn bản và âm thanh vào các nhóm chủ đề đã được xác định trước. Khác với các phương pháp phân loại truyền thống chỉ dựa trên đặc điểm thị giác tĩnh, bài toán này đòi hỏi mô hình phải có khả năng tổng hợp và xử lý tri thức từ nhiều nguồn thông tin phức tạp, phản ánh đúng tính chất đa dạng của ICH.\vspace{0.3cm}
+
+Hệ thống phân loại được xây dựng dựa trên ba cách thức xử lý đặc trưng chính:\vspace{-0.1cm}
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Đặc trưng hình ảnh:} Phân tích bối cảnh không gian, trang phục, động tác biểu diễn hoặc quy trình thủ công thông qua các khung hình trích xuất từ video hoặc hình ảnh đầu vào. Quá trình này sử dụng các kiến trúc CNN tiên tiến (được huấn luyện trước trên tập ImageNet) làm bộ trích xuất đặc trưng nền tảng (backbone).
+    \item \textbf{Đặc trưng văn bản:} Khai thác thông tin ngữ nghĩa từ phụ đề video hoặc văn bản mô tả do người dùng nhập liệu. Các từ khóa quan trọng và ngữ cảnh câu được trích xuất và mã hóa thành các vector đặc trưng (embeddings) thông qua mô hình Sentence Transformers, giúp máy tính hiểu được nội dung văn bản.
+    \item \textbf{Đặc trưng âm thanh:} Đối với các loại hình diễn xướng hoặc lễ hội, cần tận dụng các tín hiệu âm thanh đặc trưng (như giai điệu, tiết tấu) sử dụng kỹ thuật trích xuất như MFCC để phân biệt các sắc thái nghệ thuật.
+\end{itemize}
+
+Mục tiêu cốt lõi của đề tài là xây dựng một kiến trúc hợp nhất sử dụng MGNN (MGAT) kết hợp với KAN (FastKAN). Mô hình này đóng vai trò liên kết các đặc trưng rời rạc từ ba phương thức trên thành một biểu diễn tri thức thống nhất, từ đó đưa ra quyết định phân loại ICH với độ chính xác cao.
+
+%=======================================================================
+\subsubsection{1.2. Ứng dụng Web}
+\indent\indent Để minh chứng cho tính thực tiễn của mô hình nghiên cứu và hỗ trợ người dùng trong việc phân loại ICH, đề tài triển khai xây dựng ứng dụng web \textbf{ICH Predictor}. Hệ thống được thiết kế không chỉ để đưa ra kết quả dự đoán mà còn hướng tới việc trực quan hóa để giúp người dùng có thêm góc nhìn khác về cách mà dữ liệu tương tác với nhau.\vspace{0.3cm}
+
+Các chức năng chính của hệ thống bao gồm:\vspace{-0.1cm}
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Chức năng 1 -- Dự đoán đơn phương thức:} Người dùng tải lên video hoặc tập hợp hình ảnh. Hệ thống sẽ sử dụng mô hình CNN Baseline để trích xuất và phân tích dựa trên dữ liệu thị giác thuần túy. Kết quả trả về bao gồm nhãn ICH và độ tin cậy của nhãn.
+    \item \textbf{Chức năng 2 -- Dự đoán đa phương thức (Hình ảnh + Văn bản):} Người dùng cung cấp dữ liệu hình ảnh, video kèm theo văn bản mô tả (nhập trực tiếp hoặc tải lên file \texttt{.txt}). Hệ thống sẽ sử dụng mô hình MGAT + FastKAN/MLP được huấn luyện chuyên biệt cho hai phương thức này để tiến hành phân loại. Bên cạnh kết quả dự đoán, giao diện sẽ hiển thị trực quan cấu trúc đồ thị, minh họa cách các nút hình ảnh và văn bản được liên kết và tương tác với nhau trong quá trình suy luận.
+    \item \textbf{Chức năng 3 -- Dự đoán đa phương thức toàn diện (Hình ảnh + Văn bản + Âm thanh):} Đây là chức năng cho phép người dùng bổ sung dữ liệu âm thanh cũng như là tận dụng dữ liệu âm thanh từ video trong quá trình dự đoán. Ở chức năng này, hệ thống sẽ sử dụng mô hình MGAT + FastKAN/MLP được huấn luyện với đầy đủ 3 phương thức để cho ra kết quả phân loại. Tương tự như \textbf{Chức năng 2}, hệ thống sẽ cung cấp nhãn ICH, độ tin cậy và phần trực quan hóa cấu trúc đồ thị đa phương thức.
+\end{itemize}

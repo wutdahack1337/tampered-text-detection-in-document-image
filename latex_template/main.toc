@@ -1,0 +1,58 @@
+\contentsline {chapter}{\numberline {}DANH MỤC HÌNH ẢNH}{iii}{chapter.1}%
+\contentsline {chapter}{\numberline {}DANH MỤC BẢNG BIỂU}{v}{chapter.2}%
+\contentsline {chapter}{\numberline {}DANH MỤC TỪ VIẾT TẮT}{vii}{chapter.3}%
+\contentsline {chapter}{\numberline {}ABSTRACT}{viii}{chapter.4}%
+\contentsline {chapter}{\numberline {}TÓM LƯỢC}{ix}{chapter.5}%
+\contentsline {chapter}{\numberline {}I. PHẦN GIỚI THIỆU}{1}{chapter.6}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Đặt vấn đề}{1}{subsection.6.0.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Những nghiên cứu liên quan}{1}{subsection.6.0.2}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Mục tiêu đề tài}{2}{subsection.6.0.3}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}4. Đối tượng và phạm vi nghiên cứu}{3}{subsection.6.0.4}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}5. Phương pháp nghiên cứu}{4}{subsection.6.0.5}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}6. Bố cục quyển báo cáo}{4}{subsection.6.0.6}%
+\contentsline {chapter}{\numberline {}II. PHẦN NỘI DUNG}{6}{chapter.7}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 1. MÔ TẢ BÀI TOÁN}{6}{section.7.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Mô tả chi tiết bài toán}{6}{subsection.7.1.1}%
+\contentsline {subsubsection}{1.1. Bài toán phân loại ICH}{6}{section*.3}%
+\contentsline {subsubsection}{1.2. Ứng dụng Web}{6}{section*.4}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Vấn đề giải pháp liên quan đến bài toán}{7}{subsection.7.1.2}%
+\contentsline {subsubsection}{2.1. Mạng noron tích chập (CNN)}{7}{section*.5}%
+\contentsline {subsubsection}{2.2. Mô hình embedding câu (Sentence Transformer)}{8}{section*.7}%
+\contentsline {subsubsection}{2.3. Đặc trưng MFCC của âm thanh}{10}{section*.9}%
+\contentsline {subsubsection}{2.4. Đồ thị đa phương thức (Multimodal Graph -- MG)}{10}{section*.10}%
+\contentsline {subsubsection}{2.5. Mạng noron đồ thị (GNN)}{12}{section*.12}%
+\contentsline {subsubsection}{2.6. Mạng Kolgomorov-Arnold (KAN)}{14}{section*.15}%
+\contentsline {subsubsection}{2.7. Thang đo độ chính xác}{15}{section*.17}%
+\contentsline {subsubsection}{2.8. Framework web}{16}{section*.18}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 2. THIẾT KẾ VÀ CÀI ĐẶT GIẢI PHÁP}{18}{section.7.2}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Thiết kế hệ thống}{18}{subsection.7.2.1}%
+\contentsline {subsubsection}{1.1. Mô hình CNN baseline:}{20}{section*.20}%
+\contentsline {subsubsection}{1.2. Mô hình MGAT + FastKAN/MLP}{21}{section*.22}%
+\contentsline {paragraph}{1.2.1. Tầng trích xuất đặc trưng}{21}{section*.23}%
+\contentsline {paragraph}{1.2.2. Tầng chiếu không gian chung}{22}{section*.25}%
+\contentsline {paragraph}{1.2.3. Tầng học trọng số cạnh}{23}{section*.27}%
+\contentsline {paragraph}{1.2.4. Tầng GAT}{24}{section*.29}%
+\contentsline {paragraph}{1.2.5. Bộ phân lớp}{26}{section*.31}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Cài đặt giải pháp}{27}{subsection.7.2.2}%
+\contentsline {subsubsection}{2.1. Thu thập dữ liệu}{27}{section*.33}%
+\contentsline {subsubsection}{2.2. Tiền xử lý dữ liệu}{28}{section*.35}%
+\contentsline {paragraph}{2.2.1. Phân đoạn video và phụ đề}{28}{section*.36}%
+\contentsline {paragraph}{2.2.2. Trích xuất hình ảnh và âm thanh}{28}{section*.37}%
+\contentsline {paragraph}{2.2.3. Chuẩn hóa phụ đề bằng LLM}{29}{section*.38}%
+\contentsline {paragraph}{2.2.4. Tiền tính toán dữ liệu văn bản và âm thanh}{29}{section*.39}%
+\contentsline {paragraph}{2.2.5. Phân chia tập dữ liệu}{30}{section*.40}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 3. KIỂM THỬ VÀ ĐÁNH GIÁ}{32}{section.7.3}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Giao diện sản phẩm}{32}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Kết quả thực nghiệm}{37}{subsection.7.3.2}%
+\contentsline {subsubsection}{2.1. Các thông số cho huấn luyện và kiểm thử}{37}{section*.55}%
+\contentsline {paragraph}{2.1.1. Tham số mô hình, siêu tham số và kỹ thuật huấn luyện}{37}{section*.56}%
+\contentsline {paragraph}{2.1.2. Chiến lược kiểm thử}{40}{section*.61}%
+\contentsline {subsubsection}{2.2. Kết quả kiểm thử trên các mô hình CNN baseline}{40}{section*.62}%
+\contentsline {subsubsection}{2.3. Kết quả kiểm thử trên mô hình CNN + MGAT + FastKAN/MLP với toàn bộ phương thức}{44}{section*.71}%
+\contentsline {subsubsection}{2.4. Kết quả kiểm thử trên mô hình CNN + MGAT + FastKAN/MLP với hai phương thức (hình ảnh và văn bản)}{49}{section*.80}%
+\contentsline {subsubsection}{2.5. Kết quả kiểm thử trên mô hình CNN + MGAT + mô hình phân lớp truyền thống với toàn bộ phương thức}{53}{section*.89}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Thảo luận chung về các kết quả thực nghiệm}{54}{subsection.7.3.3}%
+\contentsline {chapter}{\numberline {}III. PHẦN KẾT LUẬN}{56}{chapter.8}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Kết quả đạt được}{56}{subsection.8.0.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Hướng phát triển}{56}{subsection.8.0.2}%
+\contentsline {chapter}{\numberline {}TÀI LIỆU THAM KHẢO}{57}{chapter.9}%

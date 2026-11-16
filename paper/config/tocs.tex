@@ -1,0 +1,23 @@
+% Đảm bảo có dấu chấm cho tất cả các cấp độ mục lục
+
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}  % Mục
+\renewcommand{\cftsubsecleader}{\cftdotfill{\cftdotsep}} % Tiểu mục
+\renewcommand{\cftdotsep}{2}
+
+\renewcommand{\cftsecfont}{\bfseries}   % Định dạng chữ in đậm cho section
+\renewcommand{\cftsecpagefont}{\bfseries}  % Định dạng số trang in đậm cho section
+
+\cftsetindents{chapter}{0em}{0em} 
+\cftsetindents{section}{0.5em}{0.5em}   
+\cftsetindents{subsection}{1em}{1em} 
+\cftsetindents{subsubsection}{3em}{3em} 
+
+% \setlength{\cftbeforepartskip}{1.2em}
+\setlength{\cftbeforechapskip}{1em}
+\setlength{\cftbeforesecskip}{0.7em}  % Khoảng cách trước mỗi mục cấp 1
+\setlength{\cftbeforesubsecskip}{0.2em}  % Khoảng cách trước mỗi mục cấp 2
+\setlength{\cftbeforesubsubsecskip}{0.2em}  % Khoảng cách trước mỗi mục cấp 3
+\setlength{\cftbeforetoctitleskip}{10pt}  % Khoảng cách trước tiêu đề "Mục lục"
+\setlength{\cftaftertoctitleskip}{25pt}  % Khoảng cách sau tiêu đề "Mục lục"
+
+\setcounter{tocdepth}{3}

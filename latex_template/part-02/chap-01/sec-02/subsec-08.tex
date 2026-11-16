@@ -1,0 +1,17 @@
+\subsubsection{2.8. Framework web}
+\indent\indent Để xây dựng một hệ thống tích hợp mô hình học sâu với giao diện người dùng tương tác cao, kiến trúc ứng dụng được chia thành hai phần chính: Frontend sử dụng Angular và Backend sử dụng FastAPI.\vspace{0.3cm}
+
+Angular\footnote{\url{https://angular.dev/}} là một nền tảng phát triển ứng dụng đơn trang (Single Page Application -- SPA) mã nguồn mở được phát triển bởi Google. Trong phiên bản hiện đại (Angular 20+), framework này đã thực hiện một cuộc cách mạng về kiến trúc với sự giới thiệu của cơ chế Signals.\vspace{0.3cm}
+
+Khác với các phiên bản cũ phụ thuộc vào thư viện \textit{Zone.js} để phát hiện thay đổi (dirty checking) trên toàn bộ cây DOM, kiến trúc Signal mang lại khả năng reactive tốt hơn. Điều này cho phép Angular cập nhật chính xác vị trí dữ liệu thay đổi trên giao diện mà không cần render lại các thành phần không liên quan, tương tự như cơ chế quản lý trạng thái của React nhưng được tích hợp sâu vào lõi framework.\vspace{0.3cm}
+
+Ưu điểm vượt trội của Angular so với các đối thủ là tính "nguyên khối". Nó cung cấp sẵn một hệ sinh thái đồng bộ bao gồm: Routing, HTTP Client, Form Validation và Dependency Injection mạnh mẽ, giúp tối ưu hóa hiệu suất tải trang và duy trì tính ổn định cho các hệ thống doanh nghiệp lớn.\vspace{0.3cm}
+
+Về phần Backend, FastAPI\footnote{\url{https://fastapi.tiangolo.com/}} được lựa chọn nhờ hiệu năng vượt trội và khả năng tương thích hoàn hảo với hệ sinh thái Python (ngôn ngữ bản ngữ của AI/Machine Learning).\vspace{0.3cm}
+
+FastAPI được xây dựng trên chuẩn ASGI (Asynchronous Server Gateway Interface), cho phép xử lý bất đồng bộ các yêu cầu đồng thời, giúp giảm độ trễ khi mô hình AI thực hiện suy luận. Điểm mạnh của FastAPI bao gồm:\vspace{-0.1cm}
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item Hiệu suất cao: Tốc độ xử lý ngang ngửa với NodeJS và Go, nhờ sử dụng Starlette cho phần web và Pydantic cho phần validation dữ liệu.
+    \item Tích hợp AI dễ dàng: Vì chạy trên Python, FastAPI có thể gọi trực tiếp các thư viện PyTorch, TensorFlow hay các mô hình HuggingFace mà không cần qua các cầu nối ngôn ngữ phức tạp.
+    \item Tự động hóa tài liệu: Tự động sinh tài liệu API chuẩn OpenAPI (Swagger UI), giúp việc giao tiếp giữa đội ngũ phát triển Frontend và AI engineer trở nên dễ dàng.
+\end{itemize}

@@ -1,0 +1,21 @@
+\addbibresource{bib/refs.bib}
+
+% Định dạng lại tiêu đề: chỉ in nghiêng, không gạch chân
+% \DeclareFieldFormat{title}{%
+%   \iffieldundef{url}
+%     {#1}
+%     {\href{\thefield{url}}{#1}}%
+% }
+\setlength{\bibhang}{0pt}
+\setlength{\labelnumberwidth}{2.5em}
+\DeclareFieldFormat{title}{\textit{#1}}
+\DeclareFieldFormat{booktitle}{\textit{#1}}
+\DeclareFieldFormat{journal}{\textit{#1}}
+\DeclareFieldFormat[article]{journaltitle}{{#1}}
+
+% If you want to break on URL numbers
+\setcounter{biburlnumpenalty}{9000}
+% If you want to break on URL lower case letters
+\setcounter{biburllcpenalty}{9000}
+% If you want to break on URL UPPER CASE letters
+\setcounter{biburlucpenalty}{9000}

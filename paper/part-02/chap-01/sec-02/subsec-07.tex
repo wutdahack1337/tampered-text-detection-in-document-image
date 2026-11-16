@@ -1,0 +1,23 @@
+\subsubsection{2.7. Thang đo độ chính xác}
+\indent\indent Để đánh giá định lượng hiệu quả của các mô hình học sâu trong bài toán phân lớp, việc chỉ dựa vào số lượng mẫu dự đoán đúng là chưa đủ. Mà cần phải dựa trên ma trận nhầm lẫn (Confusion Matrix) với bốn thành phần cơ bản: Dương tính thật (True Positive - TP), Âm tính thật (True Negative - TN), Dương tính giả (False Positive - FP), và Âm tính giả (False Negative - FN), các thành phần này tạo thành các thang đo tiêu chuẩn sau:\vspace{-0.1cm}
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Accuracy:} Là tỷ lệ giữa tổng số mẫu được dự đoán đúng trên tổng số mẫu trong tập dữ liệu. Đây là thang đo phổ biến nhất nhưng thường không phản ánh đúng hiệu năng khi tập dữ liệu bị mất cân bằng.
+    \[
+        \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+    \]
+
+    \item \textbf{Precision:} Phản ánh mức độ tin cậy của mô hình khi dự đoán một mẫu là dương tính. Precision trả lời câu hỏi: "Trong số các mẫu mô hình dự đoán là Positive, bao nhiêu mẫu thực sự là Positive?".
+    \[
+        \text{Precision} = \frac{TP}{TP + FP}
+    \]
+
+    \item \textbf{Recall:} Còn được gọi là Sensitivity, thang đo này phản ánh khả năng của mô hình trong việc phát hiện các mẫu dương tính thực tế. Recall trả lời câu hỏi: "Trong tổng số các mẫu thực sự là Positive, mô hình đã bỏ sót bao nhiêu mẫu?".
+    \[
+        \text{Recall} = \frac{TP}{TP + FN}
+    \]
+
+    \item \textbf{F1-Score:} Trong thực tế, thường có sự đánh đổi giữa Precision và Recall. F1-Score là trung bình điều hòa của hai giá trị này, cung cấp một đánh giá tổng quát cân bằng hơn, đặc biệt hữu ích trong các bài toán mà dữ liệu phân bố không đều.
+    \[
+        \text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+    \]
+\end{itemize}

@@ -1,0 +1,35 @@
+\noaddvspace 
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {\textbf {1}}{\ignorespaces Phân bố số lượng mẫu dữ liệu cho từng tập}}{30}{table.caption.41}%
+\contentsline {table}{\numberline {\textbf {2}}{\ignorespaces Thống kê số lượng tham số của các mô hình CNN Baseline}}{37}{table.caption.57}%
+\contentsline {table}{\numberline {\textbf {3}}{\ignorespaces \centering Thống kê số lượng tham số của mô hình CNN backbone + MGAT + FastKAN/MLP trên toàn bộ phương thức}}{38}{table.caption.58}%
+\contentsline {table}{\numberline {\textbf {4}}{\ignorespaces Classification report của ResNet18 trên CNN baseline}}{40}{table.caption.63}%
+\contentsline {table}{\numberline {\textbf {5}}{\ignorespaces Classification report của RegNetX400MF trên CNN baseline}}{41}{table.caption.64}%
+\contentsline {table}{\numberline {\textbf {6}}{\ignorespaces Classification report của MobileNetV3 Large trên CNN baseline}}{41}{table.caption.65}%
+\contentsline {table}{\numberline {\textbf {7}}{\ignorespaces Classification report của MobileNetV3 Small trên CNN baseline}}{41}{table.caption.66}%
+\contentsline {table}{\numberline {\textbf {8}}{\ignorespaces Classification report khi kiểm thử DenseNet121 trên CNN baseline}}{42}{table.caption.67}%
+\contentsline {table}{\numberline {\textbf {9}}{\ignorespaces Classification report khi kiểm thử ShuffleNet V2 1.0x trên CNN baseline}}{42}{table.caption.68}%
+\contentsline {table}{\numberline {\textbf {10}}{\ignorespaces Kết quả kiểm thử trung bình của tất cả các mô hình CNN baseline}}{43}{table.caption.69}%
+\contentsline {table}{\numberline {\textbf {11}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên toàn bộ phương thức với backbone ResNet18}}{44}{table.caption.72}%
+\contentsline {table}{\numberline {\textbf {12}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên toàn bộ phương thức với backbone RegNetX400MF}}{45}{table.caption.73}%
+\contentsline {table}{\numberline {\textbf {13}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên toàn bộ phương thức với backbone MobileNetV3 Large}}{45}{table.caption.74}%
+\contentsline {table}{\numberline {\textbf {14}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên toàn bộ phương thức với backbone MobileNetV3 Small}}{45}{table.caption.75}%
+\contentsline {table}{\numberline {\textbf {15}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên toàn bộ phương thức với backbone DenseNet121}}{46}{table.caption.76}%
+\contentsline {table}{\numberline {\textbf {16}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên toàn bộ phương thức với backbone ShuffleNetV2 1.0x}}{46}{table.caption.77}%
+\contentsline {table}{\numberline {\textbf {17}}{\ignorespaces \centering Kết quả kiểm thử trung bình của tất cả các mô hình CNN backbone + MGAT + FastKAN/MLP trên toàn bộ phương thức}}{47}{table.caption.78}%
+\contentsline {table}{\numberline {\textbf {18}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên hai phương thức với backbone ResNet18}}{49}{table.caption.81}%
+\contentsline {table}{\numberline {\textbf {19}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên hai phương thức với backbone RegNetX400MF}}{49}{table.caption.82}%
+\contentsline {table}{\numberline {\textbf {20}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên hai phương thức với backbone MobileNetV3 Large}}{50}{table.caption.83}%
+\contentsline {table}{\numberline {\textbf {21}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên hai phương thức với backbone MobileNetV3 Small}}{50}{table.caption.84}%
+\contentsline {table}{\numberline {\textbf {22}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên hai phương thức với backbone DenseNet121}}{50}{table.caption.85}%
+\contentsline {table}{\numberline {\textbf {23}}{\ignorespaces \centering Classification report của FastKAN(1) và MLP(2) trên hai phương thức với backbone ShuffleNetV2 1.0x}}{51}{table.caption.86}%
+\contentsline {table}{\numberline {\textbf {24}}{\ignorespaces \centering Kết quả kiểm thử trung bình của tất cả các mô hình CNN backbone + MGAT + FastKAN/MLP trên hai phương thức}}{52}{table.caption.87}%
+\contentsline {table}{\numberline {\textbf {25}}{\ignorespaces \centering Kết quả kiểm thử trung bình của các mô hình truyền thống (sử dụng đặc trưng từ DenseNet121 + MGAT + FastKAN)}}{53}{table.caption.90}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }

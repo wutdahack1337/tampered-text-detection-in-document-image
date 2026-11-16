@@ -1,0 +1,14 @@
+\subsection{3. Mục tiêu đề tài}
+
+\indent\indent Đề tài hướng tới việc giải quyết bài toán phát hiện và giải thích hành vi làm giả văn bản trong tài liệu số thông qua các mục tiêu cụ thể sau:\vspace{0.3cm}
+
+\textbf{Mục tiêu tổng quát:}
+Xây dựng một quy trình học sâu gọn nhẹ, chính xác và có khả năng giải thích suy luận tự động nhằm phát hiện các vùng chữ bị làm giả trong ảnh tài liệu.
+
+\textbf{Mục tiêu cụ thể:}
+\begin{enumerate}[label=\alph*)]
+    \item \textbf{Nghiên cứu và tiền xử lý tập dữ liệu:} Khảo sát tập dữ liệu chuẩn DTD (Document Tampering Dataset) phiên bản gọn nhẹ (DTD-lightweight); thực hiện tái cân bằng phân bố các tập train/val/test (rebalancing splits) để khắc phục hiện tượng mất cân bằng dữ liệu giữa các lớp làm giả.
+    \item \textbf{Xây dựng mô hình phân loại đa lớp gọn nhẹ:} Ứng dụng và tinh chỉnh kiến trúc EfficientNet-B0 để trích xuất đặc trưng giả mạo và phân loại chính xác các hình thức làm giả văn bản (Multi-class Tampered Text Classification) với số lượng tham số tối thiểu.
+    \item \textbf{Tích hợp mô hình thị giác - ngôn ngữ giải thích suy luận:} Khai thác mô hình SmolVLM2-500M để sinh ra các đoạn văn bản lý giải chi tiết (Reasoning Extraction), làm rõ các dấu vết bất thường (như sai lệch phông chữ, viền nén, độ mờ) của vùng chữ bị can thiệp.
+    \item \textbf{Đánh giá và so sánh thực nghiệm:} Thực hiện đánh giá toàn diện mô hình dựa trên các chỉ số định lượng (Loss, Accuracy, F1-score) và đánh giá định tính các câu suy luận trích xuất được.
+\end{enumerate}

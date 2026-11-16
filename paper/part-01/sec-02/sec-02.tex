@@ -1,0 +1,13 @@
+\subsection{2. Những nghiên cứu liên quan}
+
+\indent\indent Lĩnh vực giám định ảnh số và phát hiện làm giả tài liệu (Document Image Forensics) đã trải qua quá trình phát triển mạnh mẽ từ các phương pháp truyền thống đến các mô hình học sâu hiện đại.
+
+Các nghiên cứu ban đầu tập trung vào các đặc trưng vật lý và thống kê tần số của ảnh. Krawetz \cite{krawetz2007picture} đề xuất phương pháp Phân tích mức sai số (Error Level Analysis -- ELA), cho phép trực quan hóa mức độ nén JPEG không đồng nhất trên các vùng ảnh khác nhau. Farid \cite{farid2009image} đã tổng hợp các kỹ thuật phát hiện giả mạo dựa trên bất thường của hàm phản hồi quang học (CFR), sai lệch nguồn sáng và dấu vết nội suy màu (CFA artifacts). Mặc dù các kỹ thuật này mang tính khoa học cao, chúng thường bộc lộ hạn chế lớn khi tài liệu bị làm giả trải qua các bước nén hoặc chuyển đổi định dạng nhiều lần.\vspace{0.3cm}
+
+Với sự bùng nổ của mạng nơ-ron tích chập (CNN), các mô hình học sâu đã mang lại bước nhảy vọt về độ chính xác. Nhiều kiến trúc như ResNet \cite{he2015deepresiduallearningimage} hay DenseNet \cite{huang2018denselyconnectedconvolutionalnetworks} được áp dụng để học tự động các biểu diễn đặc trưng giả mạo ở cấp độ vi mô. Để giải quyết bài toán tài liệu cụ thể, Wang và cộng sự \cite{dtd_dataset} đã công bố tập dữ liệu chuẩn DTD (Document Tampering Dataset), cung cấp hàng ngàn mẫu tài liệu bị chỉnh sửa với các kỹ thuật sao chép, chèn chữ và xóa nội dung. Tuy nhiên, các mạng nơ-ron truyền thống này thường có số lượng tham số rất lớn, gây khó khăn cho việc triển khai trong môi trường hạn chế tài nguyên.\vspace{0.3cm}
+
+Để cân bằng giữa hiệu năng và kích thước mô hình, Tan và Le \cite{tan2019efficientnet} đã đề xuất dòng kiến trúc \textbf{EfficientNet}. Bằng cách áp dụng phương pháp co giãn phức hợp (compound scaling) đồng thời cân bằng giữa độ sâu, độ rộng và độ phân giải đầu vào, EfficientNet-B0 đạt được độ chính xác tương đương các mạng lớn với số lượng tham số chỉ bằng một phần nhỏ (~5.3 triệu tham số). Đây là cơ sở lý tưởng để xây dựng bộ phân loại làm giả chữ gọn nhẹ.\vspace{0.3cm}
+
+Gần đây nhất, sự xuất hiện của các mô hình Thị giác - Ngôn ngữ (Vision-Language Models -- VLM) như SmolVLM \cite{smolvlm2024} đã mở ra kỷ nguyên mới về trí tuệ nhân tạo có thể giải thích (Explainable AI). Với kích thước nhỏ gọn (~500M tham số), SmolVLM có thể hiểu đồng thời tín hiệu thị giác và ngữ nghĩa văn bản, cho phép sinh ra các câu lý giải tự nhiên chỉ rõ tại sao một vùng chữ bị nghi ngờ là giả mạo.
+
+Tóm lại, khoảng trống nghiên cứu hiện nay là sự thiếu vắng các giải pháp kết hợp vừa đảm bảo tính gọn nhẹ trong phân loại, vừa cung cấp khả năng giải thích suy luận tự động. Đề tài này được thực hiện nhằm lấp đầy khoảng trống đó.

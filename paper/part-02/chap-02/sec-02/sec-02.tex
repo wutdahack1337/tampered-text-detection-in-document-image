@@ -1,0 +1,38 @@
+\subsection{2. Thu thập và Tiền xử lý dữ liệu}
+
+\subsubsection{2.1. Tập dữ liệu DTD / TFR-lightweight}
+\indent\indent Nghiên cứu sử dụng tập dữ liệu chuẩn hóa TFR (Tampered Text Forensic and Reasoning) kết hợp DTD-lightweight. Tập dữ liệu gốc bao gồm hai tập con chính:
+\begin{itemize}[label={--}, itemsep=1pt]
+    \item \textbf{Tập huấn luyện (DOC\_ALLS\_9705):} Gồm 9,705 mẫu ảnh tài liệu có nhãn làm giả, đi kèm mặt nạ phân đoạn (binary mask) và các chuỗi văn bản chú thích suy luận.
+    \item \textbf{Tập kiểm thử (DOC\_ALLS\_2518):} Gồm 2,518 mẫu kiểm thử độc lập dùng để đánh giá khả năng tổng quát hóa của mô hình.
+\end{itemize}
+
+\subsubsection{2.2. Chiến lược xử lý văn bản phủ định và Tái cân bằng tập dữ liệu (Rebalancing Splits)}
+\indent\indent Trong quá trình khảo sát dữ liệu chú thích của tập TFR, tôi nhận thấy nhiều câu mô tả chứa các cụm từ phủ định (Negative Phrases) như: \textit{``delete this item''}, \textit{``not cause''}, \textit{``no obvious''}, \textit{``contradicts''}, \textit{``no such artifacts''}, \textit{``should be deleted''}. Nếu chỉ dùng kỹ thuật khớp từ khóa đơn thuần (Regex Search), mô hình sẽ gán nhầm nhãn dương tính ($1$) cho các đặc trưng thực chất không tồn tại.\vspace{0.3cm}
+
+Để khắc phục hiện tượng trên, thuật toán lọc ngữ cảnh phủ định được cài đặt:
+\begin{lstlisting}[language=Python, frame=single, caption={Lọc nhãn phủ định và xây dựng vector nhãn nhị phân}]
+def extract_label_vector(content):
+    vec = []
+    for k in LABELS:
+        m = re.search(LABEL_PATTERNS[k], content, re.I)
+        if m:
+            text = m.group(1).lower()
+            if not any(neg in text for neg in NEGATIVE_PHRASES):
+                vec.append(1)
+            else:
+                vec.append(0)
+        else:
+            vec.append(0)
+    return vec
+\end{lstlisting}
+
+Sau khi lọc sạch nhãn, sự mất cân bằng giữa các lớp làm giả vẫn rất lớn (ví dụ: \textit{edge\_artifacts} chiếm trên 65\% trong khi \textit{text\_incoherence} chỉ chiếm khoảng 12\%). Để đảm bảo độ tin cậy trong đánh giá, tôi xây dựng tập kiểm thử chuẩn hóa gồm \textbf{2,000 mẫu} thông qua thuật toán phân tầng (stratified sampling) với hạt giống ngẫu nhiên $Seed = 42$, giúp phân bố giữa các lớp đồng đều hơn.
+
+\subsubsection{2.3. Quy trình chuẩn hóa và Tăng cường dữ liệu hình ảnh}
+\indent\indent Dữ liệu ảnh sau khi cắt theo vùng quan tâm (ROI) được xử lý qua chuỗi biến đổi:
+\begin{enumerate}
+    \item \textbf{Thay đổi kích thước (Resize):} Đưa kích thước ảnh về $224 \times 224$ pixel bằng phép nội suy song tuyến tính (Bilinear Interpolation).
+    \item \textbf{Chuẩn hóa (Normalization):} Chuẩn hóa giá trị kênh màu theo phân phối ImageNet: $\mu = [0.485, 0.456, 0.406]$ và $\sigma = [0.229, 0.224, 0.225]$.
+    \item \textbf{Tăng cường dữ liệu (Data Augmentation):} Áp dụng ngẫu nhiên phép lật ngang (Random Horizontal Flip, $p=0.5$), xoay nhẹ góc nhỏ (Random Rotation $\pm 10^\circ$) và biến thiên độ sáng/tương phản nhẹ (Color Jitter) nhằm tăng khả năng chống chịu với nhiễu scan thực tế.
+\end{enumerate}

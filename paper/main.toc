@@ -1,0 +1,46 @@
+\contentsline {chapter}{\numberline {}DANH MỤC HÌNH ẢNH}{iii}{chapter.1}%
+\contentsline {chapter}{\numberline {}DANH MỤC BẢNG BIỂU}{iv}{chapter.2}%
+\contentsline {chapter}{\numberline {}DANH MỤC TỪ VIẾT TẮT}{v}{chapter.3}%
+\contentsline {chapter}{\numberline {}ABSTRACT}{vi}{chapter.4}%
+\contentsline {chapter}{\numberline {}TÓM LƯỢC}{vii}{chapter.5}%
+\contentsline {chapter}{\numberline {}I. PHẦN GIỚI THIỆU}{1}{chapter.6}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Đặt vấn đề}{1}{subsection.6.0.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Những nghiên cứu liên quan}{2}{subsection.6.0.2}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Mục tiêu đề tài}{2}{subsection.6.0.3}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}4. Đối tượng và phạm vi nghiên cứu}{3}{subsection.6.0.4}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}5. Phương pháp nghiên cứu}{3}{subsection.6.0.5}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}6. Ý nghĩa khoa học, thực tiễn và Bố cục luận văn}{4}{subsection.6.0.6}%
+\contentsline {chapter}{\numberline {}II. PHẦN NỘI DUNG}{6}{chapter.7}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 1. MÔ TẢ BÀI TOÁN}{6}{section.7.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Mô tả chi tiết bài toán}{6}{subsection.7.1.1}%
+\contentsline {subsubsection}{1.1. Bài toán phát hiện chữ bị làm giả trong tài liệu}{6}{section*.3}%
+\contentsline {subsubsection}{1.2. Mục tiêu hệ thống và yêu cầu suy luận}{6}{section*.4}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Cơ sở lý thuyết liên quan}{7}{subsection.7.1.2}%
+\contentsline {subsubsection}{2.1. Kiến trúc mạng nơ-ron tích chập EfficientNet-B0}{7}{section*.5}%
+\contentsline {subsubsection}{2.2. Kỹ thuật pháp y ảnh tài liệu số}{7}{section*.6}%
+\contentsline {subsubsection}{2.3. Mô hình thị giác - ngôn ngữ SmolVLM2 và cơ chế sinh suy luận}{8}{section*.7}%
+\contentsline {subsubsection}{2.4. Các độ đo đánh giá mô hình}{8}{section*.8}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 2. THIẾT KẾ VÀ CÀI ĐẶT GIẢI PHÁP}{9}{section.7.2}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Thiết kế kiến trúc hệ thống}{9}{subsection.7.2.1}%
+\contentsline {subsubsection}{1.1. Luồng xử lý tổng thể (System Pipeline)}{9}{section*.9}%
+\contentsline {subsubsection}{1.2. Hệ thống nhãn phân loại pháp y (Forensic Labels)}{9}{section*.10}%
+\contentsline {subsubsection}{1.3. Cơ chế trích xuất chuỗi lập luận (Reasoning Rationale)}{9}{section*.12}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Thu thập và Tiền xử lý dữ liệu}{10}{subsection.7.2.2}%
+\contentsline {subsubsection}{2.1. Tập dữ liệu DTD / TFR-lightweight}{10}{section*.13}%
+\contentsline {subsubsection}{2.2. Chiến lược xử lý văn bản phủ định và Tái cân bằng tập dữ liệu (Rebalancing Splits)}{10}{section*.14}%
+\contentsline {subsubsection}{2.3. Quy trình chuẩn hóa và Tăng cường dữ liệu hình ảnh}{11}{section*.15}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 3. KIỂM THỬ VÀ ĐÁNH GIÁ}{12}{section.7.3}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Môi trường thực nghiệm và Thiết lập huấn luyện}{12}{subsection.7.3.1}%
+\contentsline {subsubsection}{1.1. Môi trường phần cứng và phần mềm}{12}{section*.16}%
+\contentsline {subsubsection}{1.2. Thiết lập siêu tham số huấn luyện (Hyperparameters)}{12}{section*.18}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Kết quả thực nghiệm và Đánh giá}{12}{subsection.7.3.2}%
+\contentsline {subsubsection}{2.1. Kết quả định lượng tổng thể}{12}{section*.19}%
+\contentsline {subsubsection}{2.2. Đánh giá chi tiết trên từng lớp nhãn làm giả}{13}{section*.21}%
+\contentsline {subsubsection}{2.3. Đánh giá định tính: Phân tích các trường hợp suy luận thực tế (Reasoning Case Studies)}{13}{section*.23}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Thảo luận và Đánh giá tổng kết}{13}{subsection.7.3.3}%
+\contentsline {chapter}{\numberline {}III. PHẦN KẾT LUẬN}{15}{chapter.8}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Kết quả đạt được}{15}{subsection.8.0.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Hạn chế và Hướng phát triển}{15}{subsection.8.0.2}%
+\contentsline {subsubsection}{2.1. Hạn chế của đề tài}{15}{section*.24}%
+\contentsline {subsubsection}{2.2. Hướng nghiên cứu và phát triển tiếp theo}{15}{section*.25}%
+\contentsline {chapter}{\numberline {}TÀI LIỆU THAM KHẢO}{17}{chapter.9}%
