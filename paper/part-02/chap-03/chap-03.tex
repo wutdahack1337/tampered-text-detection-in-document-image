@@ -23,86 +23,175 @@
         \hline
         Tập dữ liệu & Minh-TFR (DTD-lightweight + TFR extracted) \\
         \hline
-        Checkpoint tốt nhất & \texttt{best\_model\_multi\_classes.pth} \\
+        Tập mẫu phân chia & 9,290 Train, 1,033 Validation, 2,000 Test (500 batches) \\
+        \hline
+        Checkpoint tối ưu nhất & \texttt{best\_model\_multi\_label.pth} (Epoch 19) \\
         \hline
     \end{tabular}
 \end{table}
 
 \subsubsection{1.2. Chiến lược huấn luyện và Tối ưu hóa siêu tham số}
-\indent\indent Để mô hình hội tụ nhanh và tối ưu hóa bộ nhớ GPU, các chiến lược kỹ thuật sau được áp dụng:
+\indent\indent Để mô hình hội tụ ổn định, bảo toàn các đặc trưng tiền huấn luyện của ImageNet và tối ưu hóa bộ nhớ GPU, các chiến lược huấn luyện sau được thiết lập:
 \begin{itemize}[label={--}, itemsep=2pt]
-    \item \textbf{Huấn luyện độ chính xác hỗn hợp tự động (Automatic Mixed Precision -- AMP):} Sử dụng `torch.cuda.amp.GradScaler()` để tính toán song song kiểu FP16/FP32, giúp giảm 50\% mức chiếm dụng VRAM. Riêng mô-đun BlockDCT được cố định tính toán trên FP32 nhằm đảm bảo độ chính xác toán học của phép nhân ma trận cơ sở.
-    \item \textbf{Thuật toán tối ưu (Optimizer):} Sử dụng AdamW với tốc độ học khởi tạo $1 \times 10^{-4}$ và hệ số suy giảm trọng số (Weight Decay) là $1 \times 10^{-2}$.
-    \item \textbf{Lịch trình điều chỉnh tốc độ học (LR Scheduler):} Áp dụng Cosine Annealing Learning Rate Scheduler để giảm dần tốc độ học về $1 \times 10^{-6}$ ở các epoch cuối.
-    \item \textbf{Hàm mất mát đa nhiệm (MultiTaskTamperLoss):} Kết hợp có trọng số giữa hàm mất mát phân đoạn ($\text{BCE} + \text{Dice}$) và hàm mất mát phân loại đa nhãn ($\text{BCE}$).
+    \item \textbf{Tối ưu hóa phân tầng tốc độ học (Differential Learning Rates):} Sử dụng thuật toán tối ưu AdamW với phân tầng tốc độ học:
+    \begin{itemize}[label={+}, itemsep=1pt]
+        \item Nhánh trích xuất đặc trưng nền tảng (Encoder EfficientNet-B0): $\text{lr}_{\text{encoder}} = 5 \times 10^{-4}$.
+        \item Các khối giải mã LiteMID và đầu ra phân loại/phân đoạn: $\text{lr}_{\text{decoder}} = 5 \times 10^{-3}$.
+        \item Hệ số suy giảm trọng số (Weight Decay): $\lambda_{\text{wd}} = 1 \times 10^{-4}$.
+    \end{itemize}
+    \item \textbf{Kích thước batch và Số chu kỳ huấn luyện:} Mô hình được huấn luyện trong 20 epochs với kích thước lô $\text{Batch Size} = 4$.
+    \item \textbf{Lịch trình điều chỉnh tốc độ học (LR Scheduler):} Áp dụng Cosine Annealing Learning Rate Scheduler ($T_{\max} = 20$) để hạ dần tốc độ học theo hàm cosin mượt mà.
+    \item \textbf{Huấn luyện độ chính xác hỗn hợp tự động (Automatic Mixed Precision -- AMP):} Sử dụng \texttt{torch.amp.GradScaler("cuda")} để tính toán kiểu số thực FP16/FP32 kết hợp, giúp tăng tốc độ xử lý hơn 2 lần và tiết kiệm 50\% VRAM. Riêng nhánh BlockDCT được duy trì ở định dạng FP32 nhằm đảm bảo độ chính xác của phép biến đổi ma trận trực chuẩn.
+    \item \textbf{Hàm mất mát đa nhiệm (MultiTaskTamperLoss):} Tối ưu hóa đồng thời tổn thất phân đoạn ($\text{BCE} + 1.0 \times \text{Dice}$) và tổn thất phân loại đa nhãn ($\text{BCEWithLogits}$) với trọng số $\lambda_{\text{cls}} = 1.0$. Checkpoint tốt nhất được lưu trữ tại Epoch 19 khi đạt $\text{Val Dice} = 0.6065$, $\text{Val Macro-F1} = 0.6464$ và $\text{Val mAP} = 0.6778$.
 \end{itemize}
 
 \subsection{2. Kết quả thực nghiệm và Đánh giá}
 
 \subsubsection{2.1. Kết quả định lượng trên tập kiểm thử Minh-TFR TestSet}
-\indent\indent Mô hình \textbf{LightweightDTD} sau khi huấn luyện được tải lại từ checkpoint tối ưu \texttt{best\_model\_multi\_classes.pth} và đánh giá toàn diện trên toàn bộ tập kiểm thử độc lập \textbf{Minh-TFR TestSet} (gồm 500 batches kiểm thử với ngưỡng nhị phân $threshold = 0.5$).
+\indent\indent Sau khi kết thúc quá trình huấn luyện, mô hình được tải lại từ checkpoint tối ưu \texttt{best\_model\_multi\_label.pth} và đánh giá toàn diện trên toàn bộ \textbf{Minh-TFR TestSet} gồm chính xác 2,000 ảnh tài liệu độc lập (tương ứng 500 batches kiểm thử, ngưỡng nhị phân $threshold = 0.5$).
 
+\textbf{A. Kết quả phân đoạn điểm ảnh (Pixel-level Segmentation):}
 \begin{table}[H]
     \centering
-    \caption{Kết quả định lượng của mô hình LightweightDTD trên Minh-TFR TestSet}
-    \label{tab:test_results}
+    \caption{Kết quả phân đoạn mặt nạ pixel của LightweightDTD trên Minh-TFR TestSet}
+    \label{tab:test_seg_results}
     \vspace{0.2cm}
     \renewcommand{\arraystretch}{1.3}
     \begin{tabular}{|m{6.5cm}|m{4cm}|m{3.5cm}|}
         \hline
-        \textbf{Chỉ số đánh giá (Evaluation Metric)} & \textbf{Giá trị đạt được} & \textbf{Tỷ lệ (\%)} \\
+        \textbf{Chỉ số đánh giá (Segmentation Metric)} & \textbf{Giá trị đạt được} & \textbf{Tỷ lệ (\%)} \\
         \hline
-        \textbf{Pixel Accuracy (Độ chính xác pixel)} & \textbf{0.9968} & \textbf{99.68\%} \\
+        \textbf{Pixel Accuracy (Độ chính xác pixel)} & \textbf{0.9979} & \textbf{99.79\%} \\
         \hline
-        \textbf{Top-3 Class Hit Rate} & \textbf{0.9830} & \textbf{98.30\%} \\
+        \textbf{Precision (Micro)} & \textbf{0.9009} & \textbf{90.09\%} \\
         \hline
-        \textbf{Precision (Micro)} & \textbf{0.8525} & \textbf{85.25\%} \\
+        \textbf{Recall (Micro)} & \textbf{0.7793} & \textbf{77.93\%} \\
         \hline
-        \textbf{Recall (Micro)} & \textbf{0.6496} & \textbf{64.96\%} \\
+        \textbf{Intersection over Union (IoU Micro)} & \textbf{0.7178} & \textbf{71.78\%} \\
         \hline
-        \textbf{Intersection over Union (IoU Micro)} & \textbf{0.5839} & \textbf{58.39\%} \\
-        \hline
-        \textbf{Macro Dice Score} & \textbf{0.4518} & 45.18\% \\
+        \textbf{Macro Dice Score} & \textbf{0.6218} & \textbf{62.18\%} \\
         \hline
         \multicolumn{2}{|l|}{\textbf{Tổng số tham số mô hình (Total Parameters)}} & \textbf{4,155,796} \\
         \hline
     \end{tabular}
 \end{table}
 
-Kết quả tại \textbf{Bảng \ref{tab:test_results}} thể hiện hai ưu thế vượt trội:
-\begin{enumerate}
-    \item \textbf{Ở nhiệm vụ phân đoạn mặt nạ làm giả:} Độ chính xác pixel đạt tới \textbf{99.68\%} cùng chỉ số \textbf{Precision đạt 85.25\%}. Chỉ số IoU đạt \textbf{58.39\%}, phản ánh khả năng khoanh vùng chính xác các ký tự bị sửa đổi mà không làm lan rộng sang các vùng văn bản hợp lệ xung quanh.
-    \item \textbf{Ở nhiệm vụ phân loại đặc trưng làm giả:} Chỉ số \textbf{Top-3 Class Hit Rate đạt tới 98.30\%}, chứng minh rằng trong gần như toàn bộ các trường hợp kiểm thử (98.3\%), mô hình đều chỉ ra đúng ít nhất một bản chất lỗi vi mô thực tế nằm trong 3 phán đoán hàng đầu.
-\end{enumerate}
+\textbf{B. Kết quả phân loại đa nhãn thuộc tính giả mạo (Multi-Label Classification):}
+\begin{table}[H]
+    \centering
+    \caption{Kết quả phân loại đa nhãn đặc trưng làm giả trên Minh-TFR TestSet}
+    \label{tab:test_cls_results}
+    \vspace{0.2cm}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|m{6.5cm}|m{4cm}|m{3.5cm}|}
+        \hline
+        \textbf{Chỉ số đánh giá (Classification Metric)} & \textbf{Giá trị đạt được} & \textbf{Tỷ lệ (\%)} \\
+        \hline
+        \textbf{Micro F1-Score} & \textbf{0.7749} & \textbf{77.49\%} \\
+        \hline
+        \textbf{Macro F1-Score} & \textbf{0.5860} & \textbf{58.60\%} \\
+        \hline
+        \textbf{Macro Precision} & \textbf{0.5589} & 55.89\% \\
+        \hline
+        \textbf{Macro Recall} & \textbf{0.6550} & 65.50\% \\
+        \hline
+        \textbf{Mean Average Precision (mAP / PR-AUC)} & \textbf{0.6102} & \textbf{61.02\%} \\
+        \hline
+        \textbf{Top-3 Class Hit Rate (Auxiliary)} & \textbf{0.9845} & \textbf{98.45\%} \\
+        \hline
+        \textbf{Exact Match Ratio (Subset Accuracy)} & \textbf{0.2705} & 27.05\% \\
+        \hline
+        \textbf{Hamming Loss (Càng nhỏ càng tốt)} & \textbf{0.1942} & Sai số: 19.42\% \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Để hiểu rõ hiệu năng của mô hình đối với từng đặc trưng vi mô riêng biệt, Bảng \ref{tab:cls_report} trình bày chi tiết chỉ số Precision, Recall và F1-Score trên từng lớp nhãn:
+\begin{table}[H]
+    \centering
+    \caption{Báo cáo chi tiết theo từng lớp đặc trưng làm giả trên tập kiểm thử}
+    \label{tab:cls_report}
+    \vspace{0.2cm}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|m{5.5cm}|m{2cm}|m{2cm}|m{2cm}|m{2.5cm}|}
+        \hline
+        \textbf{Lớp đặc trưng (Artifact Class)} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} & \textbf{Số mẫu (Support)} \\
+        \hline
+        \texttt{edge\_artifacts} & 0.79 & 0.88 & \textbf{0.83} & 1,499 \\
+        \hline
+        \texttt{unnatural\_texture} & 0.70 & 0.96 & \textbf{0.81} & 490 \\
+        \hline
+        \texttt{inconsistent\_alignment} & 0.40 & 0.15 & 0.21 & 813 \\
+        \hline
+        \texttt{inconsistent\_font} & 0.61 & 0.95 & \textbf{0.74} & 437 \\
+        \hline
+        \texttt{lack\_of\_integration} & 0.85 & 1.00 & \textbf{0.92} & 1,693 \\
+        \hline
+        \texttt{text\_incoherence} & 0.00 & 0.00 & 0.00 & 116 \\
+        \hline
+        \hline
+        \textbf{Micro Average} & \textbf{0.76} & \textbf{0.79} & \textbf{0.77} & \textbf{5,048} \\
+        \hline
+        \textbf{Macro Average} & 0.56 & 0.66 & 0.59 & 5,048 \\
+        \hline
+        \textbf{Weighted Average} & 0.70 & 0.79 & 0.73 & 5,048 \\
+        \hline
+        \textbf{Samples Average} & 0.78 & 0.82 & 0.77 & 5,048 \\
+        \hline
+    \end{tabular}
+\end{table}
 
 \subsubsection{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}
-\indent\indent Để ứng dụng thực tế, mô hình cung cấp phương thức suy luận nhanh \texttt{model.predict(image, threshold=0.5, top\_k=3)} trả về đồng thời mặt nạ phân đoạn pixel và danh sách top 3 nhãn vi mô có độ tin cậy cao nhất.
+\indent\indent Trong môi trường triển khai thực tế, mô hình cung cấp giao diện suy luận đồng thời \texttt{model.predict(image, threshold=0.5, top\_k=3)} trả về mặt nạ phân đoạn nhị phân, bản đồ xác suất làm giả (Probability Heatmap) và danh sách top 3 nhãn vi mô có độ tin cậy cao nhất.
 
-Dưới đây là một trường hợp suy luận mẫu trên ảnh tài liệu kiểm thử:
-\begin{lstlisting}[language=Python, frame=single, caption={Ví dụ kết quả suy luận từ phương thức predict}]
-# Input: Anh tai lieu kich thuoc 224x224x3
-result = model.predict(img_tensor, threshold=0.5, top_k=3)
-
-# Output Pixel Mask:
-print("Pixel mask shape:", result["mask"].shape)  # (224, 224)
-
-# Output Top-3 Classes and Confidence Scores:
-# 1. inconsistent_alignment : 58.09%
-# 2. text_incoherence       : 56.46%
-# 3. edge_artifacts         : 52.85%
+Dưới đây là kết quả suy luận thực tế từ checkpoint trên một ảnh tài liệu kiểm thử mẫu (\texttt{10043.jpg}):
+\begin{lstlisting}[language=Python, frame=single, caption={Kết quả suy luận thực tế trên ảnh tài liệu 10043.jpg}]
+============================================================
+KET QUA DU DOAN: 10043.jpg
+============================================================
+- So pixel bi nghi van chinh sua: 1,921 (0.56% dien tich anh)
+- Top 3 Classes co ti le tin cay (confidence) cao nhat:
+    1. edge_artifacts         : 86.96%
+    2. lack_of_integration    : 81.69%
+    3. inconsistent_alignment : 48.38%
+============================================================
 \end{lstlisting}
 
-Kết quả cho thấy mô hình phát hiện chính xác vùng văn bản nghi vấn và chỉ ra các dấu hiệu: chữ bị lệch dòng (\textit{inconsistent\_alignment}), ngữ nghĩa không mạch lạc (\textit{text\_incoherence}) và xuất hiện viền cắt dán (\textit{edge\_artifacts}).
+Hình \ref{fig:single_infer} minh họa trực quan quá trình suy luận trên mẫu tài liệu này với 4 khung nhìn: ảnh gốc đầu vào, bản đồ nhiệt xác suất làm giả (inferno heatmap), mặt nạ nhị phân dự đoán tại ngưỡng $0.5$, và lớp phủ (overlay) khoanh vùng văn bản nghi vấn.
 
-\subsection{3. Thảo luận và Đánh giá tổng kết}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/part-02/chap-03/sec-02/single_prediction_10043.png}
+    \caption{Trực quan hóa kết quả suy luận trên ảnh tài liệu 10043.jpg: Ảnh đầu vào, Bản đồ nhiệt xác suất, Mặt nạ phân đoạn nhị phân và Vùng nghi vấn phủ trên ảnh gốc}
+    \label{fig:single_infer}
+\end{figure}
 
-\indent\indent Từ các kết quả thực nghiệm đạt được, một số phân tích học thuật quan trọng được rút ra:\vspace{0.3cm}
+Bên cạnh đó, Hình \ref{fig:batch_vis} minh họa kết quả dự đoán trên một tập các mẫu ảnh kiểm thử chuẩn ngẫu nhiên trong \textbf{Minh-TFR TestSet}, đối sánh trực tiếp giữa Ground Truth (mặt nạ và nhãn thực tế) với kết quả dự đoán của mô hình LightweightDTD:
 
-\textbf{1. Hiệu quả của việc kết hợp miền Không gian và Tần số (BlockDCT Fusion):}
-Việc tích hợp nhánh phân tích tần số BlockDCT $8 \times 8$ tại tầng đặc trưng $1/8$ đã chứng minh tính hiệu quả vượt bậc trong việc phát hiện các vết làm giả tinh vi. Trong khi các mạng CNN thông thường dễ bị đánh lừa bởi các ký tự ghép có phông chữ tương đồng, ma trận hệ số DCT cho phép mạng bóc tách sự đứt gãy trong cấu trúc lưới nén JPEG, nâng cao rõ rệt chỉ số Precision (đạt 85.25\%).\vspace{0.3cm}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{images/part-02/chap-03/sec-02/batch_predictions_vis.png}
+    \caption{Kết quả kiểm thử trên các mẫu tài liệu độc lập: (1) Ảnh gốc, (2) Ground Truth Mask \& Classes, (3) Predicted Mask, (4) Top-3 Classes kèm độ tin cậy}
+    \label{fig:batch_vis}
+\end{figure}
 
-\textbf{2. Tính gọn nhẹ vượt bậc của bộ giải mã LiteMID kết hợp scSE:}
-Nhờ thay thế các khối tích chập tiêu chuẩn bằng các khối tích chập tách biệt chiều sâu (Depthwise Separable Blocks) và kiểm soát độ rộng kênh ở mức 48, bộ giải mã LiteMID cùng khối chú ý scSE giữ cho tổng tham số của toàn bộ mô hình dừng lại ở mức \textbf{4.15 triệu tham số}. So với các kiến trúc DTD gốc thường có kích thước trên 30 triệu tham số, LightweightDTD tiết kiệm gần 85\% dung lượng nhưng vẫn bảo toàn độ chính xác pixel đạt 99.68\%.\vspace{0.3cm}
+\subsection{3. Thảo luận và Đánh giá chuyên sâu}
 
-\textbf{3. Khả năng giải thích hỗ trợ giám định (Top-3 Class Hit Rate 98.30\%):}
-Việc tích hợp đầu ra phân loại 6 đặc trưng vi mô giúp mô hình vượt khỏi giới hạn của một bộ phân đoạn mặt nạ thuần túy. Tỷ lệ Top-3 Hit Rate lên tới 98.30\% là một đóng góp thiết thực cho các hệ thống giám định thực tế, cung cấp gợi ý trực quan cho chuyên viên pháp y về loại hình can thiệp (lệch dòng, sai phông, hay vết cắt viền).
+\indent\indent Từ các kết quả thực nghiệm thu được, một số nhận định khoa học quan trọng được rút ra:\vspace{0.3cm}
+
+\textbf{1. Hiệu năng vượt trội của nhánh phân đoạn điểm ảnh (IoU 71.78\%, Precision 90.09\%):}
+Chỉ số IoU đạt tới \textbf{71.78\%} cùng Micro Precision đạt \textbf{90.09\%} trên tập kiểm thử độc lập 2,000 mẫu đã khẳng định sức mạnh của cơ chế kết hợp miền Không gian -- Tần số. Việc nhúng mô-đun BlockDCT $8 \times 8$ tại tầng độ phân giải $1/8$ giúp mô hình triệt tiêu các báo động giả (False Positives) do ký tự thông thường gây ra, chỉ tập trung vào các vị trí có sự đứt gãy lưới lượng tử hóa JPEG và vết cắt biên viền. Bộ giải mã LiteMID kết hợp scSE phục hồi biên nét chữ cực kỳ sắc gọn mà chỉ tiêu tốn 4.15 triệu tham số.\vspace{0.3cm}
+
+\textbf{2. Động lực học của bài toán phân loại đa nhãn (Multi-Label F1 Dynamics):}
+Quan sát Bảng \ref{tab:cls_report}, có thể phân loại năng lực nhận diện của mô hình thành hai nhóm rõ rệt:
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item \textbf{Nhóm thuộc tính đạt F1-Score rất cao (74\% -- 92\%):} Bao gồm \textit{lack\_of\_integration} (F1 = 0.92, Recall = 100\%), \textit{edge\_artifacts} (F1 = 0.83, Recall = 88\%), \textit{unnatural\_texture} (F1 = 0.81, Recall = 96\%) và \textit{inconsistent\_font} (F1 = 0.74, Recall = 95\%). Đây là các đặc trưng biểu hiện trực tiếp qua gradient biên viền và phổ tần số cục bộ mà EfficientNet và BlockDCT có thể trích xuất xuất sắc.
+    \item \textbf{Nhóm thuộc tính gặp thách thức bởi sự mất cân bằng dữ liệu (Class Imbalance):}
+    \begin{itemize}[label={+}, itemsep=1pt]
+        \item Nhãn \textit{text\_incoherence} có chỉ số F1 = 0.00 trên ngưỡng cố định $0.5$. Nguyên nhân chính là do sự mất cân bằng cực độ của tập dữ liệu: trong 9,290 mẫu huấn luyện, chỉ có 526 mẫu (5.7\%) chứa nhãn này, và trong tập kiểm thử chỉ có 116 mẫu. Hơn nữa, việc phát hiện tính phi ngữ nghĩa văn bản đòi hỏi năng lực hiểu ngôn ngữ tự nhiên (NLP) ở cấp độ câu, vượt ra ngoài phạm vi biểu diễn của một bộ trích xuất đặc trưng thuần thị giác.
+        \item Nhãn \textit{inconsistent\_alignment} đạt F1 = 0.21 (Precision 0.40, Recall 0.15) do dấu vết lệch dòng thường yêu cầu thông tin đối chiếu với toàn bộ đường gióng ngang/dọc của cả trang tài liệu lớn, trong khi ảnh huấn luyện được resize về $224 \times 224$.
+    \end{itemize}
+\end{itemize}\vspace{0.2cm}
+
+\textbf{3. Giá trị thực tiễn của Top-3 Hit Rate (98.45\%) và Hamming Loss (0.1942):}
+Mặc dù bị ảnh hưởng bởi hiện tượng mất cân bằng lớp ở ngưỡng nhị phân $0.5$, chỉ số \textbf{Top-3 Class Hit Rate đạt tới 98.45\%} và \textbf{mAP đạt 61.02\%}. Điều này chứng minh rằng mô hình đã xếp hạng xác suất cực kỳ chuẩn xác: trong hầu như mọi trường hợp gian lận (98.45\%), chuyên viên pháp y chỉ cần nhìn vào 3 phán đoán hàng đầu là đã có thể nắm bắt được ít nhất một nguyên nhân làm giả cốt lõi. Đồng thời, chỉ số Hamming Loss ở mức thấp (0.1942) khẳng định tính nhất quán và ổn định của mạng trong việc ra quyết định đa nhãn độc lập.

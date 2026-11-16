@@ -6,7 +6,10 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {\textbf {1}}{\ignorespaces Cấu hình môi trường thực nghiệm}}{12}{table.caption.18}%
-\contentsline {table}{\numberline {\textbf {2}}{\ignorespaces Kết quả định lượng của mô hình LightweightDTD trên Minh-TFR TestSet}}{13}{table.caption.21}%
+\contentsline {table}{\numberline {\textbf {1}}{\ignorespaces Phân bố 6 nhãn đặc trưng pháp y vi mô trên tập dữ liệu huấn luyện Minh-TFR}}{12}{table.caption.15}%
+\contentsline {table}{\numberline {\textbf {2}}{\ignorespaces Cấu hình môi trường thực nghiệm}}{14}{table.caption.19}%
+\contentsline {table}{\numberline {\textbf {3}}{\ignorespaces Kết quả phân đoạn mặt nạ pixel của LightweightDTD trên Minh-TFR TestSet}}{15}{table.caption.22}%
+\contentsline {table}{\numberline {\textbf {4}}{\ignorespaces Kết quả phân loại đa nhãn đặc trưng làm giả trên Minh-TFR TestSet}}{15}{table.caption.23}%
+\contentsline {table}{\numberline {\textbf {5}}{\ignorespaces Báo cáo chi tiết theo từng lớp đặc trưng làm giả trên tập kiểm thử}}{16}{table.caption.24}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }

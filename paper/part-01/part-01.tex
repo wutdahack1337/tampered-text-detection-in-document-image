@@ -41,7 +41,7 @@ Xây dựng và đánh giá mô hình học sâu đa nhiệm \textbf{Lightweight
     \item \textbf{Thiết kế kiến trúc hai nhánh Không gian -- Tần số:} Kết hợp backbone EfficientNet-B0 trích xuất đặc trưng thị giác với nhánh biến đổi BlockDCT $8 \times 8$ trích xuất đặc trưng nén JPEG, hòa trộn qua mô-đun chú ý scSE.
     \item \textbf{Cài đặt bộ giải mã LiteMID đa góc nhìn gọn nhẹ:} Xây dựng bộ giải mã lồng nhau LiteMID sử dụng các khối tích chập Depthwise Separable, tổng hợp đặc trưng đa tỉ lệ từ $H/4$ đến $H/32$.
     \item \textbf{Huấn luyện đa nhiệm (Multi-task Learning):} Thiết lập hàm mất mát liên hợp $\mathcal{L}_{\text{total}} = \mathcal{L}_{\text{seg}} + \lambda \mathcal{L}_{\text{cls}}$ (kết hợp BCE + Dice Loss cho phân đoạn và BCE cho phân loại 6 nhãn).
-    \item \textbf{Đánh giá toàn diện:} Đo lường hiệu năng qua các chỉ số Pixel Accuracy, Precision, Recall, IoU, Macro Dice và Top-3 Class Hit Rate.
+    \item \textbf{Đánh giá toàn diện:} Đo lường hiệu năng toàn diện trên tập kiểm thử chuẩn 2,000 mẫu qua hai nhóm chỉ số: nhóm phân đoạn mặt nạ (Pixel Accuracy, Precision, Recall, IoU, Macro Dice) và nhóm phân loại đa nhãn (Macro/Micro F1, Macro Precision/Recall, mAP, Exact Match, Hamming Loss và Top-3 Class Hit Rate).
 \end{enumerate}
 
 \subsection{4. Đối tượng và phạm vi nghiên cứu}
@@ -76,15 +76,15 @@ Xây dựng và đánh giá mô hình học sâu đa nhiệm \textbf{Lightweight
         \item Thiết kế và cài đặt bộ giải mã lồng nhau LiteMID sử dụng Depthwise Separable Convolutions.
         \item Xây dựng hàm mất mát kết hợp `MultiTaskTamperLoss` gồm BCE + Dice Loss cho nhánh phân đoạn và BCE cho nhánh phân loại.
     \end{itemize}
-    \item \textbf{Phương pháp đánh giá thực nghiệm:} Đánh giá trên tập kiểm thử độc lập qua các chỉ số Pixel Accuracy, Precision, Recall, IoU, Macro Dice và Top-3 Class Hit Rate.
+    \item \textbf{Phương pháp đánh giá thực nghiệm:} Đánh giá trên tập kiểm thử độc lập 2,000 mẫu qua bộ độ đo học máy và pháp y tài liệu chuẩn mực: Pixel Accuracy, Micro Precision/Recall, IoU, Macro Dice cho nhánh phân đoạn; Macro/Micro F1, mAP (PR-AUC), Exact Match, Hamming Loss và Top-3 Class Hit Rate cho nhánh phân loại đa nhãn.
 \end{enumerate}
 
 \subsection{6. Ý nghĩa khoa học, thực tiễn và Bố cục luận văn}
 
 \indent\indent \textbf{Ý nghĩa khoa học:}
 \begin{itemize}
-    \item Đề xuất thành công mô hình học sâu đa nhiệm \textbf{LightweightDTD} kết hợp hiệu quả giữa đặc trưng không gian và miền tần số nén JPEG.
-    \item Chứng minh rằng một kiến trúc tinh gọn (~4.15 triệu tham số) hoàn toàn có thể đạt được độ chính xác phân đoạn 99.68\% và Top-3 Class Hit Rate 98.30\%, mở ra hướng tiếp cận tối ưu hóa cho các bài toán pháp y ảnh tài liệu.
+    \item Đề xuất thành công mô hình học sâu đa nhiệm \textbf{LightweightDTD} (4,155,796 tham số) kết hợp hiệu quả giữa đặc trưng không gian (EfficientNet-B0) và miền tần số nén JPEG (BlockDCT $8 \times 8$).
+    \item Chứng minh rằng một kiến trúc tinh gọn (~4.15 triệu tham số) hoàn toàn có thể đạt được độ chính xác phân đoạn 99.79\% (IoU đạt 71.78\%, Precision đạt 90.09\%), đồng thời đạt Micro F1 77.49\% và Top-3 Class Hit Rate 98.45\% trong phân loại đa nhãn, mở ra hướng tiếp cận tối ưu hóa cho các hệ thống pháp y ảnh tài liệu số thời gian thực.
 \end{itemize}
 \vspace{0.3cm}
 

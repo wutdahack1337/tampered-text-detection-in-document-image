@@ -69,9 +69,37 @@ với trọng số thiết lập $\lambda_{\text{dice}} = 1.0$ và $\lambda_{\te
 \subsubsection{2.1. Tập dữ liệu Minh-TFR và Phân bố mẫu}
 \indent\indent Tập dữ liệu thực nghiệm được xây dựng từ tập chuẩn TFR và DTD-lightweight, bao gồm các cặp ảnh tài liệu định dạng PNG/JPG, mặt nạ nhị phân ground-truth kích thước tương ứng và các nhãn thuộc tính làm giả được lưu trữ dưới định dạng JSON Lines (\texttt{.jsonl}):
 \begin{itemize}[label={--}, itemsep=2pt]
-    \item \textbf{Tập dữ liệu huấn luyện (\texttt{train\_datas.jsonl}):} Chứa hàng ngàn mẫu tài liệu đa dạng như biên lai, hóa đơn điện tử, hợp đồng, chứng minh thư.
-    \item \textbf{Tập dữ liệu kiểm thử (\texttt{test\_datas.jsonl}):} Tập kiểm thử độc lập \textbf{Minh-TFR TestSet} gồm 500 batches đánh giá chuẩn dùng để đo lường năng lực tổng quát hóa.
+    \item \textbf{Tập dữ liệu huấn luyện và kiểm định (\texttt{train\_datas.jsonl}):} Bao gồm tổng cộng \textbf{10,323 cặp mẫu} ảnh và mặt nạ. Tập này được phân chia ngẫu nhiên (với cố định seed ngẫu nhiên $1337$) theo tỷ lệ $90:10$, tương ứng với \textbf{9,290 mẫu huấn luyện (Train)} và \textbf{1,033 mẫu kiểm định (Validation)}.
+    \item \textbf{Tập dữ liệu kiểm thử độc lập (\texttt{test\_datas.jsonl}):} Bao gồm chính xác \textbf{2,000 mẫu kiểm thử chuẩn} (\textbf{Minh-TFR TestSet}), được gom thành 500 batches đánh giá chuẩn (với kích thước batch là 4) nhằm đo lường năng lực tổng quát hóa cuối cùng.
 \end{itemize}
+
+Bảng \ref{tab:class_distribution} thể hiện chi tiết phân bố 6 nhãn đặc trưng pháp y vi mô trên tập huấn luyện (9,290 mẫu):
+\begin{table}[H]
+    \centering
+    \caption{Phân bố 6 nhãn đặc trưng pháp y vi mô trên tập dữ liệu huấn luyện Minh-TFR}
+    \label{tab:class_distribution}
+    \vspace{0.2cm}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{|m{1cm}|m{6cm}|m{3cm}|m{3cm}|}
+        \hline
+        \textbf{STT} & \textbf{Đặc trưng làm giả (Artifact Class)} & \textbf{Số lượng mẫu} & \textbf{Tỷ lệ (\%)} \\
+        \hline
+        1 & \texttt{lack\_of\_integration} & 7,892 & 85.0\% \\
+        \hline
+        2 & \texttt{edge\_artifacts} & 7,073 & 76.1\% \\
+        \hline
+        3 & \texttt{inconsistent\_alignment} & 3,880 & 41.8\% \\
+        \hline
+        4 & \texttt{unnatural\_texture} & 2,219 & 23.9\% \\
+        \hline
+        5 & \texttt{inconsistent\_font} & 2,001 & 21.5\% \\
+        \hline
+        6 & \texttt{text\_incoherence} & 526 & 5.7\% \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Số liệu trên cho thấy sự mất cân bằng dữ liệu (class imbalance) rất rõ nét giữa các thuộc tính: trong khi các dấu vết hình học và ghép nền (\textit{lack\_of\_integration}, \textit{edge\_artifacts}) xuất hiện ở phần lớn các mẫu thì dấu vết mâu thuẫn ngữ nghĩa (\textit{text\_incoherence}) chỉ chiếm 5.7\%. Đây là một thách thức thực tế lớn đối với nhánh phân loại đa nhãn.
 
 \subsubsection{2.2. Thuật toán phân tích nhãn và Lọc cụm từ phủ định}
 \indent\indent Trong các tập dữ liệu chú thích văn bản, nhiều mẫu xuất hiện các câu mô tả ngữ cảnh phủ định (ví dụ: \textit{``no obvious edge artifacts'', ``not cause inconsistent font'', ``should be deleted''}). Để tránh gán nhầm nhãn dương tính ($1$), thuật toán trích xuất vector nhãn sử dụng danh sách các cụm từ loại trừ:

@@ -21,27 +21,27 @@
 \contentsline {subsubsection}{2.2. Phép biến đổi Cosin rời rạc theo khối (BlockDCT $8 \times 8$)}{6}{section*.7}%
 \contentsline {subsubsection}{2.3. Mô-đun chú ý không gian và kênh đồng thời (scSE Module)}{7}{section*.8}%
 \contentsline {subsubsection}{2.4. Các độ đo đánh giá mô hình đa nhiệm}{7}{section*.9}%
-\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 2. THIẾT KẾ VÀ CÀI ĐẶT GIẢI PHÁP}{9}{section.7.2}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Thiết kế kiến trúc mô hình LightweightDTD}{9}{subsection.7.2.1}%
-\contentsline {subsubsection}{1.1. Tổng quan kiến trúc hai nhánh Không gian -- Tần số}{9}{section*.10}%
-\contentsline {subsubsection}{1.2. Cơ chế hợp nhất tần số tại độ phân giải $1/8$}{9}{section*.11}%
-\contentsline {subsubsection}{1.3. Bộ giải mã lặp đa góc nhìn LiteMID (Lightweight Multi-view Iterative Decoder)}{9}{section*.12}%
-\contentsline {subsubsection}{1.4. Đầu ra đa nhiệm và Hàm mất mát kết hợp MultiTaskTamperLoss}{10}{section*.13}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Xử lý tập dữ liệu và Cài đặt tiền xử lý}{10}{subsection.7.2.2}%
-\contentsline {subsubsection}{2.1. Tập dữ liệu Minh-TFR và Phân bố mẫu}{10}{section*.14}%
-\contentsline {subsubsection}{2.2. Thuật toán phân tích nhãn và Lọc cụm từ phủ định}{11}{section*.15}%
-\contentsline {subsubsection}{2.3. Pipeline tăng cường dữ liệu đồng bộ ảnh -- mặt nạ}{11}{section*.16}%
-\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 3. KIỂM THỬ VÀ ĐÁNH GIÁ}{12}{section.7.3}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Môi trường thực nghiệm và Thiết lập huấn luyện}{12}{subsection.7.3.1}%
-\contentsline {subsubsection}{1.1. Cấu hình phần cứng và phần mềm}{12}{section*.17}%
-\contentsline {subsubsection}{1.2. Chiến lược huấn luyện và Tối ưu hóa siêu tham số}{12}{section*.19}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Kết quả thực nghiệm và Đánh giá}{12}{subsection.7.3.2}%
-\contentsline {subsubsection}{2.1. Kết quả định lượng trên tập kiểm thử Minh-TFR TestSet}{12}{section*.20}%
-\contentsline {subsubsection}{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}{13}{section*.22}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Thảo luận và Đánh giá tổng kết}{13}{subsection.7.3.3}%
-\contentsline {chapter}{\numberline {}III. PHẦN KẾT LUẬN}{15}{chapter.8}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Kết quả đạt được}{15}{subsection.8.0.1}%
-\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Hạn chế và Hướng phát triển}{15}{subsection.8.0.2}%
-\contentsline {subsubsection}{2.1. Hạn chế của đề tài}{15}{section*.23}%
-\contentsline {subsubsection}{2.2. Hướng nghiên cứu và phát triển tiếp theo}{15}{section*.24}%
-\contentsline {chapter}{\numberline {}TÀI LIỆU THAM KHẢO}{17}{chapter.9}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 2. THIẾT KẾ VÀ CÀI ĐẶT GIẢI PHÁP}{10}{section.7.2}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Thiết kế kiến trúc mô hình LightweightDTD}{10}{subsection.7.2.1}%
+\contentsline {subsubsection}{1.1. Tổng quan kiến trúc hai nhánh Không gian -- Tần số}{10}{section*.10}%
+\contentsline {subsubsection}{1.2. Cơ chế hợp nhất tần số tại độ phân giải $1/8$}{10}{section*.11}%
+\contentsline {subsubsection}{1.3. Bộ giải mã lặp đa góc nhìn LiteMID (Lightweight Multi-view Iterative Decoder)}{10}{section*.12}%
+\contentsline {subsubsection}{1.4. Đầu ra đa nhiệm và Hàm mất mát kết hợp MultiTaskTamperLoss}{11}{section*.13}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Xử lý tập dữ liệu và Cài đặt tiền xử lý}{11}{subsection.7.2.2}%
+\contentsline {subsubsection}{2.1. Tập dữ liệu Minh-TFR và Phân bố mẫu}{11}{section*.14}%
+\contentsline {subsubsection}{2.2. Thuật toán phân tích nhãn và Lọc cụm từ phủ định}{12}{section*.16}%
+\contentsline {subsubsection}{2.3. Pipeline tăng cường dữ liệu đồng bộ ảnh -- mặt nạ}{13}{section*.17}%
+\contentsline {section}{\numberline {\hspace {-0.4cm}}CHƯƠNG 3. KIỂM THỬ VÀ ĐÁNH GIÁ}{14}{section.7.3}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Môi trường thực nghiệm và Thiết lập huấn luyện}{14}{subsection.7.3.1}%
+\contentsline {subsubsection}{1.1. Cấu hình phần cứng và phần mềm}{14}{section*.18}%
+\contentsline {subsubsection}{1.2. Chiến lược huấn luyện và Tối ưu hóa siêu tham số}{14}{section*.20}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Kết quả thực nghiệm và Đánh giá}{15}{subsection.7.3.2}%
+\contentsline {subsubsection}{2.1. Kết quả định lượng trên tập kiểm thử Minh-TFR TestSet}{15}{section*.21}%
+\contentsline {subsubsection}{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}{16}{section*.25}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}3. Thảo luận và Đánh giá chuyên sâu}{19}{subsection.7.3.3}%
+\contentsline {chapter}{\numberline {}III. PHẦN KẾT LUẬN}{20}{chapter.8}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}1. Kết quả đạt được}{20}{subsection.8.0.1}%
+\contentsline {subsection}{\numberline {\hspace {-0.5cm}}2. Hạn chế và Hướng phát triển}{20}{subsection.8.0.2}%
+\contentsline {subsubsection}{2.1. Hạn chế của đề tài}{20}{section*.28}%
+\contentsline {subsubsection}{2.2. Hướng nghiên cứu và phát triển tiếp theo}{21}{section*.29}%
+\contentsline {chapter}{\numberline {}TÀI LIỆU THAM KHẢO}{22}{chapter.9}%

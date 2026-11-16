@@ -83,23 +83,60 @@ Khi đưa ảnh xám đầu vào kích thước $[B, 1, H, W]$, phép chiếu tr
 Cơ chế này cho phép mạng vừa tập trung vào ``kênh tần số nào quan trọng'' (qua cSE) vừa tập trung vào ``vùng pixel nào có vết cắt biên'' (qua sSE).
 
 \subsubsection{2.4. Các độ đo đánh giá mô hình đa nhiệm}
-\indent\indent Hệ thống sử dụng tập hợp các chỉ số đánh giá toàn diện cho cả hai nhiệm vụ:\vspace{-0.1cm}
-\begin{itemize}[label={--}, itemsep=1pt]
+\indent\indent Do mô hình \textbf{LightweightDTD} vận hành theo cơ chế học đa nhiệm (Multi-task Learning) bao gồm cả phân đoạn điểm ảnh và phân loại đa nhãn (Multi-label Classification), hệ thống xây dựng tập hợp độ đo toàn diện cho cả hai nhiệm vụ:\vspace{0.2cm}
+
+\textbf{A. Nhóm chỉ số đánh giá phân đoạn mặt nạ (Pixel Segmentation Metrics):}
+\begin{itemize}[label={--}, itemsep=2pt]
     \item \textbf{Pixel Accuracy:} Tỷ lệ phân loại đúng từng pixel trên toàn bộ ảnh tài liệu:
     \begin{equation}
     \text{Pixel Acc} = \frac{TP + TN}{TP + TN + FP + FN}
     \end{equation}
-    \item \textbf{Intersection over Union (IoU):} Đo lường mức độ trùng khớp giữa mặt nạ dự đoán $P$ và mặt nạ ground-truth $G$:
+    \item \textbf{Micro Precision và Micro Recall:} Đánh giá độ chuẩn xác và độ bao phủ của các điểm ảnh bị phát hiện là giả mạo trên toàn bộ tập dữ liệu:
     \begin{equation}
-    \text{IoU} = \frac{|P \cap G|}{|P \cup G|} = \frac{TP}{TP + FP + FN}
+    \text{Precision}_{\text{micro}} = \frac{\sum TP}{\sum TP + \sum FP}, \quad \text{Recall}_{\text{micro}} = \frac{\sum TP}{\sum TP + \sum FN}
     \end{equation}
-    \item \textbf{Macro Dice / Dice Coefficient:}
+    \item \textbf{Intersection over Union (IoU Micro):} Đo lường mức độ trùng khớp giữa vùng pixel giả mạo dự đoán $P$ và ground-truth $G$:
     \begin{equation}
-    \text{Dice} = \frac{2 \times |P \cap G|}{|P| + |G|} = \frac{2 \times TP}{2 \times TP + FP + FN}
+    \text{IoU}_{\text{micro}} = \frac{\sum TP}{\sum TP + \sum FP + \sum FN}
     \end{equation}
+    \item \textbf{Macro Dice Score:} Trung bình hệ số tương đồng Dice tính độc lập trên từng ảnh tài liệu $i \in \{1, \dots, N\}$:
+    \begin{equation}
+    \text{Macro Dice} = \frac{1}{N} \sum_{i=1}^{N} \frac{2 \times |P_i \cap G_i| + \epsilon}{|P_i| + |G_i| + \epsilon} = \frac{1}{N} \sum_{i=1}^{N} \frac{2 \cdot TP_i + \epsilon}{2 \cdot TP_i + FP_i + FN_i + \epsilon}
+    \end{equation}
+\end{itemize}
+
+\textbf{B. Nhóm chỉ số đánh giá phân loại đa nhãn (Multi-Label Classification Metrics):}
+Trong bài toán phân loại đa nhãn, một mẫu tài liệu có thể đồng thời mang nhiều đặc trưng vi mô hoặc không có nhãn nào. Do đó, các chỉ số sau được chuẩn hóa để đánh giá năng lực suy luận:
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item \textbf{Macro F1 và Micro F1:}
+    \begin{itemize}[label={+}, itemsep=1pt]
+        \item \textbf{Macro F1:} Tính giá trị F1 độc lập cho từng nhãn $c \in \{1, \dots, C\}$ rồi lấy trung bình số học không trọng số:
+        \begin{equation}
+        \text{Macro F1} = \frac{1}{C} \sum_{c=1}^{C} \text{F1}_c = \frac{1}{C} \sum_{c=1}^{C} \frac{2 \cdot \text{Precision}_c \cdot \text{Recall}_c}{\text{Precision}_c + \text{Recall}_c}
+        \end{equation}
+        Chỉ số này đặc biệt quan trọng vì nó phản ánh công bằng hiệu năng trên các nhãn thiểu số (như \textit{text\_incoherence}) mà không bị áp đảo bởi các nhãn chiếm đa số.
+        \item \textbf{Micro F1:} Tổng hợp toàn bộ số lượng $TP, FP, FN$ trên tất cả các lớp trước khi tính F1:
+        \begin{equation}
+        \text{Micro F1} = \frac{2 \sum_{c=1}^C TP_c}{2 \sum_{c=1}^C TP_c + \sum_{c=1}^C FP_c + \sum_{c=1}^C FN_c}
+        \end{equation}
+    \end{itemize}
+    \item \textbf{Độ chính xác trung bình trung bình (Mean Average Precision -- mAP / PR-AUC):} Tính diện tích dưới đường cong Precision-Recall trung bình trên toàn bộ $C$ nhãn:
+    \begin{equation}
+    \text{mAP} = \frac{1}{C} \sum_{c=1}^{C} \text{AP}_c = \frac{1}{C} \sum_{c=1}^{C} \sum_{k} (R_c^{(k)} - R_c^{(k-1)}) P_c^{(k)}
+    \end{equation}
+    Chỉ số này phản ánh năng lực sắp xếp độ tin cậy của mô hình độc lập với ngưỡng phân loại cố định.
+    \item \textbf{Exact Match Ratio (Subset Accuracy):} Đo lường tỷ lệ các mẫu ảnh mà mô hình dự đoán chính xác tuyệt đối toàn bộ vector nhãn 6 chiều:
+    \begin{equation}
+    \text{Exact Match} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I}(\hat{\mathbf{y}}_i = \mathbf{y}_i)
+    \end{equation}
+    \item \textbf{Hamming Loss:} Tỷ lệ trung bình các nhãn bị dự đoán sai trên toàn bộ tập kiểm thử:
+    \begin{equation}
+    \text{Hamming Loss} = \frac{1}{N \cdot C} \sum_{i=1}^{N} \sum_{c=1}^{C} \mathbb{I}(\hat{y}_{i,c} \neq y_{i,c})
+    \end{equation}
+    Giá trị Hamming Loss càng tiệm cận 0 thể hiện mức độ sai lệch nhãn càng thấp.
     \item \textbf{Top-k Class Hit Rate (đặc biệt Top-3 Hit Rate):} Tỷ lệ các mẫu kiểm thử mà trong đó ít nhất một nhãn làm giả thực tế (ground-truth positive) xuất hiện trong top $k$ nhãn có độ tin cậy dự đoán cao nhất:
     \begin{equation}
     \text{Hit@k} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I} \left( \text{Top-k}(\hat{\mathbf{y}}_i) \cap \mathbf{Y}_i^+ \neq \emptyset \right)
     \end{equation}
-    Chỉ số này phản ánh năng lực gợi ý chính xác dấu vết nghi vấn cho chuyên viên giám định.
+    Chỉ số này đóng vai trò thước đo hỗ trợ thực tế cho điều tra viên, đảm bảo rằng trong 3 gợi ý hàng đầu luôn có ít nhất một phán đoán trùng khớp với thực tế giả mạo.
 \end{itemize}
