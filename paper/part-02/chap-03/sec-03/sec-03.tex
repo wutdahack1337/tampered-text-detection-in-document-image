@@ -1,12 +1,12 @@
 \subsection{3. Thảo luận và Đánh giá tổng kết}
 
-\indent\indent Dựa trên các kết quả thực nghiệm, một số kết luận chuyên môn quan trọng được rút ra:\vspace{0.3cm}
+\indent\indent Từ các kết quả thực nghiệm đạt được, một số phân tích học thuật quan trọng được rút ra:\vspace{0.3cm}
 
-\textbf{1. Đánh đổi giữa hiệu năng và kích thước mô hình (Efficiency vs Accuracy):}
-Mạng EfficientNet-B0 với khoảng 5.3M tham số tiêu tốn ít hơn 75\% bộ nhớ GPU trong quá trình suy luận so với ResNet-50 nhưng lại cho điểm F1 cao hơn 2.48\%. Điều này chứng minh tính ưu việt của cơ chế Compound Scaling và khối MBConv trong việc nắm bắt các đặc trưng cục bộ tần số cao của chữ tài liệu mà không cần mạng quá sâu.\vspace{0.3cm}
+\textbf{1. Hiệu quả của việc kết hợp miền Không gian và Tần số (BlockDCT Fusion):}
+Việc tích hợp nhánh phân tích tần số BlockDCT $8 \times 8$ tại tầng đặc trưng $1/8$ đã chứng minh tính hiệu quả vượt bậc trong việc phát hiện các vết làm giả tinh vi. Trong khi các mạng CNN thông thường dễ bị đánh lừa bởi các ký tự ghép có phông chữ tương đồng, ma trận hệ số DCT cho phép mạng bóc tách sự đứt gãy trong cấu trúc lưới nén JPEG, nâng cao rõ rệt chỉ số Precision (đạt 85.25\%).\vspace{0.3cm}
 
-\textbf{2. Hiệu quả của kỹ thuật tái cân bằng phân bố nhãn (Rebalancing Splits):}
-Việc lọc sạch các câu chú thích phủ định và tái cân bằng 2,000 mẫu kiểm thử đã ngăn chặn hiện tượng mô hình thiên vị về các lớp chiếm đa số, giúp điểm Recall của các lớp thiểu số (như \textit{Text incoherence}) tăng từ 0.421 lên 0.578.\vspace{0.3cm}
+\textbf{2. Tính gọn nhẹ vượt bậc của bộ giải mã LiteMID kết hợp scSE:}
+Nhờ thay thế các khối tích chập tiêu chuẩn bằng các khối tích chập tách biệt chiều sâu (Depthwise Separable Blocks) và kiểm soát độ rộng kênh ở mức 48, bộ giải mã LiteMID cùng khối chú ý scSE giữ cho tổng tham số của toàn bộ mô hình dừng lại ở mức \textbf{4.15 triệu tham số}. So với các kiến trúc DTD gốc thường có kích thước trên 30 triệu tham số, LightweightDTD tiết kiệm gần 85\% dung lượng nhưng vẫn bảo toàn độ chính xác pixel đạt 99.68\%.\vspace{0.3cm}
 
-\textbf{3. Bước đột phá về tính minh bạch giải thích (Explainable AI):}
-Sự tham gia của mô hình thị giác - ngôn ngữ SmolVLM2 đã giải quyết triệt để bài toán ``hộp đen'' vốn là rào cản lớn nhất của các giải pháp học sâu trong lĩnh vực pháp y tài liệu. Các chuỗi suy luận bằng ngôn ngữ tự nhiên không chỉ giúp chuyên viên giám định tiết kiệm thời gian khoanh vùng nghi vấn mà còn là bằng chứng rõ ràng phục vụ công tác đối soát hồ sơ.
+\textbf{3. Khả năng giải thích hỗ trợ giám định (Top-3 Class Hit Rate 98.30\%):}
+Việc tích hợp đầu ra phân loại 6 đặc trưng vi mô giúp mô hình vượt khỏi giới hạn của một bộ phân đoạn mặt nạ thuần túy. Tỷ lệ Top-3 Hit Rate lên tới 98.30\% là một đóng góp thiết thực cho các hệ thống giám định thực tế, cung cấp gợi ý trực quan cho chuyên viên pháp y về loại hình can thiệp (lệch dòng, sai phông, hay vết cắt viền).

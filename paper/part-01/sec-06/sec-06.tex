@@ -2,27 +2,27 @@
 
 \indent\indent \textbf{Ý nghĩa khoa học:}
 \begin{itemize}
-    \item Đóng góp vào lĩnh vực pháp y tài liệu số bằng một hướng tiếp cận mới: kết hợp khả năng phân loại đặc trưng hình ảnh gọn nhẹ của EfficientNet với khả năng giải thích suy luận tự nhiên của Vision-Language Models (VLM).
-    \item Cung cấp giải pháp minh bạch hóa quá trình ra quyết định của mô hình AI, giúp chuyển đổi từ mô hình ``hộp đen'' sang hệ thống có thể kiểm chứng và giải trình.
+    \item Đề xuất thành công mô hình học sâu đa nhiệm \textbf{LightweightDTD} kết hợp hiệu quả giữa đặc trưng không gian và miền tần số nén JPEG.
+    \item Chứng minh rằng một kiến trúc tinh gọn (~4.15 triệu tham số) hoàn toàn có thể đạt được độ chính xác phân đoạn 99.68\% và Top-3 Class Hit Rate 98.30\%, mở ra hướng tiếp cận tối ưu hóa cho các bài toán pháp y ảnh tài liệu.
 \end{itemize}
 \vspace{0.3cm}
 
 \textbf{Ý nghĩa thực tiễn:}
 \begin{itemize}
-    \item Hỗ trợ các tổ chức tài chính, ngân hàng, cơ quan hành chính và doanh nghiệp tự động hóa quá trình xác thực hồ sơ, hóa đơn và văn bằng, giảm thiểu rủi ro gian lận.
-    \item Mô hình có kích thước gọn nhẹ, tiết kiệm tài nguyên, có thể tích hợp trực tiếp vào các ứng dụng di động hoặc máy quét tài liệu thông minh.
+    \item Cung cấp công cụ tự động hóa việc xác thực tính nguyên bản của hóa đơn, hợp đồng, chứng minh nhân dân trong các dịch vụ công, ngân hàng và doanh nghiệp.
+    \item Kích thước mô hình nhỏ và yêu cầu phần cứng thấp, thuận tiện tích hợp vào các thiết bị quét văn bản hoặc ứng dụng di động xử lý thời gian thực.
 \end{itemize}
 \vspace{0.3cm}
 
 \textbf{Bố cục luận văn:}
-Luận văn được tổ chức thành 3 phần chính như sau:
+Luận văn gồm 3 phần chính:
 \begin{itemize}
     \item \textbf{Phần I: Phần giới thiệu:} Trình bày đặt vấn đề, các nghiên cứu liên quan, mục tiêu, đối tượng, phương pháp nghiên cứu và ý nghĩa của đề tài.
     \item \textbf{Phần II: Phần nội dung:} Gồm 3 chương:
     \begin{itemize}
-        \item \textit{Chương 1: Cơ sở lý thuyết và Mô tả bài toán:} Trình bày kiến thức nền tảng về pháp y tài liệu, mạng EfficientNet-B0 và mô hình thị giác - ngôn ngữ SmolVLM2.
-        \item \textit{Chương 2: Thiết kế và Cài đặt giải pháp:} Chi tiết quy trình xử lý dữ liệu DTD-lightweight, kiến trúc mô hình đề xuất và cơ chế trích xuất suy luận.
-        \item \textit{Chương 3: Thực nghiệm và Đánh giá kết quả:} Trình bày kết quả huấn luyện, các bảng so sánh chỉ số định lượng và phân tích các trường hợp suy luận thực tế.
+        \item \textit{Chương 1: Cơ sở lý thuyết:} Trình bày nguyên lý EfficientNet-B0, biến đổi BlockDCT, mô-đun chú ý scSE và các độ đo đánh giá.
+        \item \textit{Chương 2: Thiết kế và Cài đặt giải pháp:} Chi tiết kiến trúc LightweightDTD, nhánh không gian, nhánh tần số, bộ giải mã LiteMID, hàm mất mát đa nhiệm và tiền xử lý tập dữ liệu Minh-TFR.
+        \item \textit{Chương 3: Thực nghiệm và Đánh giá kết quả:} Trình bày kết quả huấn luyện, các chỉ số định lượng trên tập kiểm thử và trực quan hóa kết quả dự đoán.
     \end{itemize}
-    \item \textbf{Phần III: Phần kết luận và Hướng phát triển:} Đánh giá những kết quả đạt được, chỉ ra các hạn chế và đề xuất các hướng nghiên cứu tiếp theo.
+    \item \textbf{Phần III: Phần kết luận và Hướng phát triển:} Tổng kết các đóng góp, phân tích hạn chế và đề xuất hướng mở rộng trong tương lai.
 \end{itemize}

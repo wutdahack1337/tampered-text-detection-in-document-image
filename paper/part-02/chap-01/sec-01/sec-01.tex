@@ -1,6 +1,6 @@
 \subsection{1. Mô tả chi tiết bài toán}
 \subsubsection{1.1. Bài toán phát hiện chữ bị làm giả trong tài liệu}
-\indent\indent Nghiên cứu tập trung giải quyết bài toán phát hiện và phân loại các vùng văn bản bị làm giả (Tampered Text Detection) trên các ảnh tài liệu số hóa. Khác với bài toán nhận dạng chữ quang học (OCR) thông thường chỉ đọc nội dung ký tự, bài toán pháp y tài liệu đòi hỏi mô hình phải phân tích sâu các đặc trưng vi mô ở cấp độ pixel để xác định tính xác thực của từng ký tự hoặc khối văn bản.\vspace{0.3cm}
+\indent\indent Nghiên cứu tập trung giải quyết bài toán phát hiện và phân loại các vùng văn bản bị làm giả (Tampered Text Detection) trên các ảnh tài liệu số hóa. Khác với bài toán OCR thông thường chỉ đọc nội dung văn bản, bài toán pháp y tài liệu đòi hỏi mô hình phải phân tích sâu các đặc trưng vi mô ở cấp độ pixel và miền tần số để xác định tính xác thực của từng ký tự hoặc khối văn bản.\vspace{0.3cm}
 
 Các hình thức làm giả văn bản phổ biến trong tài liệu bao gồm:\vspace{-0.1cm}
 \begin{itemize}[label={--}, itemsep=1pt]
@@ -10,11 +10,21 @@ Các hình thức làm giả văn bản phổ biến trong tài liệu bao gồm
     \item \textbf{Xóa văn bản (Text Erasure / Inpainting):} Sử dụng thuật toán lấp đầy nội dung để xóa bỏ chữ ký, con dấu hoặc các điều khoản quan trọng.
 \end{itemize}
 
-\subsubsection{1.2. Mục tiêu hệ thống và yêu cầu suy luận}
-\indent\indent Để một hệ thống giám định tài liệu có giá trị sử dụng cao trong thực tế, hệ thống không chỉ cần độ chính xác cao mà còn phải thỏa mãn hai tiêu chí thiết yếu:\vspace{-0.1cm}
-\begin{itemize}[label={--}, itemsep=1pt]
-    \item \textbf{Tính gọn nhẹ và thời gian thực:} Mô hình phân loại cần có kích thước nhỏ, tốc độ suy luận nhanh để có thể triển khai trên các máy chủ xác thực tài liệu hàng loạt hoặc tích hợp vào thiết bị di động của giao dịch viên.
-    \item \textbf{Khả năng giải thích suy luận (Explainability):} Thay vì chỉ trả về một nhãn phân loại hay điểm xác suất trừu tượng, hệ thống cần cung cấp được lý do cụ thể vì sao vùng chữ đó bị coi là giả mạo (ví dụ: ``\textit{Phát hiện viền cắt không tự nhiên xung quanh cụm số 500,000, font chữ có độ sắc nét không tương đồng với các ký tự lân cận}'').
+\subsubsection{1.2. Hệ thống nhãn phân loại pháp y vi mô}
+\indent\indent Để mô hình hóa chi tiết bản chất của vùng chữ bị can thiệp, hệ thống định nghĩa 6 nhãn đặc trưng độc lập:
+\begin{itemize}[label={--}, itemsep=2pt]
+    \item \textbf{Edge artifacts:} Vết cắt dán, viền răng cưa bất thường, dấu vết mờ nhạt do nội suy xung quanh nét chữ.
+    \item \textbf{Unnatural texture:} Độ nhiễu nén JPEG, hạt nhiễu cảm biến hoặc độ nhẵn của giấy nền không đồng nhất với tài liệu gốc.
+    \item \textbf{Inconsistent alignment:} Ký tự bị lệch dòng, khoảng cách giữa các chữ cái (kerning) hoặc khoảng cách dòng (leading) không chuẩn.
+    \item \textbf{Inconsistent font:} Sử dụng font chữ khác biệt về độ dày nét (weight), độ nghiêng, hoặc kiểu dáng chân chữ (serif).
+    \item \textbf{Lack of integration:} Vùng chữ thiếu tính hòa nhập vào nền, độ tương phản ánh sáng và đổ bóng không tự nhiên.
+    \item \textbf{Text incoherence:} Nội dung văn bản bị vô nghĩa, mâu thuẫn ngữ nghĩa hoặc sai lệch logic với phần còn lại của văn bản.
 \end{itemize}
 
-Nhằm đáp ứng trọn vẹn các yêu cầu này, đề tài đề xuất mô hình phối hợp giữa kiến trúc phân loại tích chập tối ưu **EfficientNet-B0** và mô hình thị giác - ngôn ngữ **SmolVLM2-500M** chuyên biệt cho tác vụ trích xuất suy luận logic.
+\subsubsection{1.3. Yêu cầu của kiến trúc học đa nhiệm (Multi-task Learning)}
+\indent\indent Một hệ thống giám định toàn diện cần đáp ứng đồng thời hai nhiệm vụ:
+\begin{enumerate}
+    \item \textbf{Phân đoạn mức điểm ảnh (Pixel-level Segmentation):} Trả về mặt nạ nhị phân chính xác kích thước $H \times W$, chỉ rõ từng pixel thuộc vùng chữ bị làm giả.
+    \item \textbf{Phân loại thuộc tính giả mạo (Multi-label Classification):} Dự đoán xác suất cho 6 nhãn đặc trưng vi mô, cung cấp căn cứ giải thích vì sao vùng chữ đó bị coi là giả mạo.
+\end{enumerate}
+Mô hình đề xuất \textbf{LightweightDTD} được thiết kế để giải quyết đồng thời hai nhiệm vụ này trên một mạng chia sẻ đặc trưng duy nhất.

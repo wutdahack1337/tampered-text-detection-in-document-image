@@ -1,9 +1,7 @@
 \subsection{2. Cơ sở lý thuyết liên quan}
 
-\subsubsection{2.1. Kiến trúc mạng nơ-ron tích chập EfficientNet-B0}
-\indent\indent Trong các kiến trúc CNN truyền thống, việc nâng cao độ chính xác thường dựa vào việc gia tăng một trong ba yếu tố: độ sâu của mạng (số lớp như ResNet-50, ResNet-101), độ rộng của kênh đặc trưng (channel width), hoặc độ phân giải ảnh đầu vào. Tuy nhiên, cách mở rộng đơn lẻ này thường nhanh chóng đạt điểm bão hòa và gây bùng nổ số lượng tham số.\vspace{0.3cm}
-
-Kiến trúc **EfficientNet** do Tan và Le \cite{tan2019efficientnet} đề xuất giải quyết triệt để vấn đề này bằng phương pháp \textbf{Co giãn phức hợp (Compound Scaling)}. Thay vì mở rộng tùy ý, phương pháp này sử dụng một hệ số phức hợp $\phi$ để co giãn đồng thời cả ba chiều theo tỷ lệ cân bằng toán học:
+\subsubsection{2.1. Mạng nơ-ron tích chập EfficientNet-B0}
+\indent\indent Kiến trúc \textbf{EfficientNet} do Tan và Le \cite{tan2019efficientnet} đề xuất giải quyết bài toán tối ưu hóa tài nguyên mạng tích chập thông qua phương pháp \textbf{Co giãn phức hợp (Compound Scaling)}. Thay vì mở rộng tùy ý một chiều đơn lẻ, phương pháp này sử dụng một hệ số phức hợp $\phi$ để co giãn đồng thời cả ba chiều theo tỷ lệ cân bằng toán học:
 \begin{equation}
 \begin{aligned}
 \text{Độ sâu: } & d = \alpha^\phi \\
@@ -13,38 +11,61 @@ Kiến trúc **EfficientNet** do Tan và Le \cite{tan2019efficientnet} đề xu�
 \end{aligned}
 \end{equation}
 
-Khối xây dựng cốt lõi của EfficientNet-B0 là **MBConv (Mobile Inverted Bottleneck Convolution)** kết hợp khối chú ý **Squeeze-and-Excitation (SE)**. Khối MBConv đầu tiên mở rộng số kênh qua lớp tích chập $1 \times 1$, sau đó áp dụng tích chập phân tách theo chiều sâu (Depthwise Convolution $3 \times 3$ hoặc $5 \times 5$), đi qua khối SE để hiệu chỉnh trọng số động cho từng kênh đặc trưng, và cuối cùng chiếu ngược trở lại số kênh ban đầu bằng tích chập $1 \times 1$ kết hợp liên kết tắt (residual connection). Nhờ cấu trúc này, EfficientNet-B0 chỉ có khoảng \textbf{5.3 triệu tham số} nhưng đạt hiệu quả trích xuất đặc trưng vượt trội so với các mạng lớn hơn như ResNet-50 (~25 triệu tham số).
+Khối xây dựng cốt lõi của EfficientNet-B0 là \textbf{MBConv (Mobile Inverted Bottleneck Convolution)} kết hợp khối chú ý \textbf{Squeeze-and-Excitation (SE)}. Khối MBConv đầu tiên mở rộng số kênh qua lớp tích chập $1 \times 1$, sau đó áp dụng tích chập phân tách theo chiều sâu (Depthwise Convolution $3 \times 3$ hoặc $5 \times 5$), đi qua khối SE để hiệu chỉnh trọng số động cho từng kênh đặc trưng, và cuối cùng chiếu ngược trở lại số kênh ban đầu bằng tích chập $1 \times 1$ kết hợp liên kết tắt (residual connection). Nhờ cấu trúc này, EfficientNet-B0 chỉ có khoảng 5.3 triệu tham số backbone nhưng đạt hiệu quả trích xuất đặc trưng vượt trội.
 
-\subsubsection{2.2. Kỹ thuật pháp y ảnh tài liệu số}
-\indent\indent Trong ảnh tài liệu số, mỗi thao tác chỉnh sửa đều phá vỡ tính liên tục của cấu trúc ảnh gốc. Các dấu hiệu vi mô quan trọng bao gồm:\vspace{-0.1cm}
+\subsubsection{2.2. Phép biến đổi Cosin rời rạc theo khối (BlockDCT $8 \times 8$)}
+\indent\indent Biến đổi Cosin rời rạc (Discrete Cosine Transform -- DCT) \cite{ahmed1974discrete} là kỹ thuật biến đổi tín hiệu từ miền không gian sang miền tần số, đóng vai trò nền tảng trong chuẩn nén ảnh JPEG. Trong nén JPEG, ảnh được chia thành các khối độc lập kích thước $8 \times 8$ pixel và được lượng tử hóa theo từng tần số.\vspace{0.3cm}
+
+Để trích xuất đặc trưng tần số phục vụ giám định mà không làm gián đoạn luồng tính toán song song trên GPU, mô-đun \textbf{BlockDCT} xây dựng cơ sở biến đổi DCT-II trực chuẩn $8 \times 8$:
+\begin{equation}
+B_{u, x} = \alpha(u) \cos \left( \frac{(2x + 1)u\pi}{2n} \right), \quad n=8
+\end{equation}
+trong đó:
+\begin{equation}
+\alpha(u) = \begin{cases}
+\sqrt{\frac{1}{n}} & \text{khi } u = 0 \\
+\sqrt{\frac{2}{n}} & \text{khi } u > 0
+\end{cases}
+\end{equation}
+
+Khi đưa ảnh xám đầu vào kích thước $[B, 1, H, W]$, phép chiếu trực chuẩn theo hai chiều khối $8 \times 8$ sẽ biến đổi ảnh thành tensor hệ số tần số có kích thước $[B, 64, H/8, W/8]$, trong đó mỗi kênh tương ứng với một thành phần tần số cụ thể (từ DC tần số thấp đến các hệ số AC tần số cao). Bất kỳ sự chỉnh sửa ghép nối nào làm xô lệch cấu trúc $8 \times 8$ gốc đều biểu hiện rõ rệt trên các kênh tần số này.
+
+\subsubsection{2.3. Mô-đun chú ý không gian và kênh đồng thời (scSE Module)}
+\indent\indent Mô-đun \textbf{scSE (Concurrent Spatial and Channel Squeeze-and-Excitation)} do Roy và cộng sự \cite{roy2018concurrent} đề xuất giúp tăng cường các đặc trưng không gian và ngữ nghĩa thông qua hai luồng chú ý song song:
+\begin{enumerate}
+    \item \textbf{Chú ý kênh (Channel Squeeze-and-Excitation -- cSE):} Nén chiều không gian thông qua Adaptive Average Pooling và học trọng số kênh qua hai lớp tích chập $1 \times 1$:
+    \begin{equation}
+    \mathbf{z}_{cSE} = \sigma \left( \mathbf{W}_2 \, \text{ReLU}(\mathbf{W}_1 \, \text{GAP}(\mathbf{X})) \right)
+    \end{equation}
+    \item \textbf{Chú ý không gian (Spatial Squeeze-and-Excitation -- sSE):} Chiếu toàn bộ kênh đặc trưng về 1 bản đồ kích hoạt không gian qua lớp tích chập $1 \times 1$:
+    \begin{equation}
+    \mathbf{z}_{sSE} = \sigma \left( \text{Conv}_{1 \times 1}(\mathbf{X}) \right)
+    \end{equation}
+\end{enumerate}
+Đặc trưng đầu ra được kết hợp cộng gộp trực tiếp:
+\begin{equation}
+\mathbf{X}_{scSE} = \mathbf{X} \odot \mathbf{z}_{cSE} + \mathbf{X} \odot \mathbf{z}_{sSE}
+\end{equation}
+Cơ chế này cho phép mạng vừa tập trung vào ``kênh tần số nào quan trọng'' (qua cSE) vừa tập trung vào ``vùng pixel nào có vết cắt biên'' (qua sSE).
+
+\subsubsection{2.4. Các độ đo đánh giá mô hình đa nhiệm}
+\indent\indent Hệ thống sử dụng tập hợp các chỉ số đánh giá toàn diện cho cả hai nhiệm vụ:\vspace{-0.1cm}
 \begin{itemize}[label={--}, itemsep=1pt]
-    \item \textbf{Sự không nhất quán về ma trận nén JPEG (JPEG Inconsistencies):} Khi một đoạn chữ từ ảnh JPEG này được dán vào ảnh JPEG khác và lưu lại, khối $8 \times 8$ pixel tại vùng chỉnh sửa sẽ trải qua chu kỳ lượng tử hóa kép (double compression), tạo ra phân bố tần số khác biệt với vùng xung quanh.
-    \item \textbf{Dấu vết biên ký tự (Edge Gradient Artifacts):} Vùng chữ ghép thường có viền sắc nhọn hoặc vết nhòe do nội suy không tự nhiên khi điều chỉnh kích thước hoặc xoay chữ.
-    \item \textbf{Độ tương phản và phân bố nhiễu cục bộ (Local Noise Variance):} Bộ cảm biến máy quét hoặc máy ảnh luôn để lại một mẫu nhiễu cảm biến (PRNU) đặc trưng. Khi một ký tự bị thay thế, mẫu nhiễu tại vùng đó sẽ bị đứt gãy.
-\end{itemize}
-
-\subsubsection{2.3. Mô hình thị giác - ngôn ngữ SmolVLM2 và cơ chế sinh suy luận}
-\indent\indent Vision-Language Models (VLM) là thế hệ mô hình đa phương thức cho phép tiếp nhận đồng thời cả hình ảnh và câu lệnh văn bản (prompt) để sinh ra phản hồi ngôn ngữ tương ứng. 
-
-Khác với các mô hình VLM khổng lồ (như LLaVA 7B hay GPT-4V) đòi hỏi tài nguyên tính toán đắt đỏ, **SmolVLM2-500M** là mô hình tinh gọn được tối ưu hóa cho tác vụ suy luận hiệu năng cao trên thiết bị nhỏ gọn. SmolVLM2 sử dụng một bộ mã hóa thị giác gọn nhẹ để trích xuất các token hình ảnh, sau đó ánh xạ vào không gian biểu diễn chung của một mô hình ngôn ngữ nhỏ (~500 triệu tham số). Bằng cách cung cấp prompt chuyên biệt cho bài toán pháp y (ví dụ: ``\textit{Hãy phân tích vùng văn bản được khoanh vùng trong ảnh tài liệu này và chỉ ra các dấu hiệu chỉnh sửa giả mạo nếu có}''), mô hình có thể giải mã và sinh ra chuỗi lập luận tự nhiên (chain-of-thought rationale) mô tả chi tiết bất thường quan sát được.
-
-\subsubsection{2.4. Các độ đo đánh giá mô hình}
-\indent\indent Để đánh giá khách quan hiệu năng của mô hình phân loại và phát hiện làm giả chữ, các độ đo chuẩn sau được áp dụng:\vspace{-0.1cm}
-\begin{itemize}[label={--}, itemsep=1pt]
-    \item \textbf{Validation Loss (Hàm mất mát trên tập kiểm định):} Sử dụng hàm Cross-Entropy Loss để đo lường sai số giữa phân bố xác suất dự đoán của mô hình và nhãn thực tế:
+    \item \textbf{Pixel Accuracy:} Tỷ lệ phân loại đúng từng pixel trên toàn bộ ảnh tài liệu:
     \begin{equation}
-    \mathcal{L}_{CE} = -\sum_{i=1}^{C} y_i \log(\hat{y}_i)
+    \text{Pixel Acc} = \frac{TP + TN}{TP + TN + FP + FN}
     \end{equation}
-    trong đó $C$ là số lớp làm giả, $y_i$ là nhãn ground-truth và $\hat{y}_i$ là xác suất dự đoán.
-    \item \textbf{Độ chính xác (Accuracy):} Tỷ lệ giữa số mẫu dự đoán đúng trên tổng số mẫu đánh giá:
+    \item \textbf{Intersection over Union (IoU):} Đo lường mức độ trùng khớp giữa mặt nạ dự đoán $P$ và mặt nạ ground-truth $G$:
     \begin{equation}
-    \text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+    \text{IoU} = \frac{|P \cap G|}{|P \cup G|} = \frac{TP}{TP + FP + FN}
     \end{equation}
-    \item \textbf{F1-Score (Trung bình điều hòa giữa Precision và Recall):} Đặc biệt quan trọng đối với các bài toán có sự mất cân bằng giữa các dạng làm giả:
+    \item \textbf{Macro Dice / Dice Coefficient:}
     \begin{equation}
-    \text{Precision} = \frac{TP}{TP + FP}, \quad \text{Recall} = \frac{TP}{TP + FN}
+    \text{Dice} = \frac{2 \times |P \cap G|}{|P| + |G|} = \frac{2 \times TP}{2 \times TP + FP + FN}
     \end{equation}
+    \item \textbf{Top-k Class Hit Rate (đặc biệt Top-3 Hit Rate):} Tỷ lệ các mẫu kiểm thử mà trong đó ít nhất một nhãn làm giả thực tế (ground-truth positive) xuất hiện trong top $k$ nhãn có độ tin cậy dự đoán cao nhất:
     \begin{equation}
-    \text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+    \text{Hit@k} = \frac{1}{N} \sum_{i=1}^{N} \mathbb{I} \left( \text{Top-k}(\hat{\mathbf{y}}_i) \cap \mathbf{Y}_i^+ \neq \emptyset \right)
     \end{equation}
+    Chỉ số này phản ánh năng lực gợi ý chính xác dấu vết nghi vấn cho chuyên viên giám định.
 \end{itemize}

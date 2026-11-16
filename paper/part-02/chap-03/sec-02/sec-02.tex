@@ -1,71 +1,56 @@
 \subsection{2. Kết quả thực nghiệm và Đánh giá}
 
-\subsubsection{2.1. Kết quả định lượng tổng thể}
-\indent\indent Hiệu năng của mô hình đề xuất được so sánh với các kiến trúc cơ sở (Baselines) trên cùng tập kiểm thử 2,000 mẫu chuẩn của DTD-lightweight.
+\subsubsection{2.1. Kết quả định lượng trên tập kiểm thử Minh-TFR TestSet}
+\indent\indent Mô hình **LightweightDTD** sau khi huấn luyện được tải lại từ checkpoint tối ưu \texttt{best\_model\_multi\_classes.pth} và đánh giá toàn diện trên toàn bộ tập kiểm thử độc lập \textbf{Minh-TFR TestSet} (gồm 500 batches kiểm thử với ngưỡng nhị phân $threshold = 0.5$).
 
 \begin{table}[H]
     \centering
-    \caption{So sánh hiệu năng giữa các mô hình trên tập kiểm thử}
-    \label{tab:model_comparison}
+    \caption{Kết quả định lượng của mô hình LightweightDTD trên Minh-TFR TestSet}
+    \label{tab:test_results}
     \vspace{0.2cm}
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|m{5.5cm}|m{2.5cm}|m{2.5cm}|m{2.5cm}|}
+    \begin{tabular}{|m{6.5cm}|m{4cm}|m{3.5cm}|}
         \hline
-        \textbf{Mô hình} & \textbf{Validation Loss} & \textbf{Accuracy} & \textbf{F1-Score} \\
+        \textbf{Chỉ số đánh giá (Evaluation Metric)} & \textbf{Giá trị đạt được} & \textbf{Tỷ lệ (\%)} \\
         \hline
-        Baseline CNN & 0.6210 & 71.20\% & 0.5840 \\
+        \textbf{Pixel Accuracy (Độ chính xác pixel)} & \textbf{0.9968} & \textbf{99.68\%} \\
         \hline
-        ResNet-18 & 0.5124 & 74.30\% & 0.6120 \\
+        \textbf{Top-3 Class Hit Rate} & \textbf{0.9830} & \textbf{98.30\%} \\
         \hline
-        ResNet-50 & 0.4480 & 76.80\% & 0.6410 \\
+        \textbf{Precision (Micro)} & \textbf{0.8525} & \textbf{85.25\%} \\
         \hline
-        \textbf{Ours (EfficientNet-B0 + SmolVLM2)} & \textbf{0.4011} & \textbf{78.50\%} & \textbf{0.6658} \\
+        \textbf{Recall (Micro)} & \textbf{0.6496} & \textbf{64.96\%} \\
+        \hline
+        \textbf{Intersection over Union (IoU Micro)} & \textbf{0.5839} & \textbf{58.39\%} \\
+        \hline
+        \textbf{Macro Dice Score} & \textbf{0.4518} & 45.18\% \\
+        \hline
+        \multicolumn{2}{|l|}{\textbf{Tổng số tham số mô hình (Total Parameters)}} & \textbf{4,155,796} \\
         \hline
     \end{tabular}
 \end{table}
 
-Kết quả tại \textbf{Bảng \ref{tab:model_comparison}} cho thấy mô hình đề xuất đạt hiệu năng vượt trội trên mọi chỉ số: hàm mất mát kiểm định giảm xuống chỉ còn \textbf{0.4011}, độ chính xác tổng thể đạt \textbf{78.50\%} và điểm \textbf{F1-Score đạt 0.6658}, cao hơn đáng kể so với mạng ResNet-50 dù kích thước nhỏ hơn gần 5 lần.
+Kết quả tại \textbf{Bảng \ref{tab:test_results}} thể hiện hai ưu thế vượt trội:
+\begin{enumerate}
+    \item \textbf{Ở nhiệm vụ phân đoạn mặt nạ làm giả:} Độ chính xác pixel đạt tới \textbf{99.68\%} cùng chỉ số \textbf{Precision đạt 85.25\%}. Chỉ số IoU đạt \textbf{58.39\%}, phản ánh khả năng khoanh vùng chính xác các ký tự bị sửa đổi mà không làm lan rộng sang các vùng văn bản hợp lệ xung quanh.
+    \item \textbf{Ở nhiệm vụ phân loại đặc trưng làm giả:} Chỉ số \textbf{Top-3 Class Hit Rate đạt tới 98.30\%}, chứng minh rằng trong gần như toàn bộ các trường hợp kiểm thử (98.3\%), mô hình đều chỉ ra đúng ít nhất một bản chất lỗi vi mô thực tế nằm trong 3 phán đoán hàng đầu.
+\end{enumerate}
 
-\subsubsection{2.2. Đánh giá chi tiết trên từng lớp nhãn làm giả}
-\indent\indent Bảng \ref{tab:per_class_results} thể hiện chi tiết điểm F1-Score trên từng đặc trưng pháp y:
-\begin{table}[H]
-    \centering
-    \caption{Hiệu năng phân loại chi tiết theo từng lớp nhãn}
-    \label{tab:per_class_results}
-    \vspace{0.2cm}
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|m{1cm}|m{5.5cm}|m{2.5cm}|m{2.5cm}|m{2cm}|}
-        \hline
-        \textbf{STT} & \textbf{Nhãn làm giả} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\
-        \hline
-        1 & Edge artifacts & 0.768 & 0.718 & \textbf{0.742} \\
-        \hline
-        2 & Unnatural texture & 0.702 & 0.669 & \textbf{0.685} \\
-        \hline
-        3 & Inconsistent font & 0.735 & 0.687 & \textbf{0.710} \\
-        \hline
-        4 & Inconsistent alignment & 0.654 & 0.623 & \textbf{0.638} \\
-        \hline
-        5 & Lack of integration & 0.641 & 0.608 & \textbf{0.624} \\
-        \hline
-        6 & Text incoherence & 0.615 & 0.578 & \textbf{0.596} \\
-        \hline
-        \multicolumn{2}{|c|}{\textbf{Trung bình (Macro Average)}} & \textbf{0.686} & \textbf{0.647} & \textbf{0.6658} \\
-        \hline
-    \end{tabular}
-\end{table}
+\subsubsection{2.2. Trực quan hóa kết quả dự đoán suy luận (Inference Visualization)}
+\indent\indent Để ứng dụng thực tế, mô hình cung cấp phương thức suy luận nhanh \texttt{model.predict(image, threshold=0.5, top\_k=3)} trả về đồng thời mặt nạ phân đoạn pixel và danh sách top 3 nhãn vi mô có độ tin cậy cao nhất.
 
-Các đặc trưng hình học và biên viền như \textit{Edge artifacts} (F1: 0.742) và \textit{Inconsistent font} (F1: 0.710) đạt độ chính xác cao nhất do mạng EfficientNet-B0 bắt rất nhạy các biến đổi đột ngột về độ dốc gradient và hoa văn font chữ. Nhãn \textit{Text incoherence} có điểm F1 thấp hơn (0.596) do đòi hỏi khả năng hiểu sâu về ngữ cảnh ngôn ngữ cấp tài liệu.
+Dưới đây là một trường hợp suy luận mẫu trên ảnh tài liệu kiểm thử:
+\begin{lstlisting}[language=Python, frame=single, caption={Ví dụ kết quả suy luận từ phương thức predict}]
+# Input: Anh tai lieu kich thuoc 224x224x3
+result = model.predict(img_tensor, threshold=0.5, top_k=3)
 
-\subsubsection{2.3. Đánh giá định tính: Phân tích các trường hợp suy luận thực tế (Reasoning Case Studies)}
-\indent\indent Dưới đây là ví dụ minh họa kết quả trích xuất suy luận từ mô hình SmolVLM2 trên một mẫu hóa đơn bị chỉnh sửa con số:
-\begin{lstlisting}[language=TeX, frame=single, caption={Ví dụ kết quả suy luận trích xuất từ SmolVLM2}]
-<think>
-1. Inspect the highlighted region at line "Total Amount":
-2. Digit '5' exhibits a distinct rectangular boundary discontinuity (Edge artifacts).
-3. The stroke width and ink density of '5' differ from adjacent zeroes (Inconsistent font).
-4. Local JPEG compression noise around '5' is unnaturally smooth compared to paper background (Unnatural texture).
-Conclusion: The text area is tampered using text splicing manipulation.
-</think>
+# Output Pixel Mask:
+print("Pixel mask shape:", result["mask"].shape)  # (224, 224)
+
+# Output Top-3 Classes and Confidence Scores:
+# 1. inconsistent_alignment : 58.09%
+# 2. text_incoherence       : 56.46%
+# 3. edge_artifacts         : 52.85%
 \end{lstlisting}
-Chuỗi tư duy trên chứng minh mô hình không chỉ dự đoán đúng nhãn mà còn chỉ ra chính xác các cơ sở vật lý vi mô, mang lại giá trị giải trình pháp lý cao.
+
+Kết quả cho thấy mô hình phát hiện chính xác vùng văn bản nghi vấn và chỉ ra các dấu hiệu: chữ bị lệch dòng (\textit{inconsistent\_alignment}), ngữ nghĩa không mạch lạc (\textit{text\_incoherence}) và xuất hiện viền cắt dán (\textit{edge\_artifacts}).

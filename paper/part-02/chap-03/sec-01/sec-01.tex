@@ -1,6 +1,6 @@
 \subsection{1. Môi trường thực nghiệm và Thiết lập huấn luyện}
 
-\subsubsection{1.1. Môi trường phần cứng và phần mềm}
+\subsubsection{1.1. Cấu hình phần cứng và phần mềm}
 \indent\indent Toàn bộ quá trình thực nghiệm, huấn luyện mô hình và kiểm thử được triển khai trên môi trường tính toán chuẩn:
 \begin{table}[H]
     \centering
@@ -8,29 +8,26 @@
     \label{tab:env_specs}
     \vspace{0.2cm}
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabular}{|m{4cm}|m{10cm}|}
+    \begin{tabular}{|m{4.5cm}|m{9.5cm}|}
         \hline
         \textbf{Thành phần} & \textbf{Thông số kỹ thuật} \\
         \hline
-        Bộ xử lý đồ họa (GPU) & NVIDIA RTX / Tesla T4 16GB VRAM \\
+        Bộ xử lý đồ họa (GPU) & NVIDIA GPU (CUDA Enabled) hỗ trợ FP16 / AMP \\
         \hline
-        Bộ nhớ hệ thống (RAM) & 16GB -- 32GB High-speed DDR4 \\
+        Môi trường thực thi & Python 3.10+, PyTorch 2.x, Torchvision, Scikit-learn \\
         \hline
-        Bộ xử lý trung tâm (CPU) & Intel Core i7 / Xeon @ 2.50GHz \\
+        Tập dữ liệu & Minh-TFR (DTD-lightweight + TFR extracted) \\
         \hline
-        Hệ điều hành & Ubuntu 22.04 LTS / Windows 11 64-bit \\
-        \hline
-        Ngôn ngữ \& Thư viện & Python 3.10+, PyTorch 2.x, Transformers, Torchvision, Scikit-learn, Accelerate \\
+        Checkpoint tốt nhất & \texttt{best\_model\_multi\_classes.pth} \\
         \hline
     \end{tabular}
 \end{table}
 
-\subsubsection{1.2. Thiết lập siêu tham số huấn luyện (Hyperparameters)}
-\indent\indent Để đảm bảo mô hình hội tụ ổn định và tránh hiện tượng quá khớp (overfitting), các siêu tham số được tối ưu hóa như sau:
+\subsubsection{1.2. Chiến lược huấn luyện và Tối ưu hóa siêu tham số}
+\indent\indent Để mô hình hội tụ nhanh và tối ưu hóa bộ nhớ GPU, các chiến lược kỹ thuật sau được áp dụng:
 \begin{itemize}[label={--}, itemsep=2pt]
-    \item \textbf{Kích thước Batch (Batch Size):} 32 mẫu trên mỗi lượt huấn luyện.
-    \item \textbf{Thuật toán tối ưu (Optimizer):} AdamW với trọng số suy giảm (Weight Decay) là $1 \times 10^{-2}$.
-    \item \textbf{Tốc độ học (Learning Rate):} Khởi tạo ở mức $1 \times 10^{-4}$, áp dụng lịch trình suy giảm Cosine (Cosine Annealing LR Scheduler) với 3 epoch khởi động (Warmup).
-    \item \textbf{Số lượng Epochs:} 20 epochs, kích hoạt cơ chế dừng sớm (Early Stopping) nếu Validation Loss không giảm sau 4 epochs liên tiếp.
-    \item \textbf{Hàm mất mát (Loss Function):} Binary Cross-Entropy with Logits Loss (\texttt{BCEWithLogitsLoss}) hỗ trợ cơ chế đa nhãn độc lập trên 6 đầu ra.
+    \item \textbf{Huấn luyện độ chính xác hỗn hợp tự động (Automatic Mixed Precision -- AMP):} Sử dụng `torch.cuda.amp.GradScaler()` để tính toán song song kiểu FP16/FP32, giúp giảm 50\% mức chiếm dụng VRAM. Riêng mô-đun BlockDCT được cố định tính toán trên FP32 nhằm đảm bảo độ chính xác toán học của phép nhân ma trận cơ sở.
+    \item \textbf{Thuật toán tối ưu (Optimizer):} Sử dụng AdamW với tốc độ học khởi tạo $1 \times 10^{-4}$ và hệ số suy giảm trọng số (Weight Decay) là $1 \times 10^{-2}$.
+    \item \textbf{Lịch trình điều chỉnh tốc độ học (LR Scheduler):} Áp dụng Cosine Annealing Learning Rate Scheduler để giảm dần tốc độ học về $1 \times 10^{-6}$ ở các epoch cuối.
+    \item \textbf{Hàm mất mát đa nhiệm (MultiTaskTamperLoss):} Kết hợp có trọng số giữa hàm mất mát phân đoạn ($\text{BCE} + \text{Dice}$) và hàm mất mát phân loại đa nhãn ($\text{BCE}$).
 \end{itemize}
