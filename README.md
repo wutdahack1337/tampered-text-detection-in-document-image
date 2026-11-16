@@ -32,12 +32,13 @@ pip install -U huggingface_hub hf_xet
 hf auth login
 
 # Tải dữ liệu TFR
-python download_tfr.py
+python scripts/download_tfr.py
 
 # Giải nén tập dữ liệu
 cd ./datasets/TFR
 & "$env:ProgramFiles\7-Zip\7z.exe" x .\TFR.zip
 & "$env:ProgramFiles\7-Zip\7z.exe" x .\TFR -o".\TFR_extracted"
+cd ../..
 ```
 
 ---
@@ -103,27 +104,38 @@ Kết quả xuất ra file **`paper/main.pdf`** hoàn chỉnh.
 
 ---
 
-### Cấu Trúc Thư Mục Báo Cáo (`paper/`)
+## 4. Cấu Trúc Toàn Bộ Dự Án (Project Structure)
 
 ```text
-paper/
-├── main.tex               # File điều phối chính của toàn bộ văn bản
-├── main.pdf               # File PDF kết quả sau khi biên dịch
-├── bib/
-│   └── refs.bib           # Danh mục tài liệu tham khảo (chuẩn Biber)
-├── config/                # Cấu hình font chữ, lề trang, tiêu đề, TikZ
-├── images/                # Logo trường và các hình ảnh biểu đồ minh họa
-├── minor-pages/           # Bìa ngoài, bìa trong, nhận xét, lời cảm ơn, mục lục, từ viết tắt
-├── part-01/
-│   └── part-01.tex        # Toàn bộ Phần I (Đặt vấn đề, nghiên cứu liên quan, mục tiêu, bố cục)
-├── part-02/
-│   ├── part-02.tex        # Điều phối các chương trong Phần II
-│   ├── chap-01/
-│   │   └── chap-01.tex    # Chương 1: Mô tả bài toán và cơ sở lý thuyết
-│   ├── chap-02/
-│   │   └── chap-02.tex    # Chương 2: Thiết kế và cài đặt giải pháp LightweightDTD
-│   └── chap-03/
-│       └── chap-03.tex    # Chương 3: Thực nghiệm, đánh giá định lượng và trực quan hóa
-└── part-03/
-    └── part-03.tex        # Toàn bộ Phần III (Kết luận và hướng phát triển)
+tampered-text-detection-in-document-image/
+│
+├── multi-class-efficientb0-dtd-lightweight.ipynb   ⭐ Notebook huấn luyện & kiểm thử mô hình chính
+│
+├── scripts/                                       📁 Bộ công cụ xử lý & tiền xử lý dữ liệu
+│   ├── download_tfr.py                            # Tải TFR từ HuggingFace
+│   ├── extract_reasoning.py                       # Chuyển đổi annotation JSON -> JSONL
+│   ├── update_image_paths.py                      # Chuẩn hóa prefix đường dẫn ảnh
+│   └── rebalance_splits.py                        # Lọc nhãn phủ định & chia train/test 2000 mẫu
+│
+├── checkpoints/                                   📁 Trọng số mô hình tối ưu
+│   └── best_model_multi_classes.pth               # Model (~50MB) đạt 99.68% Pixel Acc
+│
+├── datasets/                                      📁 Dữ liệu huấn luyện & kiểm thử
+│   ├── Minh-TFR/                                  # Tập dữ liệu đã tiền xử lý hoàn chỉnh
+│   └── TFR/                                       # Tập dữ liệu thô gốc
+│
+├── paper/                                         📁 Toàn bộ mã nguồn & bản in luận văn LaTeX
+│   ├── main.tex                                   # File chính biên dịch luận văn
+│   ├── main.pdf                                   # Bản in PDF 30 trang
+│   ├── bib/refs.bib                               # Trích dẫn tài liệu tham khảo
+│   ├── part-01/part-01.tex                        # Toàn bộ Phần I
+│   ├── part-02/                                   # Toàn bộ Phần II (chap-01, 02, 03)
+│   └── part-03/part-03.tex                        # Toàn bộ Phần III
+│
+├── latex_template/                                📁 Bản mẫu gốc của trường (tham khảo)
+│
+└── archive/                                       📁 Kho lưu trữ các tài nguyên thử nghiệm cũ
+    ├── legacy_notebooks/                          # Các notebook thử nghiệm ban đầu
+    ├── legacy_checkpoints/                        # Checkpoint các phiên bản trước
+    └── backups/                                   # Các file sao lưu dữ liệu (.bak)
 ```

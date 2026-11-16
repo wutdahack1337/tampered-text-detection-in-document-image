@@ -1,1 +1,27 @@
+# Data directories
 datasets/
+
+# Heavy binaries & Archives
+*.zip
+*.pth
+archive/legacy_checkpoints/
+
+# Python & Jupyter cache
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.bak
+*.tmp
+
+# LaTeX auxiliary files (keep *.tex, config, images, and main.pdf)
+*.aux
+*.log
+*.out
+*.toc
+*.lot
+*.lof
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.synctex.gz
